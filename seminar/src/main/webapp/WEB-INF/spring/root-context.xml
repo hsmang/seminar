@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/util 
+        				http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	
+	<!-- <util:properties id="jdbc" location="classpath:/config/jdbc.properties"/>
+     
+    <import resource="jdbc-config.xml"/> -->
+    
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<value>WEB-INF/spring/jdbc.properties</value>
+		</property>
+	</bean>
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+ 		<!-- mybatis-config.xml 파일이 스프링이 동작할 때 같이 동작하도록 설정한 것. -->
+		<property name="configLocation" value="classpath:mybatis-config.xml"></property>
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="mapperLocations" value="classpath:/mapper/**/*.xml"></property>
+	</bean>
+     
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+    
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		 <property name="driverClassName" value="${jdbc.driverClassName}" />
+		 <property name="url" value="${jdbc.url}" />
+		 <property name="username" value="${jdbc.username}" />
+		 <property name="password" value="${jdbc.password}" />
+		 <property name="initialSize" value="100" />
+		 <property name="maxActive" value="150" />
+		 <property name="maxWait" value="10000" />
+		 <property name="maxIdle" value="30" />
+		 <property name="minIdle" value="20" />
+		 <property name="testOnBorrow" value="true" />
+		 <property name="testOnReturn" value="true" />
+		 <property name="validationQuery" value="select 1 from dual" />
+		 <property name="testWhileIdle" value="true" />
+		 <property name="timeBetweenEvictionRunsMillis" value="130000" />
+		 <property name="minEvictableIdleTimeMillis" value="120000" />
+		 <property name="numTestsPerEvictionRun" value="20" />
+		 <property name="removeAbandonedTimeout" value="30" />
+		 <property name="removeAbandoned" value="true" />
+		 <property name="logAbandoned" value="false" />
+	</bean>
+	
+	<!-- Root Context: defines shared resources visible to all other web components -->
+</beans>
