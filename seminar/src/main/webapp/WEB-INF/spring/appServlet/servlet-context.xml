@@ -21,7 +21,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="jp.seminar.user" />
+	
+	<context:component-scan base-package="jp.seminar" />
 	
 	
 	
