@@ -3,9 +3,21 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<title>basciSeminar</title>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 </head>
 <body>
 <h2>basicSeminar</h2>
+
+	<c:choose>
+		<c:when test="${fn:length(list) > 0}">
+			<c:forEach items="${list }" var="list">
+						${list.seq }
+						${list.name }
+			</c:forEach>
+		</c:when>
+	</c:choose>
+
 </body>
 </html>
