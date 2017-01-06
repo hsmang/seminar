@@ -24,7 +24,6 @@ public class BoardController {
 		ModelAndView mv = new ModelAndView("/board/basicSeminar");
 		
 		log.debug("getBasciSeminarBoardList~~~~");
-		System.out.println("getBasciSeminarBoardList~~~~");
 		
 		List<Map<String, Object>> list = boardService.getBoardList(map);
 		mv.addObject("list", list);

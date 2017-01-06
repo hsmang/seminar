@@ -5,7 +5,10 @@
     <select id="selectList" parameterType="hashmap" resultType="hashmap">
         SELECT
         	seq,
-        	name
+        	subject,
+        	writter,
+        	date,
+        	count
         FROM
         	board
     </select>
