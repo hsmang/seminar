@@ -42,7 +42,7 @@ public class HomeController {
 		
 		model.addAttribute("serverTime", formattedDate );
 		
-//		System.out.println(userService.count());
+		System.out.println(userService.count());
 		
 		return "home";
 	}
