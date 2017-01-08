@@ -19,15 +19,31 @@ public class BoardController {
 	@Resource(name="boardService")
 	private BoardService boardService;
 	
-	@RequestMapping(value = "/test.do")
+	@RequestMapping(value = "/seminar.do")
 	public ModelAndView getBasicSeminarBoardList(Map<String, Object> map) throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar");
-		
-		log.debug("getBasciSeminarBoardList~~~~");
 		
 		List<Map<String, Object>> list = boardService.getBoardList(map);
 		mv.addObject("list", list);
 		
 		return mv;
 	}
+	
+	@RequestMapping(value = "/seminar/insert.do")
+	public ModelAndView getBasicSeminarBoardInsert(Map<String, Object> map) throws Exception{
+		ModelAndView mv = new ModelAndView("/board/basicSeminar_insert");
+		
+		return mv;
+	}
+	
+	@RequestMapping(value = "/seminar/detail.do")
+	public ModelAndView getBasicSeminarBoardDetail(Map<String, Object> map) throws Exception{
+		ModelAndView mv = new ModelAndView("/board/basicSeminar_detail");
+		
+		List<Map<String, Object>> list = boardService.getBoardDetail(map);
+		mv.addObject("list", list);
+		
+		return mv;
+	}
+	
 }

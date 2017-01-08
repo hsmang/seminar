@@ -5,24 +5,23 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
-import jp.seminar.user.dao.BoardDaoImpl;
+import jp.seminar.user.dao.BoardDAOImpl;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	
-	Logger log = Logger.getLogger(this.getClass());
-	
 	@Resource(name="boardDao")
-	private BoardDaoImpl boardDao;
+	private BoardDAOImpl boardDAO;
 	
 	@Override
 	public List<Map<String, Object>> getBoardList(Map<String, Object> map) throws Exception{
-		
-		log.debug("@@@@@@@@@@@@@@@@@@@@@@@ boardServiceImpl");
-		
-		return boardDao.selectList(map);
+		return boardDAO.selectList(map);
+	}
+
+	@Override
+	public List<Map<String, Object>> getBoardDetail(Map<String, Object> map) throws Exception {
+		return boardDAO.selectDetail(map);
 	}
 }
