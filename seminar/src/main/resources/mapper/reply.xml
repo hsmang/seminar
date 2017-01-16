@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="reply">
+
+	<select id="selectReply" parameterType="jp.seminar.board.ReplyVO" resultType="hashmap">
+		SELECT 
+			reply_idx, 
+			user_idx, 
+			reply_content, 
+			reply_write_date, 
+			reply_state, 
+			board_idx, 
+			f_type 
+		FROM 
+			board_reply
+		WHERE
+			f_type = #{f_type} 
+			AND
+			board_idx = #{board_idx}
+	</select>
+
+	<insert id="insertReply" parameterType="jp.seminar.board.ReplyVO">
+		INSERT INTO
+    		board_reply
+    		(
+    			user_idx,
+    			reply_content,
+    			reply_write_date,
+    			reply_state,
+    			board_idx,
+    			f_type
+    		)
+    	VALUES
+    		(
+    			1,
+    			#{reply_content},
+    			NOW(),
+    			'N',
+    			#{board_idx},
+    			#{f_type}
+    		)
+	</insert>
+
+</mapper>

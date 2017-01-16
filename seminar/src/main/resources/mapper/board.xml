@@ -4,26 +4,76 @@
 <mapper namespace="board">
     <select id="selectList" resultType="hashmap">
         SELECT
-        	seq,
-        	subject,
-        	writter,
-        	date,
-        	count
+        	board_idx,
+        	board_subject,
+        	user_idx,
+        	board_reg_date,
+        	board_count,
+        	board_update_date
         FROM
-        	board
+        	basic_seminar
+        ORDER BY board_idx DESC
+    </select>
+    
+    <select id="selectUserList" resultType="hashmap">
+		SELECT
+			user_idx,
+			user_no,
+			user_name
+		FROM
+			user_info
     </select>
     
     <select id="selectDetail" parameterType="int" resultType="hashmap">
         SELECT
-        	subject,
-        	writter,
-        	date,
-        	count,
-        	content
+        	board_idx,
+        	board_subject,
+        	board_content,
+        	board_reg_date,
+        	user_idx,
+        	board_count
         FROM
-        	board
+        	basic_seminar
         WHERE
-        	seq = 3
+        	board_idx = #{board_idx}
     </select>
+    
+    <update id="updateDetail" parameterType="jp.seminar.board.BoardVO">
+    	UPDATE
+    		basic_seminar
+    	SET
+    		board_subject = #{subject},
+    		board_content = #{content},
+    		board_update_date = NOW()
+    	WHERE
+    		board_idx = #{board_idx}
+    </update>
+    
+    <delete id="deleteDetail" parameterType="int">
+    	DELETE FROM
+    		basic_seminar
+    	WHERE
+    		board_idx = #{board_idx}
+    </delete>
+    
+    <insert id="insertDetail" parameterType="jp.seminar.board.BoardVO">
+    	INSERT INTO
+    		basic_seminar
+    		(
+    			board_subject,
+    			board_content,
+    			user_idx,
+    			board_reg_date,
+    			board_count
+    		)
+    	VALUES
+    		(
+    			#{subject},
+    			#{content},
+    			#{user_idx},
+    			NOW(),
+    			0
+    		)
+     </insert> 
     
 </mapper>

@@ -22,6 +22,6 @@
 	</beans:bean>
 	
 	
-	<context:component-scan base-package="jp" />
+	<context:component-scan base-package="jp.seminar" />
 	
 </beans:beans>
