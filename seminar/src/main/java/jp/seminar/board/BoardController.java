@@ -2,11 +2,13 @@ package jp.seminar.board;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -19,9 +21,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.seminar.file.PhotoVO;
 import jp.seminar.user.service.BoardService;
 import twitter4j.Twitter;
 import twitter4j.auth.AccessToken;
@@ -167,28 +172,27 @@ public class BoardController {
 	
 /////////////////////////////////////////////////////////////////////////////
 /*	@RequestMapping(value = "/board/upload.do", method=RequestMethod.POST)
-	public ResponseEntity fileUpload(MultipartHttpServletRequest request){
-		
-		try{
-			Iterator<String> itr = request.getFileNames();
-			
-			while(itr.hasNext()){
-				String uploadFile = itr.next();
-				MultipartFile file = request.getFile(uploadFile);
-				String mimeType = file.getContentType();
-				String filename = file.getOriginalFilename();
-				byte[] bytes = file.getBytes();
-				
-				FileUpload newFile = new FileUpload(filename, bytes, mimeType);
-				fileUploadServise.uploadFile(newFile);
-			}
-			
-		}catch(Exception e){
-			return new ResponseEntity<>("{}", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-		return null;
-	}*/
+	@ResponseBody
+	public ResultResponse<Object> uploadFile(MultipartHttpServletRequest request,@RequestParam String orderCode,@RequestParam int fileType,@RequestParam String assignedAe) {
+	    ResultResponse resultResponse = new ResultResponse();
+	    boolean success;
+	    try {
+	        Iterator<String> itr = request.getFileNames();
+	        while (itr.hasNext()) {
+	            String uploadedFile = itr.next();
+	            MultipartFile file = request.getFile(uploadedFile);
+	            success = fileService.saveFile(file,orderCode,fileType,assignedAe);
+	            resultResponse.setIsok(success);
+	        }
+	        resultResponse.setMessage("文件上传成功！");
+	    }catch (IOException e) {
+	        resultResponse.setIsok(false);
+	        resultResponse.setMessage("文件上传失败！");
+	        e.printStackTrace();
+	    }
+	    return resultResponse;
+	}
+*/
 	
 /////////////////////////////////////////////////////////////////////////////
 	/*@RequestMapping("/board/photoUpload.do") 
