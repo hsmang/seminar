@@ -1,11 +1,18 @@
-package jp.seminar.board;
+package jp.seminar.board.vo;
 
 public class BoardVO {
 	private String subject;
 	private String content;
 	private int user_idx;
 	private int board_idx;
+	private int board_count;
 	
+	public int getBoard_count() {
+		return board_count;
+	}
+	public void setBoard_count(int board_count) {
+		this.board_count = board_count;
+	}
 	public int getBoard_idx() {
 		return board_idx;
 	}

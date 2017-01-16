@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="board">
+<mapper namespace="basicSeminar">
     <select id="selectList" resultType="hashmap">
         SELECT
         	board_idx,
@@ -37,6 +37,15 @@
         WHERE
         	board_idx = #{board_idx}
     </select>
+    
+    <update id="updateBoardCount" parameterType="jp.seminar.board.BoardVO">
+    	UPDATE
+    		basic_seminar
+    	SET
+   			board_count = #{board_count}
+    	WHERE
+   			board_idx = #{board_idx}
+    </update>
     
     <update id="updateDetail" parameterType="jp.seminar.board.BoardVO">
     	UPDATE

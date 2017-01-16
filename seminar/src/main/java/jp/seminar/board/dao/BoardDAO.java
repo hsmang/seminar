@@ -1,10 +1,10 @@
-package jp.seminar.user.dao;
+package jp.seminar.board.dao;
 
 import java.util.List;
 import java.util.Map;
 
-import jp.seminar.board.BoardVO;
-import jp.seminar.board.ReplyVO;
+import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.ReplyVO;
 
 public interface BoardDAO {
 	
@@ -23,4 +23,6 @@ public interface BoardDAO {
 	public int insertReply(ReplyVO reply);
 	
 	public List<Map<String, Object>> getReply(ReplyVO reply);
+	
+	public int updateBoardCount(BoardVO board);
 }

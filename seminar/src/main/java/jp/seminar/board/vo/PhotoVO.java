@@ -1,4 +1,4 @@
-package jp.seminar.file;
+package jp.seminar.board.vo;
 
 import org.springframework.web.multipart.MultipartFile;
 

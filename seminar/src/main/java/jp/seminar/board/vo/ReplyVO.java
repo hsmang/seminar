@@ -1,4 +1,4 @@
-package jp.seminar.board;
+package jp.seminar.board.vo;
 
 public class ReplyVO {
 	private int user_idx;

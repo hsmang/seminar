@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="basicSeminar">
+    <select id="selectList" resultType="hashmap">
+        SELECT
+        	board_idx,
+        	board_subject,
+        	user_idx,
+        	board_reg_date,
+        	board_count,
+        	board_update_date
+        FROM
+        	basic_seminar
+        ORDER BY board_idx DESC
+    </select>
+    
+    <select id="selectUserList" resultType="hashmap">
+		SELECT
+			user_idx,
+			user_no,
+			user_name
+		FROM
+			user_info
+    </select>
+    
+    <select id="selectDetail" parameterType="int" resultType="hashmap">
+        SELECT
+        	board_idx,
+        	board_subject,
+        	board_content,
+        	board_reg_date,
+        	user_idx,
+        	board_count
+        FROM
+        	basic_seminar
+        WHERE
+        	board_idx = #{board_idx}
+    </select>
+    
+    <update id="updateBoardCount" parameterType="jp.seminar.board.BoardVO">
+    	UPDATE
+    		basic_seminar
+    	SET
+   			board_count = #{board_count}
+    	WHERE
+   			board_idx = #{board_idx}
+    </update>
+    
+    <update id="updateDetail" parameterType="jp.seminar.board.BoardVO">
+    	UPDATE
+    		basic_seminar
+    	SET
+    		board_subject = #{subject},
+    		board_content = #{content},
+    		board_update_date = NOW()
+    	WHERE
+    		board_idx = #{board_idx}
+    </update>
+    
+    <delete id="deleteDetail" parameterType="int">
+    	DELETE FROM
+    		basic_seminar
+    	WHERE
+    		board_idx = #{board_idx}
+    </delete>
+    
+    <insert id="insertDetail" parameterType="jp.seminar.board.BoardVO">
+    	INSERT INTO
+    		basic_seminar
+    		(
+    			board_subject,
+    			board_content,
+    			user_idx,
+    			board_reg_date,
+    			board_count
+    		)
+    	VALUES
+    		(
+    			#{subject},
+    			#{content},
+    			#{user_idx},
+    			NOW(),
+    			0
+    		)
+     </insert> 
+    
+</mapper>

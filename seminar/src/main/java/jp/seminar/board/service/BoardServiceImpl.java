@@ -1,4 +1,4 @@
-package jp.seminar.user.service;
+package jp.seminar.board.service;
 
 import java.util.List;
 import java.util.Map;
@@ -7,15 +7,15 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import jp.seminar.board.BoardVO;
-import jp.seminar.board.ReplyVO;
-import jp.seminar.user.dao.BoardDAOImpl;
+import jp.seminar.board.dao.BasicSeminarDAOImpl;
+import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.ReplyVO;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
 	
 	@Resource(name="boardDao")
-	private BoardDAOImpl boardDAO;
+	private BasicSeminarDAOImpl boardDAO;
 	
 	@Override
 	public List<Map<String, Object>> getUserList() throws Exception {
@@ -55,6 +55,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public List<Map<String, Object>> getReply(ReplyVO reply) {
 		return boardDAO.getReply(reply);
+	}
+
+	@Override
+	public int updateBoardCount(BoardVO board) throws Exception {
+		return boardDAO.updateBoardCount(board);
 	}
 	
 }

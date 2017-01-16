@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reply">
 
-	<select id="selectReply" parameterType="jp.seminar.board.ReplyVO" resultType="hashmap">
+	<select id="selectReply" parameterType="jp.seminar.board.vo.ReplyVO" resultType="hashmap">
 		SELECT 
 			reply_idx, 
 			user_idx, 
@@ -19,7 +19,7 @@
 			board_idx = #{board_idx}
 	</select>
 
-	<insert id="insertReply" parameterType="jp.seminar.board.ReplyVO">
+	<insert id="insertReply" parameterType="jp.seminar.board.vo.ReplyVO">
 		INSERT INTO
     		board_reply
     		(

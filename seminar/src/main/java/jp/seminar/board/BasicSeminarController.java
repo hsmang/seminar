@@ -2,13 +2,11 @@ package jp.seminar.board;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -21,18 +19,16 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import jp.seminar.user.service.BoardService;
+import jp.seminar.board.service.BoardService;
+import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.ReplyVO;
 import twitter4j.Twitter;
 import twitter4j.auth.AccessToken;
 
 @Controller
-public class BoardController {
+public class BasicSeminarController {
 	Logger log = Logger.getLogger(this.getClass());
 	
 	private static final String ACCESS_TOKEN = "808906216009244672-wU7ZJRmLKZrPS496vuRKJGbRNSD6Iwf";
@@ -100,6 +96,12 @@ public class BoardController {
 		reply.setF_type(f_type);
 		List<Map<String, Object>> replyList = boardService.getReply(reply);
 		mv.addObject("replyList", replyList);
+		
+		BoardVO board = new BoardVO();
+		int board_count = (int)list.get(0).get("board_count");
+		board.setBoard_count(++board_count);
+		board.setBoard_idx(board_idx);
+		boardService.updateBoardCount(board);
 		
 		return mv;
 	}
