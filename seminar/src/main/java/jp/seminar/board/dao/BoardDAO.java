@@ -3,6 +3,7 @@ package jp.seminar.board.dao;
 import java.util.List;
 import java.util.Map;
 
+import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.ReplyVO;
 
@@ -25,4 +26,8 @@ public interface BoardDAO {
 	public List<Map<String, Object>> getReply(ReplyVO reply);
 	
 	public int updateBoardCount(BoardVO board);
+	
+	public int insertBoardImage(BoardImageVO image);
+	
 }
+

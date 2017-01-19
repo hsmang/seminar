@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.seminar.board.service.BoardService;
+import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
 import twitter4j.Twitter;
 import twitter4j.auth.AccessToken;
@@ -31,11 +34,12 @@ import twitter4j.auth.AccessToken;
 public class BasicSeminarController {
 	Logger log = Logger.getLogger(this.getClass());
 	
-	private static final String ACCESS_TOKEN = "808906216009244672-wU7ZJRmLKZrPS496vuRKJGbRNSD6Iwf";
+/*	private static final String ACCESS_TOKEN = "808906216009244672-wU7ZJRmLKZrPS496vuRKJGbRNSD6Iwf";
 	private static final String ACCESS_TOKEN_SECRET = "fwrtC4KH1oEC6pZYh9Kf2JBkiigMwLqcW00zp9x4TCdaO";
 	private static final String CONSUMER_KEY = "nxN88I51NyTK3a6ubpmMsg51U";
 	private static final String CONSUMER_SECRET = "dxlsnQleP0StDnhCT2EeXyj7kCe2SedafRFjgLnmI2kAfmSjJf";
-	private AccessToken assessToken = new AccessToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);
+	private AccessToken assessToken = new AccessToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);*/
+	
 ///////////////////////////////////////////////////////////////////////////////
 	@Resource(name="boardService")
 	private BoardService boardService;
@@ -45,11 +49,34 @@ public class BasicSeminarController {
 	public ModelAndView getBasicSeminarBoardList() throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
 		List<Map<String, Object>> boardList = boardService.getBoardList();
-		mv.addObject("boardList", boardList);
-		
 		List<Map<String, Object>> userList = boardService.getUserList();
+		
+		/*System.out.println("boardList========================");
+		System.out.println(boardList);*/
+		
+		for(int i=0; i<boardList.size(); i++){
+			for(int j=0; j<userList.size(); j++){
+				Map<String, Object> map = new HashMap();
+				
+				if( boardList.get(i).get("user_idx") == userList.get(j).get("user_idx")){
+					map.put("user_name", userList.get(j).get("user_name"));
+					map.put("board_idx", boardList.get(i).get("board_idx"));
+					map.put("board_subject", boardList.get(i).get("board_subject"));
+					map.put("board_reg_date", boardList.get(i).get("board_reg_date"));
+					map.put("board_update_date", boardList.get(i).get("board_update_date"));
+					map.put("board_count", boardList.get(i).get("board_count"));
+					boardList.set(i, map);
+				}
+			}
+		}
+		
+		mv.addObject("boardList", boardList);
 		mv.addObject("userList", userList);
-		System.out.println(userList);
+		
+/*		System.out.println("boardList========================");
+		System.out.println(boardList);
+		System.out.println("userList========================");
+		System.out.println(userList);*/
 
 		/*Twitter twitter = TwitterFactory.getSingleton();
 		twitter = twitInit(twitter);
@@ -69,7 +96,7 @@ public class BasicSeminarController {
 		return mv;
 	}
 	
-	private Map<String, Object> insertTwitToMap(String writter, String content){
+	/*private Map<String, Object> insertTwitToMap(String writter, String content){
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("writer", writter);
 		map.put("content", content);
@@ -82,7 +109,7 @@ public class BasicSeminarController {
 			twitter.setOAuthAccessToken(assessToken);
 		}
 		return twitter;
-	}
+	}*/
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar/detail.do", method=RequestMethod.GET)
@@ -107,15 +134,15 @@ public class BasicSeminarController {
 	}
 	
 	@RequestMapping(value = "/seminar/insertReply.do")
-	public String insertBasicSeminarReply(HttpServletRequest request, int board_idx) throws Exception{
+	public String insertBasicSeminarReply(HttpServletRequest request, int board_idx, String f_type) throws Exception{
 		
 		ReplyVO reply = new ReplyVO();
 		reply.setBoard_idx(board_idx);
-		reply.setF_type((String)request.getParameter("f_type"));
+		reply.setF_type(f_type);
 		reply.setReply_content((String)request.getParameter("reply_content"));
 		boardService.insertReply(reply);
 		
-		return "redirect:/seminar/detail.do?board_idx="+board_idx+"&f_type="+reply.getF_type();
+		return "redirect:/seminar/detail.do?board_idx="+board_idx+"&f_type="+f_type;
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////
@@ -159,6 +186,7 @@ public class BasicSeminarController {
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////
+	
 	@RequestMapping(value = "/seminar/insertProc.do")
 	public String insertProcBasicSeminarBoard(HttpServletRequest request) throws Exception{
 		BoardVO board = new BoardVO();
@@ -166,72 +194,73 @@ public class BasicSeminarController {
 		board.setSubject((String)request.getParameter("subject"));
 		board.setContent((String)request.getParameter("content"));
 		board.setUser_idx(Integer.parseInt(request.getParameter("user_idx")));
-		
 		boardService.insertBoard(board);
 		
 		return "redirect:/seminar.do";
 	}
 	
-/////////////////////////////////////////////////////////////////////////////
-/*	@RequestMapping(value = "/board/upload.do", method=RequestMethod.POST)
-	@ResponseBody
-	public ResultResponse<Object> uploadFile(MultipartHttpServletRequest request,@RequestParam String orderCode,@RequestParam int fileType,@RequestParam String assignedAe) {
-	    ResultResponse resultResponse = new ResultResponse();
-	    boolean success;
-	    try {
-	        Iterator<String> itr = request.getFileNames();
-	        while (itr.hasNext()) {
-	            String uploadedFile = itr.next();
-	            MultipartFile file = request.getFile(uploadedFile);
-	            success = fileService.saveFile(file,orderCode,fileType,assignedAe);
-	            resultResponse.setIsok(success);
-	        }
-	        resultResponse.setMessage("文件上传成功！");
-	    }catch (IOException e) {
-	        resultResponse.setIsok(false);
-	        resultResponse.setMessage("文件上传失败！");
-	        e.printStackTrace();
-	    }
-	    return resultResponse;
+	/////////////////////////////////////////////////////////////////////////////
+	@RequestMapping("/seminar/photoUpload.do") 
+	public String file_uploader(HttpServletRequest request, HttpServletResponse response, PhotoVO editor){ 
+		String return1=request.getParameter("callback"); 
+		System.out.println("return 1 : " + return1);
+		String return2="?callback_func=" + request.getParameter("callback_func");
+		System.out.println("return 2 : " + return2);
+		String return3=""; 
+		String name = ""; 
+		
+		try { 
+			if(editor.getFiledata() != null && editor.getFiledata().getOriginalFilename() != null && !editor.getFiledata().getOriginalFilename().equals("")) { 
+				// 기존 상단 코드를 막고 하단코드를 이용 
+				name = editor.getFiledata().getOriginalFilename().substring(editor.getFiledata().getOriginalFilename().lastIndexOf(File.separator)+1); 
+				String filename_ext = name.substring(name.lastIndexOf(".")+1); 
+				filename_ext = filename_ext.toLowerCase(); 
+				String[] allow_file = {"jpg","png","bmp","gif"}; 
+				int cnt = 0; 
+				
+				for(int i=0; i<allow_file.length; i++) { 
+					if(filename_ext.equals(allow_file[i])){ 
+						cnt++; 
+					} 
+				} 
+				if(cnt == 0) { 
+					return3 = "&errstr="+name; 
+				} else { 
+					//파일 기본경로 
+					String dftFilePath = request.getSession().getServletContext().getRealPath("/"); 
+					//파일 기본경로 _ 상세경로
+					String filePath = dftFilePath + "resources"+ File.separator + "editor" + File.separator +"upload" + File.separator; 
+					File file = new File(filePath); 
+					
+					if(!file.exists()) { 
+						file.mkdirs(); 
+					} 
+					
+					String realFileNm = ""; 
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd"); 
+					String today= formatter.format(new java.util.Date()); 
+					realFileNm = today+UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
+					String rlFileNm = filePath + realFileNm; 
+					///////////////// 서버에 파일쓰기 ///////////////// 
+					editor.getFiledata().transferTo(new File(rlFileNm)); 
+					///////////////// 서버에 파일쓰기 ///////////////// 
+					return3 += "&bNewLine=true"; 
+					return3 += "&sFileName="+ name; 
+					return3 += "&sFileURL=/resources/editor/upload/"+realFileNm; 
+					} 
+				}
+			else { 
+				return3 += "&errstr=error"; 
+			} 
+		}catch (Exception e) { 
+			e.printStackTrace();
+		} 
+		System.out.println("return : " + return1+return2+return3);
+		return "redirect:"+return1+return2+return3; 
 	}
-*/
 	
-/////////////////////////////////////////////////////////////////////////////
-	/*@RequestMapping("/board/photoUpload.do") 
-	public String photoUpload(HttpServletRequest request, PhotoVO vo){
-	    String callback = vo.getCallback();
-	    String callback_func = vo.getCallback_func();
-	    String file_result = "";
-	    try {
-	        if(vo.getFiledata() != null && vo.getFiledata().getOriginalFilename() != null && !vo.getFiledata().getOriginalFilename().equals("")){
-	            //파일이 존재하면
-	            String original_name = vo.getFiledata().getOriginalFilename();
-	            String ext = original_name.substring(original_name.lastIndexOf(".")+1);
-	            //파일 기본경로
-	            String defaultPath = request.getSession().getServletContext().getRealPath("/");
-	            //파일 기본경로 _ 상세경로
-	            String path = defaultPath + "resource" + File.separator + "photo_upload" + File.separator;             
-	            File file = new File(path);
-	            System.out.println("path:"+path);
-	            //디렉토리 존재하지 않을경우 디렉토리 생성
-	            if(!file.exists()) {
-	                file.mkdirs();
-	            }
-	            //서버에 업로드 할 파일명(한글문제로 인해 원본파일은 올리지 않는것이 좋음)
-	            String realname = UUID.randomUUID().toString() + "." + ext;
-	        ///////////////// 서버에 파일쓰기 /////////////////
-	            vo.getFiledata().transferTo(new File(path+realname));
-	            file_result += "&bNewLine=true&sFileName="+original_name+"&sFileURL=/resource/photo_upload/"+realname;
-	        } else {
-	            file_result += "&errstr=error";
-	        }
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }
-	    return "redirect:" + callback + "?callback_func="+callback_func+file_result;
-	}*/
-	
-	@RequestMapping("/board/multiplePhotoUpload.do")
+///////////////////////////////////////////////////////////////////////////////
+	@RequestMapping("/seminar/multiplePhotoUpload.do")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			// 파일정보
@@ -247,43 +276,56 @@ public class BasicSeminarController {
 			// 파일 기본경로 _ 상세경로
 			String filePath = dftFilePath + "resource" + File.separator + "photo_upload" + File.separator;
 			File file = new File(filePath);
+			
 			if (!file.exists()) {
 				file.mkdirs();
 			}
+		
 			String realFileNm = "";
-			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd");
 			String today = formatter.format(new java.util.Date());
 			realFileNm = today + UUID.randomUUID().toString() + filename.substring(filename.lastIndexOf("."));
 			String rlFileNm = filePath + realFileNm;
+			
+			///////////////// 디비에 정보 저장하기 /////////////////
+			BoardImageVO image = new BoardImageVO();
+			image.setF_img_name(filename);
+			image.setF_img_path(filePath + filename);
+			image.setF_type("SE");
+			boardService.insertBoardImage(image);
+			
 			///////////////// 서버에 파일쓰기 /////////////////
 			InputStream is = request.getInputStream();
 			OutputStream os = new FileOutputStream(rlFileNm);
 			int numRead;
 			byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
+			
 			while ((numRead = is.read(b, 0, b.length)) != -1) {
 				os.write(b, 0, numRead);
 			}
+			
 			if (is != null) {
 				is.close();
 			}
 			os.flush();
 			os.close();
+			
 			///////////////// 서버에 파일쓰기 /////////////////
 			// 정보 출력
 			sFileInfo += "&bNewLine=true";
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 			sFileInfo += "&sFileName=" + filename;
-			;
 			sFileInfo += "&sFileURL=" + "/resource/photo_upload/" + realFileNm;
+			
 			PrintWriter print = response.getWriter();
 			print.print(sFileInfo);
 			print.flush();
 			print.close();
-		} catch (Exception e) {
+			
+			} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-
-
+	
 }
 

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import jp.seminar.board.dao.BasicSeminarDAOImpl;
 import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.ReplyVO;
 
 @Service("boardService")
@@ -60,6 +61,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int updateBoardCount(BoardVO board) throws Exception {
 		return boardDAO.updateBoardCount(board);
+	}
+
+	@Override
+	public int insertBoardImage(BoardImageVO image) throws Exception {
+		return boardDAO.insertBoardImage(image);
 	}
 	
 }

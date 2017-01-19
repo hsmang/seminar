@@ -4,6 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="twitter:widgets:theme" content="light">
+<meta name="twitter:widgets:link-color" content="#55acee">
+<meta name="twitter:widgets:border-color" content="#55acee">
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
@@ -30,8 +35,6 @@ tr, td {
 <body>
 
 	<h3>세미나 게시판 insert</h3>
-
-
 
 <form id="frm" action="/seminar/insertProc.do" method="post">
 	<table>
@@ -67,12 +70,6 @@ tr, td {
   </div>
 </form>
 
-<hr>
-
-<form action="/board/upload.do" id="upload-widget" method="post"  class="dropzone">
-</form>
-
-<hr>
 	<script type="text/javascript">
 		var smartEditor = [];
 		nhn.husky.EZCreator.createInIFrame({
@@ -89,10 +86,6 @@ tr, td {
 				frm.submit();
 			});
 		});
-		
-		Dropzone.options.myAwesomeDropzone = {
-			maxFilesize : 2				
-		};
 	</script>
 
 </body>

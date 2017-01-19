@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.ReplyVO;
 
@@ -59,6 +60,11 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 
 	public int updateBoardCount(BoardVO board) {
 		return sqlSession.insert("basicSeminar.updateBoardCount", board);
+	}
+
+	@Override
+	public int insertBoardImage(BoardImageVO image) {
+		return sqlSession.insert("boardImage.insertBoardImage", image);
 	}
 
 }

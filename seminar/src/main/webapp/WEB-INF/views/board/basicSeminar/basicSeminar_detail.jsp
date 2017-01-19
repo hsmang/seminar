@@ -65,7 +65,6 @@ table, tr, td {
 		</c:choose>
 	</div>
 	<form id="frm" method="post">
-		<input type="hidden" id="f_type" name="f_type" value="SE">
 		댓글달기 <textarea id="reply_content" form="frm" name="reply_content" rows="10" cols="100"></textarea>
 		<input type="button" id="btn_save" value="댓글 저장">
 	</form>
@@ -74,9 +73,12 @@ table, tr, td {
 		$(document).ready(function(){
 			$('#btn_save').on("click", function(){
 				var board_idx = document.getElementById('board_idx').value;
-				$("#frm").attr("action", "/seminar/insertReply.do?board_idx="+board_idx);
+				$("#frm").attr("action", "/seminar/insertReply.do?board_idx="+board_idx+"&f_type=SE");
 				frm.submit();
+				
+				history.pushState(null, 'page -1', "/seminar.do");
 			});
+			
 		});
 	</script>
 </body>

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.ReplyVO;
 
 public interface BoardService {
@@ -25,4 +26,6 @@ public interface BoardService {
 	int insertReply(ReplyVO reply) throws Exception;
 
 	List<Map<String, Object>> getReply(ReplyVO reply);	
+	
+	int insertBoardImage(BoardImageVO image) throws Exception;
 }

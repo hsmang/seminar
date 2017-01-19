@@ -34,16 +34,13 @@ table, tr, td {
 		<c:choose>
 			<c:when test="${fn:length(boardList) > 0}">
 				<c:forEach items="${boardList }" var="list">
-					<c:forEach items="${userList }" var="user">
-						<tr>
-							<td id="idx">${list.board_idx }</td>
-							<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
-							<td>${list.user_idx } // ${user.user_idx }
-								${user_user_name }</td>						
-							<td>${list.board_reg_date }</td>
-							<td>${list.board_count }</td>
-						</tr>
-					</c:forEach>
+					<tr>
+						<td id="idx">${list.board_idx }</td>
+						<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+						<td>${list.user_name }</td>						
+						<td>${list.board_reg_date }</td>
+						<td>${list.board_count }</td>
+					</tr>
 				</c:forEach>
 			</c:when>
 		</c:choose>
@@ -57,17 +54,24 @@ table, tr, td {
 	</select>
 	
 	<input type="text"><input type="button" value="검색"><input type="button" id="btn_insert" value="작성(권한있는자만)" onclick="location.href='/seminar/insert.do'">
+
+
+<h3>아래는 트위터</h3>
+
+	<!-- <a class="twitter-timeline" href="https://twitter.com/sanggi_wjg">Tweets by @sanggi_wjg</a>	
+	<a class="twitter-timeline" href="https://twitter.com/kimzemi833">Tweets by @kimzemi833</a>
 	
-	<h3>twitter4j</h3>
+	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+ -->
 	
-	<c:choose>
+<%-- 	<c:choose>
 		<c:when test="${fn:length(twitList) > 0}">
 			<c:forEach items="${twitList }" var="twit">
 						${twit.writter }<br>
 						${twit.content }
 			</c:forEach>
 		</c:when>
-	</c:choose>
+	</c:choose> --%>
 	
 </body>
 </html>
