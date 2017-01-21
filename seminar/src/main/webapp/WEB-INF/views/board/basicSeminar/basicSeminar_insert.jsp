@@ -12,11 +12,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<link rel="stylesheet" type="text/css" href="/resources/dropzone/dist/dropzone.css">
+<link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
 
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script> -->
 <script type="text/javascript" src="/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
-<script type="text/javascript" src="/resources/dropzone/dist/dropzone.js" charset="utf-8"></script>
+
+<link rel="stylesheet" href="/resources/dropzone/dropzone.css">
+<script type="text/javascript" src="/resources/dropzone/dropzone.js" charset="utf-8"></script>
 
 <title>basicSeminar_insert</title>
 
@@ -35,7 +39,10 @@ tr, td {
 <body>
 
 	<h3>세미나 게시판 insert</h3>
-
+	
+	
+	<form action="/seminar/fileUpload.do" class="dropzone"></form>
+	
 <form id="frm" action="/seminar/insertProc.do" method="post">
 	<table>
 		<tr>
@@ -44,12 +51,25 @@ tr, td {
 		</tr>
 		<tr>
 			<td>작성자</td>
-			<td><input type="text" id="user_idx" name="user_idx" value="99">user_idx</td>
+			<td><input type="text" id="user_idx" name="user_idx" value="2">user_idx</td>
 		</tr>
 		<tr>
 			<td>첨부파일</td>
 			<td>
+				<div id="fileuploader">Upload</div>
+				<script>
+				$(document).ready(function()
+				{
+					$("#fileuploader").uploadFile({
+						url:"/seminar/fileUpload_jquery_fileUpload.do",
+						fileName:"myfile",
+						sequential:true,
+						sequentialCount:1
+					});
 					
+					
+				});
+				</script>
 			</td>
 		</tr>
 		<tr>
@@ -64,12 +84,6 @@ tr, td {
 
 <hr>
 
-<form action="/board/file_upload.do" class="dropzone">
-  <div class="fallback">
-    <input name="file" type="file" multiple />
-  </div>
-</form>
-
 	<script type="text/javascript">
 		var smartEditor = [];
 		nhn.husky.EZCreator.createInIFrame({
@@ -79,8 +93,6 @@ tr, td {
 			fCreator : "createSEditor2"
 		});
 		$(document).ready(function(){
-			$(".fallback").dropzone({ url: "/file/post" });
-			
 			$('#btn_save').on("click", function(){
 				smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 				frm.submit();

@@ -32,7 +32,7 @@ table, tr, td {
 					</tr>
 					<tr>
 						<td>작성자</td>
-						<td>${detail.user_idx }</td>
+						<td>${detail.user_name }</td>
 						<td>등록일</td>
 						<td>${detail.board_reg_date }</td>
 						<td>조회수</td>

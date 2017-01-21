@@ -58,11 +58,17 @@ table, tr, td {
 
 <h3>아래는 트위터</h3>
 
-	<!-- <a class="twitter-timeline" href="https://twitter.com/sanggi_wjg">Tweets by @sanggi_wjg</a>	
-	<a class="twitter-timeline" href="https://twitter.com/kimzemi833">Tweets by @kimzemi833</a>
+	 <a class="twitter-timeline" 
+	 	href="https://twitter.com/sanggi_wjg"
+	 	data-width="50%"
+	 	data-height="500px">Tweets by @sanggi_wjg</a>
+<!--	<a class="twitter-timeline" href="https://twitter.com/kimzemi833">Tweets by @kimzemi833</a>-->
 	
 	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
- -->
+ 	<script>
+ 		
+ 	
+ 	</script>
 	
 <%-- 	<c:choose>
 		<c:when test="${fn:length(twitList) > 0}">
