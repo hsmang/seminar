@@ -5,4 +5,16 @@
     <select id="count" resultType="int">
         select a from test where 1
     </select>
+    
+    <select id="getUserByID" resultType="jp.seminar.user.model.UserVO">
+    	SELECT
+    		idx
+    		,user_no
+    		,user_name
+    		,user_pw
+    	FROM
+    		user
+    	WHERE
+    		user_name = #{username}
+    </select>
 </mapper>
