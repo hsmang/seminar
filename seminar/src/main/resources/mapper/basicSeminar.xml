@@ -31,7 +31,8 @@
         	board_content,
         	board_reg_date,
         	user_idx,
-        	board_count
+        	board_count,
+        	board_update_date
         FROM
         	basic_seminar
         WHERE

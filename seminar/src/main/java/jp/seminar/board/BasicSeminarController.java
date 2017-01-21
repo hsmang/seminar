@@ -2,12 +2,14 @@ package jp.seminar.board;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -20,6 +22,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import jp.seminar.board.service.BoardService;
@@ -27,8 +31,6 @@ import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
-import twitter4j.Twitter;
-import twitter4j.auth.AccessToken;
 
 @Controller
 public class BasicSeminarController {
@@ -49,35 +51,9 @@ public class BasicSeminarController {
 	public ModelAndView getBasicSeminarBoardList() throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
 		List<Map<String, Object>> boardList = boardService.getBoardList();
-		List<Map<String, Object>> userList = boardService.getUserList();
-		
-		/*System.out.println("boardList========================");
-		System.out.println(boardList);*/
-		
-		for(int i=0; i<boardList.size(); i++){
-			for(int j=0; j<userList.size(); j++){
-				Map<String, Object> map = new HashMap();
-				
-				if( boardList.get(i).get("user_idx") == userList.get(j).get("user_idx")){
-					map.put("user_name", userList.get(j).get("user_name"));
-					map.put("board_idx", boardList.get(i).get("board_idx"));
-					map.put("board_subject", boardList.get(i).get("board_subject"));
-					map.put("board_reg_date", boardList.get(i).get("board_reg_date"));
-					map.put("board_update_date", boardList.get(i).get("board_update_date"));
-					map.put("board_count", boardList.get(i).get("board_count"));
-					boardList.set(i, map);
-				}
-			}
-		}
 		
 		mv.addObject("boardList", boardList);
-		mv.addObject("userList", userList);
 		
-/*		System.out.println("boardList========================");
-		System.out.println(boardList);
-		System.out.println("userList========================");
-		System.out.println(userList);*/
-
 		/*Twitter twitter = TwitterFactory.getSingleton();
 		twitter = twitInit(twitter);
 		
@@ -116,6 +92,7 @@ public class BasicSeminarController {
 	public ModelAndView getBasicSeminarBoardDetail(int board_idx, String f_type) throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar_detail");
 		List<Map<String, Object>> list = boardService.getBoardDetail(board_idx);
+		
 		mv.addObject("list", list);
 		
 		ReplyVO reply = new ReplyVO();
@@ -135,7 +112,6 @@ public class BasicSeminarController {
 	
 	@RequestMapping(value = "/seminar/insertReply.do")
 	public String insertBasicSeminarReply(HttpServletRequest request, int board_idx, String f_type) throws Exception{
-		
 		ReplyVO reply = new ReplyVO();
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
@@ -172,7 +148,6 @@ public class BasicSeminarController {
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar/deleteProc.do")
 	public String deleteBasicSeminarBoardDetail(int board_idx) throws Exception{
-		
 		boardService.deleteBoardDetail(board_idx);
 
 		return "redirect:/seminar.do";
@@ -199,9 +174,46 @@ public class BasicSeminarController {
 		return "redirect:/seminar.do";
 	}
 	
+///////////////////////////////////////////////////////////////////////////////
+	
+	@RequestMapping(value="/seminar/fileUpload.do")
+	public void fileUpload_jquery_fileUpload(HttpServletRequest request) throws Exception  {
+		String filePath = "C:/Users/wjg/git/seminar/seminar/src/main/resources/files/";
+
+		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+
+		MultipartFile multipartFile = null;
+		String originalFileName = null;
+		String originalFileExtension = null;
+
+		File file = new File(filePath);
+		if (file.exists() == false) {
+			file.mkdirs();
+		}
+
+		while (iterator.hasNext()) {
+			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+			if (multipartFile.isEmpty() == false) {
+				originalFileName = multipartFile.getOriginalFilename();
+				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
+				
+				file = new File(filePath + originalFileName);
+				multipartFile.transferTo(file);
+			}
+		}
+		
+	}
+	
+	@RequestMapping(value="/seminar/fileUpload_dropzone.do")
+	public String fileUpload_jquery_fileUpload_dropzone(HttpServletRequest request)  {
+		
+		return null;
+	}
+	
 	/////////////////////////////////////////////////////////////////////////////
 	@RequestMapping("/seminar/photoUpload.do") 
-	public String file_uploader(HttpServletRequest request, HttpServletResponse response, PhotoVO editor){ 
+	public String singlePhotoUpload(HttpServletRequest request, HttpServletResponse response, PhotoVO editor){ 
 		String return1=request.getParameter("callback"); 
 		System.out.println("return 1 : " + return1);
 		String return2="?callback_func=" + request.getParameter("callback_func");
