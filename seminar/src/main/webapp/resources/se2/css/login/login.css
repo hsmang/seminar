@@ -1,0 +1,7 @@
+@CHARSET "UTF-8";
+
+.content h1.p_logo, .content h1.t_logo, .content h1.m_logo{
+	width: auto;
+	text-align: center;
+}
+
