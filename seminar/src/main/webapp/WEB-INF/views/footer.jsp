@@ -18,7 +18,7 @@
 <script>
 	$(document).ready(function(){
 		
-		for(var i=3; i<5; i++){
+		for(var i=2; i<4; i++){
 			for(var j=0; j<4; j++){
 				if( $('.navbar-nav >li:eq('+i+') > ul > li > a:eq('+j+')').attr('href') == $(location).attr('pathname') ){
 					$('.navbar-nav >li:eq('+i+') > ul > li:eq('+j+')').addClass("active");
