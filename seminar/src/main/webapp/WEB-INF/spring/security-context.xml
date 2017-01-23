@@ -13,7 +13,7 @@
 		<intercept-url pattern="/resources/**" access="permitAll" /> 
 		<intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
 			<form-login login-page="/login.do"               
-				default-target-url="/seminar/insert.do"          
+				default-target-url="/seminar.do"          
 				username-parameter="username"       
 				password-parameter="password"         
 				authentication-failure-url="/login?error"
