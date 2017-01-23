@@ -27,5 +27,11 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
+    <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
+	<link rel="stylesheet" href="/resources/dropzone/dropzone.css">
+    
+    <script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="/resources/modern-business/js/bootstrap.min.js"></script>
+    
 <title>Insert title here</title>
 </head>

@@ -11,16 +11,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/seminar.do">메인페이지로</a>
+                <a class="navbar-brand" href="/index.do">메인페이지로</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/seminar.do">교수 소개</a>
+                        <a href="/introduce.do">교수 소개</a>
                     </li>
                     <li>
-                        <a href="/seminar.do">문의사항</a>
+                        <a href="/qna.do">문의사항</a>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">수업 자료용 <b class="caret"></b></a>
@@ -29,13 +29,13 @@
                                 <a href="/seminar.do">기초세미나</a>
                             </li>
                             <li>
-                                <a href="/seminar.do">경영학</a>
+                                <a href="/businessadmin.do">경영학</a>
                             </li>
                             <li>
-                                <a href="/seminar.do">경영전략론</a>
+                                <a href="/businessstrategy.do">경영전략론</a>
                             </li>
                             <li>
-                                <a href="/seminar.do">사업시스템론</a>
+                                <a href="/businesssystem.do">사업시스템론</a>
                             </li>
                         </ul>
                     </li>
@@ -43,16 +43,16 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">세마니 자료용<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/seminar.do">상품개발</a>
+                                <a href="/productdev.do">상품개발</a>
                             </li>
                             <li>
-                                <a href="/seminar.do">비지니스 컨테스트</a>
+                                <a href="/businesscontest.do">비지니스 컨테스트</a>
                             </li>
                             <li>
-                                <a href="/seminar.do">관광사업</a>
+                                <a href="/tourbusiness.do">관광사업</a>
                             </li>
                             <li>
-                                <a href="/seminar.do">앨범</a>
+                                <a href="/album.do">앨범</a>
                             </li>
                         </ul>
                     </li>
