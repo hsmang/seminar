@@ -44,18 +44,18 @@
 					</h1>
 					<fieldset>
 						<section class="loginform cf">
-							<form name="frm" action="j_spring_security_check" method="post">
+							<form name="frm" action="/user/login_proc.do" method="post">
 								<legend class="blind">Login Information</legend>
-								<p class="error_noti" style="display: block"></p>
+								<p c lass="error_noti" style="display: block"></p>
 								<div class="inp_area">
 									<div class="inp_txt">
-										<input type="text" placeholder="ID" id="userID" name="username" style="ime-mode: disabled;" tabindex="2" required /> 
+										<input type="text" placeholder="ID" id="userID" name="user_email" style="ime-mode: disabled;" tabindex="2" required /> 
 										<a href="javascript:;" class="txt_clear" style="cursor: hand;">
 											<span class="blind"></span>
 										</a>
 									</div>
 									<div class="inp_txt">
-										<input type="password" placeholder="PASSWORD" id="password" name="password" tabindex="2" required>
+										<input type="password" placeholder="PASSWORD" id="password" name="user_pw" tabindex="2" required>
 										<a href="javascript:;" class="txt_clear" style="cursor: hand;"><span class="blind"></span></a>
 									</div>
 								</div>

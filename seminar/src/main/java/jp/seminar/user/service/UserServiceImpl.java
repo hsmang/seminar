@@ -23,4 +23,25 @@ public class UserServiceImpl implements UserService{
 		return userDao.getUserByID(username);
 	}
 
+	@Override
+	public int userJoinProc(UserVO user) {
+		return userDao.userJoinProc(user);
+	}
+
+	@Override
+	public int userLoginProc(UserVO user) {
+		int count = userDao.userLoginProc(user);
+		if(count != 1){
+			return 0;
+		}else{
+			return 1;
+		}
+		 
+	}
+
+	@Override
+	public UserVO getUserInfo(UserVO user) {
+		return userDao.getUserInfo(user);
+	}
+
 }

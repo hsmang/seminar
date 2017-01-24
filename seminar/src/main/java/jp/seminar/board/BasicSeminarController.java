@@ -17,6 +17,7 @@ import java.util.UUID;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -163,12 +164,12 @@ public class BasicSeminarController {
 ///////////////////////////////////////////////////////////////////////////////
 	
 	@RequestMapping(value = "/seminar/insertProc.do")
-	public String insertProcBasicSeminarBoard(HttpServletRequest request) throws Exception{
+	public String insertProcBasicSeminarBoard(HttpServletRequest request, HttpSession session) throws Exception{
 		BoardVO board = new BoardVO();
-		
+		System.out.println(session.getAttributeNames().nextElement());
 		board.setSubject((String)request.getParameter("subject"));
 		board.setContent((String)request.getParameter("content"));
-		board.setUser_idx(Integer.parseInt(request.getParameter("user_idx")));
+		board.setUser_idx((int) session.getAttribute("user_idx"));
 		boardService.insertBoard(board);
 		
 		return "redirect:/seminar.do";

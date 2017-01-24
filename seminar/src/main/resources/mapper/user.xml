@@ -2,6 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="user">
+	<parameterMap type="jp.seminar.user.model.UserVO" id="userVO">
+		<parameter property="user_email"/>
+		<parameter property="user_pw"/>
+		<parameter property="user_no"/>
+		<parameter property="user_name"/>		
+		<parameter property="user_hp"/>
+	</parameterMap>
     <select id="count" resultType="int">
         select a from test where 1
     </select>
@@ -17,4 +24,31 @@
     	WHERE
     		user_name = #{username}
     </select>
+    
+    <insert id="userJoinProc" parameterMap="userVO">
+    	INSERT INTO `seminar`.`user_info` 
+    	(`user_email`, `user_pw`, `user_no`, `user_name`, `user_hp`, `user_role`, `user_state`, `reg_date`, `update_date`) 
+    	VALUES 
+    	( ? , ? , ? , ? , ? , '0', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    </insert>
+    
+    <select id="userLoginProc" parameterType="jp.seminar.user.model.UserVO" resultType="int">
+    	SELECT
+    		count(*)
+    	FROM
+    		`seminar`.`user_info`
+    	WHERE
+    		user_email = #{user_email}
+    		and
+    		user_pw = #{user_pw}
+    </select>
+    <select id="getUserInfoByEmail" parameterType="jp.seminar.user.model.UserVO" resultType="jp.seminar.user.model.UserVO">
+    	SELECT
+    		*
+    	FROM
+    		`seminar`.`user_info`
+    	WHERE
+    		user_email = #{user_email}
+    </select>
+    
 </mapper>

@@ -22,4 +22,29 @@ public class UserDaoImpl implements UserDao{
 	public UserVO getUserByID(String username) {
 		return sqlSession.selectOne("user.getUserByID");
 	}
+
+	@Override
+	public int userJoinProc(UserVO user) {
+		int result = 0;
+		try {
+			sqlSession.insert("user.userJoinProc", user);
+			result = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = 0;
+		}
+		return result;
+	}
+
+	@Override
+	public int userLoginProc(UserVO user) {
+		int count = sqlSession.selectOne("user.userLoginProc", user);
+		return count;
+	}
+
+	@Override
+	public UserVO getUserInfo(UserVO user) {
+		
+		return sqlSession.selectOne("user.getUserInfoByEmail", user);
+	}
 }
