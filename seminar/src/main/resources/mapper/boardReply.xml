@@ -35,7 +35,7 @@
     			1,
     			#{reply_content},
     			NOW(),
-    			'N',
+    			1,
     			#{board_idx},
     			#{f_type}
     		)
