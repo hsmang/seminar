@@ -1,14 +1,11 @@
-package jp.seminar.board;
+package jp.seminar.board.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -32,16 +29,11 @@ import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
+import jp.seminar.user.model.UserVO;
 
 @Controller
 public class BasicSeminarController {
 	Logger log = Logger.getLogger(this.getClass());
-	
-/*	private static final String ACCESS_TOKEN = "808906216009244672-wU7ZJRmLKZrPS496vuRKJGbRNSD6Iwf";
-	private static final String ACCESS_TOKEN_SECRET = "fwrtC4KH1oEC6pZYh9Kf2JBkiigMwLqcW00zp9x4TCdaO";
-	private static final String CONSUMER_KEY = "nxN88I51NyTK3a6ubpmMsg51U";
-	private static final String CONSUMER_SECRET = "dxlsnQleP0StDnhCT2EeXyj7kCe2SedafRFjgLnmI2kAfmSjJf";
-	private AccessToken assessToken = new AccessToken(ACCESS_TOKEN, ACCESS_TOKEN_SECRET);*/
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@Resource(name="boardService")
@@ -55,38 +47,8 @@ public class BasicSeminarController {
 		
 		mv.addObject("boardList", boardList);
 		
-		/*Twitter twitter = TwitterFactory.getSingleton();
-		twitter = twitInit(twitter);
-		
-		Paging page = new Paging(1, 1);
-		List<Map> twitList = new ArrayList<Map>();
-		
-		try{
-			List<Status> status = twitter.getHomeTimeline(page);
-			for(Status statuses : status){
-				twitList.add(insertTwitToMap(statuses.getUser().getScreenName(), statuses.getText()));
-			}
-			mv.addObject("twitList", twitList);
-		}catch(Exception e){
-			e.printStackTrace();
-		}*/
 		return mv;
 	}
-	
-	/*private Map<String, Object> insertTwitToMap(String writter, String content){
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("writer", writter);
-		map.put("content", content);
-		return map;
-	}
-	
-	private Twitter twitInit(Twitter twitter){
-		if(twitter.getAuthorization().toString().equals("NullAuthentication{SINGLETON}")){
-			twitter.setOAuthConsumer(CONSUMER_KEY, CONSUMER_SECRET);
-			twitter.setOAuthAccessToken(assessToken);
-		}
-		return twitter;
-	}*/
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar/detail.do", method=RequestMethod.GET)
@@ -156,7 +118,7 @@ public class BasicSeminarController {
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar/insert.do")
-	public String insertBsicSeminarBoard() throws Exception{
+	public String insertBasicSeminarBoard() throws Exception{
 		
 		return "/board/basicSeminar/basicSeminar_insert";
 	}
@@ -166,10 +128,10 @@ public class BasicSeminarController {
 	@RequestMapping(value = "/seminar/insertProc.do")
 	public String insertProcBasicSeminarBoard(HttpServletRequest request, HttpSession session) throws Exception{
 		BoardVO board = new BoardVO();
-		System.out.println(session.getAttributeNames().nextElement());
+		UserVO user = (UserVO) session.getAttribute("user");
 		board.setSubject((String)request.getParameter("subject"));
 		board.setContent((String)request.getParameter("content"));
-		board.setUser_idx((int) session.getAttribute("user_idx"));
+		board.setUser_idx(user.getUser_idx());
 		boardService.insertBoard(board);
 		
 		return "redirect:/seminar.do";
@@ -186,6 +148,7 @@ public class BasicSeminarController {
 
 		MultipartFile multipartFile = null;
 		String originalFileName = null;
+		@SuppressWarnings("unused")
 		String originalFileExtension = null;
 
 		File file = new File(filePath);

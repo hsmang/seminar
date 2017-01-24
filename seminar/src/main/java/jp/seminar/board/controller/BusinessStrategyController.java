@@ -1,4 +1,4 @@
-package jp.seminar.board;
+package jp.seminar.board.controller;
 
 public class BusinessStrategyController {
 
