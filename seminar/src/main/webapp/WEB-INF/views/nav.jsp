@@ -26,7 +26,7 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">수업 자료용 <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/seminar.do">기초세미나</a>
+                                <a href="/seminar.do?pageNumber=1&pageSize=10">기초세미나</a>
                             </li>
                             <li>
                                 <a href="/businessadmin.do">경영학</a>

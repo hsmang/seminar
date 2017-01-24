@@ -12,6 +12,7 @@ import jp.seminar.board.dao.BasicSeminarDAOImpl;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.ReplyVO;
+import jp.seminar.paging.FirstRowPageSize;
 
 @Service("boardService")
 public class BasicSeminarServiceImpl implements BoardService {
@@ -25,8 +26,8 @@ public class BasicSeminarServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public List<Map<String, Object>> getBoardList() throws Exception{
-		List<Map<String, Object>> boardList = boardDAO.selectList();
+	public List<Map<String, Object>> getBoardList(FirstRowPageSize  firstRowpageSize) throws Exception{
+		List<Map<String, Object>> boardList = boardDAO.selectList(firstRowpageSize);
 		List<Map<String, Object>> userList = boardDAO.selectUserList();
 		
 		for(int i=0; i<boardList.size(); i++){
@@ -100,6 +101,11 @@ public class BasicSeminarServiceImpl implements BoardService {
 	@Override
 	public int insertBoardImage(BoardImageVO image) throws Exception {
 		return boardDAO.insertBoardImage(image);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return boardDAO.getTotalCount();
 	}
 	
 }

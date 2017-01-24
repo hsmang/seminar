@@ -1,4 +1,4 @@
-package jp.seminar.main.controller;
+package jp.seminar.introduce.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -23,21 +23,18 @@ import jp.seminar.user.service.UserService;
  * Handles requests for the application home page.
  */
 @Controller
-public class MainrController {
+public class IntroduceController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(MainrController.class);
+	private static final Logger logger = LoggerFactory.getLogger(IntroduceController.class);
 	
-	@Autowired
-	@Resource(name="userService")
-	private UserService userService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/index.do", method = RequestMethod.GET)
-	public ModelAndView index() {
+	@RequestMapping(value = "/introduce.do", method = RequestMethod.GET)
+	public ModelAndView introduce() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("index");
+		mav.setViewName("intro/introduce");
 		return mav ;
 	}
 	

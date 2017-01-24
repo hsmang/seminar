@@ -29,6 +29,8 @@ import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
+import jp.seminar.paging.BoardPaging;
+import jp.seminar.paging.FirstRowPageSize;
 import jp.seminar.user.model.UserVO;
 
 @Controller
@@ -41,11 +43,23 @@ public class BasicSeminarController {
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar.do")
-	public ModelAndView getBasicSeminarBoardList() throws Exception{
+	public ModelAndView getBasicSeminarBoardList(
+			String pageNumber, String pageSize,
+			HttpServletResponse response, HttpServletRequest request
+			) throws Exception{
+		
+		String url = request.getRequestURL().toString();
+		int totalCount = boardService.getTotalCount(); 
+		BoardPaging boardPaging = new BoardPaging(pageNumber, pageSize , totalCount, url); // 페이징처리
+		FirstRowPageSize  firstRowpageSize = new FirstRowPageSize(); // db limit 설정하기
+		firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
+		firstRowpageSize.setPageSize(boardPaging.getPageSize());
+		
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
-		List<Map<String, Object>> boardList = boardService.getBoardList();
+		List<Map<String, Object>> boardList = boardService.getBoardList(firstRowpageSize);
 		
 		mv.addObject("boardList", boardList);
+		mv.addObject("paging", boardPaging);
 		
 		return mv;
 	}

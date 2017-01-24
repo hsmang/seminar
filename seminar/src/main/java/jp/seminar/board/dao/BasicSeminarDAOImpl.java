@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.ReplyVO;
+import jp.seminar.paging.FirstRowPageSize;
 
 
 @Repository("boardDao")
@@ -19,8 +20,8 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Map<String, Object>> selectList() {
-		return sqlSession.selectList("basicSeminar.selectList");
+	public List<Map<String, Object>> selectList(FirstRowPageSize  firstRowpageSize) {
+		return sqlSession.selectList("basicSeminar.selectList" , firstRowpageSize);
 	}
 
 	@Override
@@ -65,6 +66,11 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	@Override
 	public int insertBoardImage(BoardImageVO image) {
 		return sqlSession.insert("boardImage.insertBoardImage", image);
+	}
+
+	@Override
+	public int getTotalCount() {
+		return sqlSession.selectOne("basicSeminar.getTotalCount");
 	}
 
 }

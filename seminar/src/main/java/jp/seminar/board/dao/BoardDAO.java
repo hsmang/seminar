@@ -6,10 +6,11 @@ import java.util.Map;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.ReplyVO;
+import jp.seminar.paging.FirstRowPageSize;
 
 public interface BoardDAO {
 	
-	public List<Map<String, Object>> selectList();
+	public List<Map<String, Object>> selectList(FirstRowPageSize  firstRowpageSize);
 	
 	public List<Map<String, Object>> selectDeatil(int board_idx);
 	
@@ -28,6 +29,8 @@ public interface BoardDAO {
 	public int updateBoardCount(BoardVO board);
 	
 	public int insertBoardImage(BoardImageVO image);
+	
+	int getTotalCount();
 	
 }
 
