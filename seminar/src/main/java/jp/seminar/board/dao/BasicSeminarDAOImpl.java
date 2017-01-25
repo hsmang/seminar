@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.Board_UserVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
@@ -20,13 +21,13 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	private SqlSessionTemplate sqlSession;
 
 	@Override
-	public List<Map<String, Object>> selectList(FirstRowPageSize  firstRowpageSize) {
+	public List<BoardVO> selectList(FirstRowPageSize  firstRowpageSize) {
 		return sqlSession.selectList("basicSeminar.selectList" , firstRowpageSize);
 	}
 
 	@Override
-	public List<Map<String, Object>> selectDeatil(int board_idx) {
-		return sqlSession.selectList("basicSeminar.selectDetail", board_idx);
+	public BoardVO selectDeatil(int board_idx) {
+		return (BoardVO) sqlSession.selectOne("basicSeminar.selectDetail", board_idx);
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectUserList() {
+	public List<Board_UserVO> selectUserList() {
 		return sqlSession.selectList("basicSeminar.selectUserList");
 	}
 
@@ -53,12 +54,8 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	public int insertReply(ReplyVO reply) {
 		return sqlSession.insert("reply.insertReply", reply);
 	}
-
+	
 	@Override
-	public List<Map<String, Object>> getReply(ReplyVO reply) {
-		return sqlSession.selectList("reply.selectReply", reply);
-	}
-
 	public int updateBoardCount(BoardVO board) {
 		return sqlSession.insert("basicSeminar.updateBoardCount", board);
 	}
@@ -72,5 +69,16 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	public int getTotalCount() {
 		return sqlSession.selectOne("basicSeminar.getTotalCount");
 	}
+
+	@Override
+	public Board_UserVO getCertainUser(int user_idx) {
+		return sqlSession.selectOne("basicSeminar.selectCertainUser", user_idx);
+	}
+
+	@Override
+	public List<ReplyVO> getReply(ReplyVO reply) {
+		return sqlSession.selectList("reply.selectReply", reply);
+	}
+
 
 }

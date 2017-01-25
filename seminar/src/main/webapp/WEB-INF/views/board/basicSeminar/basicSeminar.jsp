@@ -31,10 +31,9 @@
 					<c:forEach items="${boardList }" var="list">
 						<tr>
 							<td id="idx">${list.board_idx }</td>
-							<td><a
-								href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+							<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
 							<td>${list.user_name }</td>
-							<td>${list.board_reg_date }</td>
+							<td>${list.board_update_date }</td>
 							<td>${list.board_count }</td>
 						</tr>
 					</c:forEach>
@@ -67,5 +66,7 @@
 	<input class="btn btn-default" type="text" placeholder="검색내용">
 	<button type="button" class="btn btn-default">검색</button>
 	<button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/seminar/insert.do'">작성</button>
+
+	<hr>
 
 <%@include file="../../footer.jsp"%>

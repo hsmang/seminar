@@ -19,27 +19,22 @@
 
 	<div class="row">
 		<div class="col-lg-12">
-			<c:choose>
-				<c:when test="${fn:length(list) > 0}">
-					<c:forEach items="${list }" var="detail">
-						<input type="hidden" id="board_idx" value="${detail.board_idx }">
-						<hr>
-						<h3>${detail.board_subject }</h3>
-							<!-- Date/Time -->
-						<p><i class="fa fa-clock-o"></i> Posted on ${detail.board_reg_date }  ///////  ${detail.user_name }</p>
-						<hr>
-						<a href="#">첨부파일_추가.jpg</a>
-						<hr>
-						<p>${detail.board_content }</p>
-						<hr>
-					</c:forEach>
-				</c:when>
-			</c:choose>
+		
+		
+ 				<input type="hidden" id="board_idx" value="${detail.board_idx }">
+				<hr>
+				<h2>${detail.board_subject }</h2>
+					<!-- Date/Time -->
+					<p><i class="fa fa-clock-o"></i> Posted on ${detail.board_reg_date } / ${user.user_name }(${user.user_no }) </p>
+				<a href="#">첨부파일_추가.jpg</a>
+				<hr>
+				<p>${detail.board_content }</p>
+				<hr>
 				<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">수정</button>
 				<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>
 				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">목록</button>
 				<br><br>
-				
+		
 				<!-- Comments Form -->
                 <div class="well">
                     <h4>Leave a Comment:</h4>
@@ -50,15 +45,15 @@
                         <input class="btn btn-primary" type="button" id="btn_save" value="댓글 저장">
                     </form>
                 </div>
-                <hr>
-
+                <hr> 
+                
 			<c:choose>
 				<c:when test="${fn:length(replyList) > 0}">
 					<c:forEach items="${replyList }" var="replyList">
 						<div class="media">
 							<a class="pull-left" href="#"><img class="media-object"	src="http://placehold.it/64x64" alt=""></a>
 							<div class="media-body">
-								<h4 class="media-heading">username으로 ${replyList.user_idx }&nbsp;&nbsp;<small>${replyList.reply_write_date }</small></h4>
+								<h4 class="media-heading">${replyList.user_name }&nbsp;&nbsp;<small>${replyList.reply_write_date }</small></h4>
 								${replyList.reply_content }
 							</div>
 						</div>

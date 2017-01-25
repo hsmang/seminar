@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="reply">
 
-	<select id="selectReply" parameterType="jp.seminar.board.vo.ReplyVO" resultType="hashmap">
+	<select id="selectReply" parameterType="jp.seminar.board.vo.ReplyVO" resultType="jp.seminar.board.vo.ReplyVO">
 		SELECT 
 			reply_idx, 
 			user_idx, 
@@ -35,7 +35,7 @@
     			1,
     			#{reply_content},
     			NOW(),
-    			'N',
+    			1,
     			#{board_idx},
     			#{f_type}
     		)

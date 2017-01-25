@@ -14,11 +14,11 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">
-				About <small>Subheading</small>
+				Basic Seminar <small>Subheading</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="index.html">Home</a></li>
-				<li class="active">About</li>
+				<li class="active">Basic Seminar</li>
 			</ol>
 		</div>
 	</div>
@@ -63,7 +63,7 @@
 				<div class="form-group">
 			    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 			    	<div class="col-sm-11">
-			    		<textarea name="content" id="content" rows="10" cols="107"></textarea>
+			    		<textarea name="content" id="content" style="width:100%"></textarea>
 					</div>
 			    </div>
 			    <hr>

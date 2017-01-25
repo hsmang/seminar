@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="basicSeminar">
-    <select id="selectList" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="hashmap">
+    <select id="selectList" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
         SELECT
         	board_idx,
         	board_subject,
@@ -16,7 +16,7 @@
         LIMIT #{firstRow} , #{pageSize}
     </select>
     
-    <select id="selectUserList" resultType="hashmap">
+    <select id="selectUserList" resultType="jp.seminar.board.vo.Board_UserVO">
 		SELECT
 			user_idx,
 			user_no,
@@ -25,7 +25,17 @@
 			user_info
     </select>
     
-    <select id="selectDetail" parameterType="int" resultType="hashmap">
+    <select id="selectCertainUser" parameterType="int" resultType="jp.seminar.board.vo.Board_UserVO">
+    	SELECT
+    		user_name,
+    		user_no
+    	FROM
+    		user_info
+    	WHERE
+    		user_idx = #{user_idx}
+    </select>
+    
+    <select id="selectDetail" parameterType="int" resultType="jp.seminar.board.vo.BoardVO">
         SELECT
         	board_idx,
         	board_subject,

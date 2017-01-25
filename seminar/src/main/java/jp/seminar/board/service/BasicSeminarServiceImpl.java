@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import jp.seminar.board.dao.BasicSeminarDAOImpl;
 import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.Board_UserVO;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
@@ -21,27 +22,27 @@ public class BasicSeminarServiceImpl implements BoardService {
 	private BasicSeminarDAOImpl boardDAO;
 	
 	@Override
-	public List<Map<String, Object>> getUserList() throws Exception {
+	public List<Board_UserVO> getUserList() throws Exception {
 		return boardDAO.selectUserList();
 	}
 	
 	@Override
-	public List<Map<String, Object>> getBoardList(FirstRowPageSize  firstRowpageSize) throws Exception{
-		List<Map<String, Object>> boardList = boardDAO.selectList(firstRowpageSize);
-		List<Map<String, Object>> userList = boardDAO.selectUserList();
+	public List<BoardVO> getBoardList(FirstRowPageSize  firstRowpageSize) throws Exception{
+		List<BoardVO> boardList = boardDAO.selectList(firstRowpageSize);
+		List<Board_UserVO> userList = boardDAO.selectUserList();
 		
 		for(int i=0; i<boardList.size(); i++){
 			for(int j=0; j<userList.size(); j++){
-				Map<String, Object> map = new HashMap();
-				
-				if( boardList.get(i).get("user_idx") == userList.get(j).get("user_idx")){
-					map.put("user_name", userList.get(j).get("user_name"));
-					map.put("board_idx", boardList.get(i).get("board_idx"));
-					map.put("board_subject", boardList.get(i).get("board_subject"));
-					map.put("board_reg_date", boardList.get(i).get("board_reg_date"));
-					map.put("board_update_date", boardList.get(i).get("board_update_date"));
-					map.put("board_count", boardList.get(i).get("board_count"));
-					boardList.set(i, map);
+				BoardVO board = new BoardVO();
+				if( boardList.get(i).getUser_idx() == userList.get(j).getUser_idx()){
+					board.setBoard_idx(boardList.get(i).getBoard_idx());
+					board.setBoard_content(boardList.get(i).getBoard_content());
+					board.setBoard_count(boardList.get(i).getBoard_count());
+					board.setBoard_reg_date(boardList.get(i).getBoard_reg_date());
+					board.setBoard_subject(boardList.get(i).getBoard_subject());
+					board.setBoard_update_date(boardList.get(i).getBoard_update_date());
+					board.setUser_name(userList.get(j).getUser_name());
+					boardList.set(i, board);
 				}
 			}
 		}
@@ -49,23 +50,8 @@ public class BasicSeminarServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getBoardDetail(int board_idx) throws Exception {
-		List<Map<String, Object>> detail = boardDAO.selectDeatil(board_idx);
-		List<Map<String, Object>> userList = boardDAO.selectUserList();
-		
-		Map<String, Object> map = new HashMap();
-		for(int i=0; i<userList.size(); i++){
-			if(detail.get(0).get("user_idx") == userList.get(i).get("user_idx")){
-				map.put("user_name", userList.get(i).get("user_name"));
-				map.put("board_idx", detail.get(0).get("board_idx"));
-				map.put("board_subject", detail.get(0).get("board_subject"));
-				map.put("board_reg_date", detail.get(0).get("board_reg_date"));
-				map.put("board_update_date", detail.get(0).get("board_update_date"));
-				map.put("board_count", detail.get(0).get("board_count"));
-				map.put("board_content", detail.get(0).get("board_content"));
-				detail.set(0, map);
-			}
-		}
+	public BoardVO getBoardDetail(int board_idx) throws Exception {
+		BoardVO detail = boardDAO.selectDeatil(board_idx);
 		return detail;
 	}
 
@@ -90,11 +76,6 @@ public class BasicSeminarServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getReply(ReplyVO reply) {
-		return boardDAO.getReply(reply);
-	}
-
-	@Override
 	public int updateBoardCount(BoardVO board) throws Exception {
 		return boardDAO.updateBoardCount(board);
 	}
@@ -108,5 +89,32 @@ public class BasicSeminarServiceImpl implements BoardService {
 	public int getTotalCount() {
 		return boardDAO.getTotalCount();
 	}
-	
+
+	@Override
+	public Board_UserVO getCertainUser(int user_idx) {
+		return boardDAO.getCertainUser(user_idx);
+	}
+
+	@Override
+	public List<ReplyVO> getReply(ReplyVO reply) {
+		List<ReplyVO> replyList = boardDAO.getReply(reply);
+		List<Board_UserVO> userList = boardDAO.selectUserList();
+		
+		for(int i=0; i<replyList.size(); i++){
+			for(int j=0; j<userList.size(); j++){
+				ReplyVO replyOne = new ReplyVO();
+				if( replyList.get(i).getUser_idx() == userList.get(j).getUser_idx()){
+					replyOne.setBoard_idx(replyList.get(i).getBoard_idx());
+					replyOne.setF_type(replyList.get(i).getF_type());
+					replyOne.setReply_content(replyList.get(i).getReply_content());
+					replyOne.setReply_state(replyList.get(i).getReply_state());
+					replyOne.setReply_write_date(replyList.get(i).getReply_write_date());
+					replyOne.setUser_name(userList.get(j).getUser_name());
+					replyList.set(i, replyOne);
+				}
+			}
+		}
+		return replyList;
+	}
+
 }

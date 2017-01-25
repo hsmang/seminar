@@ -4,17 +4,18 @@ import java.util.List;
 import java.util.Map;
 
 import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.Board_UserVO;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
 public interface BoardService {
 	
-	List<Map<String, Object>> getUserList() throws Exception;
+	List<Board_UserVO> getUserList() throws Exception;
 	
-	List<Map<String, Object>> getBoardList(FirstRowPageSize  firstRowpageSize) throws Exception;
+	List<BoardVO> getBoardList(FirstRowPageSize  firstRowpageSize) throws Exception;
 	
-	List<Map<String, Object>> getBoardDetail(int board_idx) throws Exception;
+	BoardVO getBoardDetail(int board_idx) throws Exception;
 	
 	int updateBoardCount(BoardVO board) throws Exception;
 	
@@ -26,9 +27,12 @@ public interface BoardService {
 	
 	int insertReply(ReplyVO reply) throws Exception;
 
-	List<Map<String, Object>> getReply(ReplyVO reply);	
-	
 	int insertBoardImage(BoardImageVO image) throws Exception;
 	
 	int getTotalCount();
+
+	Board_UserVO getCertainUser(int user_idx);
+
+	List<ReplyVO> getReply(ReplyVO reply);
+
 }

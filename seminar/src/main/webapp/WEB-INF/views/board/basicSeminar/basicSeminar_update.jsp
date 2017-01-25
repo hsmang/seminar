@@ -21,6 +21,7 @@
 
 	<form id="frm" method="post" class="form-horizontal">
 		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+		<hr>
 		<c:choose>
 			<c:when test="${fn:length(list) > 0}">
 				<c:forEach items="${list }" var="detail">
@@ -28,18 +29,20 @@
 					<div class="form-group">
 						<label for="inputSubject" class="col-sm-1 control-label">제목</label>
 				    	<div class="col-sm-11">
-				    		<input type="text" id="subject" name="subject" value="${detail.board_subject }">
+				    		<input class="form-control" type="text" id="subject" name="subject" value="${detail.board_subject }">
 				    	</div>
 				    </div>
+				    <hr>
 				    <div class="form-group">
 				    	<label for="inputFile" class="col-sm-1 control-label">첨부파일</label>
 				    	<div class="col-sm-11">첨부파일 히히
 				    	</div>
 				    </div>
+				    <hr>	
 				    <div class="form-group">
 				    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 				    	<div class="col-sm-11">
-				    		<textarea name="content" id="content" rows="10" cols="100">${detail.board_content }</textarea>
+				    		<textarea name="content" id="content" style="width:100%">${detail.board_content }</textarea>
 				    	</div>
 				    </div>
 				    <hr>

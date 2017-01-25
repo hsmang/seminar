@@ -3,10 +3,24 @@ package jp.seminar.board.vo;
 public class ReplyVO {
 	private int user_idx;
 	private String reply_content;
+	private String reply_write_date;
 	private String reply_state;
 	private int board_idx;
 	private String f_type;
+	private String user_name;
 	
+	public String getUser_name() {
+		return user_name;
+	}
+	public void setUser_name(String user_name) {
+		this.user_name = user_name;
+	}
+	public String getReply_write_date() {
+		return reply_write_date;
+	}
+	public void setReply_write_date(String reply_write_date) {
+		this.reply_write_date = reply_write_date;
+	}
 	public int getUser_idx() {
 		return user_idx;
 	}

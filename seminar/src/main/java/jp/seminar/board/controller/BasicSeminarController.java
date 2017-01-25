@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import jp.seminar.board.service.BoardService;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
+import jp.seminar.board.vo.Board_UserVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.BoardPaging;
@@ -43,10 +44,7 @@ public class BasicSeminarController {
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar.do")
-	public ModelAndView getBasicSeminarBoardList(
-			String pageNumber, String pageSize,
-			HttpServletResponse response, HttpServletRequest request
-			) throws Exception{
+	public ModelAndView getBasicSeminarBoardList(String pageNumber, String pageSize,HttpServletResponse response, HttpServletRequest request) throws Exception{
 		
 		String url = request.getRequestURL().toString();
 		int totalCount = boardService.getTotalCount(); 
@@ -56,7 +54,7 @@ public class BasicSeminarController {
 		firstRowpageSize.setPageSize(boardPaging.getPageSize());
 		
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
-		List<Map<String, Object>> boardList = boardService.getBoardList(firstRowpageSize);
+		List<BoardVO> boardList = boardService.getBoardList(firstRowpageSize);
 		
 		mv.addObject("boardList", boardList);
 		mv.addObject("paging", boardPaging);
@@ -66,23 +64,23 @@ public class BasicSeminarController {
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar/detail.do", method=RequestMethod.GET)
-	public ModelAndView getBasicSeminarBoardDetail(int board_idx, String f_type) throws Exception{
+	public ModelAndView getBasicSeminarBoardDetail(int board_idx, String f_type, HttpSession session) throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar_detail");
-		List<Map<String, Object>> list = boardService.getBoardDetail(board_idx);
+
+		UserVO user = (UserVO) session.getAttribute("user");
 		
-		mv.addObject("list", list);
+		BoardVO detail = new BoardVO();
+		detail = boardService.getBoardDetail(board_idx);
+		mv.addObject("detail", detail);
+		
+		Board_UserVO uservo = boardService.getCertainUser(detail.getUser_idx());
+		mv.addObject("user", uservo);
 		
 		ReplyVO reply = new ReplyVO();
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
-		List<Map<String, Object>> replyList = boardService.getReply(reply);
+		List<ReplyVO> replyList = boardService.getReply(reply);
 		mv.addObject("replyList", replyList);
-		
-		BoardVO board = new BoardVO();
-		int board_count = (int)list.get(0).get("board_count");
-		board.setBoard_count(++board_count);
-		board.setBoard_idx(board_idx);
-		boardService.updateBoardCount(board);
 		
 		return mv;
 	}
@@ -102,8 +100,9 @@ public class BasicSeminarController {
 	@RequestMapping(value = "/seminar/update.do", method=RequestMethod.GET)
 	public ModelAndView updateBasicSeminarBoardDetail(int board_idx) throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar_update");
-		List<Map<String, Object>> list = boardService.getBoardDetail(board_idx);
-		mv.addObject("list", list);
+		
+		/*List<Map<String, Object>> list = boardService.getBoardDetail(board_idx);
+		mv.addObject("list", list);*/
 				
 		return mv;
 	}
@@ -113,8 +112,8 @@ public class BasicSeminarController {
 		public String updateProcBasicSeminarBoardDetail(HttpServletRequest request) throws Exception{
 		
 		BoardVO board = new BoardVO();
-		board.setSubject((String)request.getParameter("subject"));
-		board.setContent((String)request.getParameter("content"));
+		board.setBoard_subject((String)request.getParameter("subject"));
+		board.setBoard_content((String)request.getParameter("content"));
 		board.setBoard_idx(Integer.parseInt(request.getParameter("board_idx")));
 		
 		boardService.updateBoardDetail(board);
@@ -143,8 +142,8 @@ public class BasicSeminarController {
 	public String insertProcBasicSeminarBoard(HttpServletRequest request, HttpSession session) throws Exception{
 		BoardVO board = new BoardVO();
 		UserVO user = (UserVO) session.getAttribute("user");
-		board.setSubject((String)request.getParameter("subject"));
-		board.setContent((String)request.getParameter("content"));
+		board.setBoard_subject((String)request.getParameter("subject"));
+		board.setBoard_content((String)request.getParameter("content"));
 		board.setUser_idx(user.getUser_idx());
 		boardService.insertBoard(board);
 		
