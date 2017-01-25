@@ -62,6 +62,7 @@ public class BasicSeminarServiceImpl implements BoardService {
 				map.put("board_reg_date", detail.get(0).get("board_reg_date"));
 				map.put("board_update_date", detail.get(0).get("board_update_date"));
 				map.put("board_count", detail.get(0).get("board_count"));
+				map.put("board_content", detail.get(0).get("board_content"));
 				detail.set(0, map);
 			}
 		}
