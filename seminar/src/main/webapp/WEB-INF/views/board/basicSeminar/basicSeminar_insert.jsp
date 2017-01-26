@@ -37,12 +37,6 @@
 			    </div>
 			    <hr>
 			    <div class="form-group">
-			    	<label for="inputWriter" class="col-sm-1 control-label">작성자</label>
-			    	<div class="col-sm-11">
-			    		<input class="form-control" type="text" id="user_idx" name="user_idx" value="2">
-			    	</div>
-			    </div>
-			    <div class="form-group">
 			    	<label for="inputFile" class="col-sm-1 control-label">첨부파일</label>
 			    	<div class="col-sm-11">
 			    		<div id="fileuploader">Upload</div>
@@ -83,11 +77,17 @@
 		oAppRef : smartEditor,
 		elPlaceHolder : "content",
 		sSkinURI : "/resources/se2/SmartEditor2Skin.html",
-		fCreator : "createSEditor2"
+		htParams : {
+            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseToolbar : true,            
+            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseVerticalResizer : true,    
+            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+            bUseModeChanger : true,
+        }
 	});
 	$(document).ready(function() {
 		$('#btn_save').on("click", function() {
-			smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 			if(frm.subject.value == "") {
 				alert("제목을 입력해주세요.");
 				return;
@@ -96,6 +96,7 @@
 				alert("내용을 입력해주세요.");
 				return;
 			}
+			smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 			frm.submit();
 		});
 	});
