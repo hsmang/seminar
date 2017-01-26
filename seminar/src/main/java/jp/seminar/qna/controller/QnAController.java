@@ -1,4 +1,4 @@
-package jp.seminar.introduce.controller;
+package jp.seminar.qna.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -23,18 +23,18 @@ import jp.seminar.user.service.UserService;
  * Handles requests for the application home page.
  */
 @Controller
-public class IntroduceController {
+public class QnAController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(IntroduceController.class);
+	private static final Logger logger = LoggerFactory.getLogger(QnAController.class);
 	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/introduce.do", method = RequestMethod.GET)
-	public ModelAndView introduce() {
+	@RequestMapping(value = "/qna.do", method = RequestMethod.GET)
+	public ModelAndView qna() {
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("introduce/introduce");
+		mav.setViewName("qna/qna");
 		return mav ;
 	}
 	
