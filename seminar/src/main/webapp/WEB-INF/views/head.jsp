@@ -29,9 +29,15 @@
     
     <link href="http://hayageek.github.io/jQuery-Upload-File/4.0.10/uploadfile.css" rel="stylesheet">
 	<link rel="stylesheet" href="/resources/dropzone/dropzone.css">
+	
+	<link rel="stylesheet" href="/resources/assets/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/resources/assets/css/form-elements.css">
+    <link rel="stylesheet" href="/resources/assets/css/style.css">
     
     <script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="/resources/modern-business/js/bootstrap.min.js"></script>
-    
+    <script src="/resources/assets/js/jquery.backstretch.min.js"></script>
+    <script src="/resources/assets/js/scripts.js"></script>
+        
 <title>Insert title here</title>
 </head>

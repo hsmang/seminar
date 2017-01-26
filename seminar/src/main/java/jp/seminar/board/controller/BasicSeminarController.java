@@ -265,7 +265,7 @@ public class BasicSeminarController {
 	         //파일 기본경로
 	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 	         //파일 기본경로 _ 상세경로
-	         String filePath = dftFilePath + "resource" + File.separator + "photo_upload" + File.separator;
+	         String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
 	         File file = new File(filePath);
 	         if(!file.exists()) {
 	            file.mkdirs();
@@ -302,7 +302,7 @@ public class BasicSeminarController {
 	         sFileInfo += "&bNewLine=true";
 	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	         sFileInfo += "&sFileName="+ filename;;
-	         sFileInfo += "&sFileURL="+"/resource/photo_upload/"+realFileNm;
+	         sFileInfo += "&sFileURL="+"/resources/photo_upload/"+realFileNm;
 	         System.out.println(sFileInfo);
 	         PrintWriter print = response.getWriter();
 	         print.print(sFileInfo);
