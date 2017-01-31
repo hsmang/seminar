@@ -89,8 +89,8 @@
     		)
     	VALUES
     		(
-    			#{subject},
-    			#{content},
+    			#{board_subject},
+    			#{board_content},
     			#{user_idx},
     			NOW(),
     			0

@@ -74,11 +74,23 @@
             bUseModeChanger : true,
         }
 	});
-	
+	var a;
 	$(document).ready(function() {
 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("div#file-dropzone", {
-			url: "/seminar/fileUpload.do"
+			url: "/seminar/fileUpload.do",
+			init: function(){
+				this.on('complete',function(result){
+					alert(result +";;"); 
+					a = result;
+				})
+				/* 
+				this.on('drop', function(file) {
+			          // 파일이 드롭되면Upload Progress 나와줘야 된다.
+			          $("#file-dropzone").hide();
+			          $(".upload-progress").show();
+			      }); */
+			}
 		});
 		
 		

@@ -181,6 +181,7 @@ public class BasicSeminarController {
 					originalFileName = multipartFile.getOriginalFilename();
 					originalFileExtension = today + originalFileName.substring(originalFileName.lastIndexOf("."));
 					file = new File(filePath + originalFileExtension);
+					System.out.println(file.getAbsolutePath());
 					multipartFile.transferTo(file);
 				}
 			}
