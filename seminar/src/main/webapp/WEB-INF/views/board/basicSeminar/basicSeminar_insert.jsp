@@ -39,25 +39,14 @@
 			    <div class="form-group">
 			    	<label for="inputFile" class="col-sm-1 control-label">첨부파일</label>
 			    	<div class="col-sm-11">
-			    		<div id="fileuploader">Upload</div>
-							<script>
-								$(document).ready(function() {
-									$("#fileuploader").uploadFile({
-										url : "/seminar/fileUpload.do",
-										fileName : "myfile",
-										sequential : true,
-										sequentialCount : 1
-									});
-			
-								});
-							</script>
+						<div class="dropzone" id="file-dropzone"></div>
 					</div>
 				</div>
 				<hr>
 				<div class="form-group">
 			    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 			    	<div class="col-sm-11">
-			    		<textarea name="content" id="content" style="width:100%"></textarea>
+			    		<textarea name="content" id="content" style="width:100%; height:500px;"></textarea>
 					</div>
 			    </div>
 			    <hr>
@@ -66,12 +55,11 @@
 			    <input class="btn btn-default" type="button" id="btn_save" value="저장">
 			    
 			</form>
-			
-			<form action="/seminar/fileUpload.do" class="dropzone"></form>
 		</div>
 	</div>
 
 <script type="text/javascript">
+
 	var smartEditor = [];
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef : smartEditor,
@@ -86,13 +74,21 @@
             bUseModeChanger : true,
         }
 	});
+	
 	$(document).ready(function() {
-		$('#btn_save').on("click", function() {
+		Dropzone.autoDiscover = false;
+		var myDropzone = new Dropzone("div#file-dropzone", {
+			url: "/seminar/fileUpload.do"
+			
+		});
+		
+		
+ 		$('#btn_save').on("click", function() {
 			if(frm.subject.value == "") {
 				alert("제목을 입력해주세요.");
 				return;
 			}
-			if(frm.content.value == "") {
+			if(smartEditor.getById["content"] == "") {
 				alert("내용을 입력해주세요.");
 				return;
 			}

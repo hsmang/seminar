@@ -8,10 +8,9 @@ import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -20,6 +19,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,6 +28,7 @@ import jp.seminar.board.service.BoardService;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.Board_UserVO;
+import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.BoardPaging;
@@ -153,48 +154,45 @@ public class BasicSeminarController {
 ///////////////////////////////////////////////////////////////////////////////
 	
 	@RequestMapping(value="/seminar/fileUpload.do")
-	public void fileUpload_jquery_fileUpload(HttpServletRequest request) throws Exception  {
-		String filePath = "C:/Users/wjg/git/seminar/seminar/src/main/resources/files/";
+	public void fileUpload(HttpServletRequest request, FileVO filevo) throws Exception  {
+		
+		try{
+			String dftFilePath = request.getSession().getServletContext().getRealPath("/"); 
+			String filePath = dftFilePath + "/resources/file_upload/";
+		
+			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
+			Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 
-		MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-		Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
+			MultipartFile multipartFile = null;
+			String originalFileName = null;
+			String originalFileExtension = null;
 
-		MultipartFile multipartFile = null;
-		String originalFileName = null;
-		@SuppressWarnings("unused")
-		String originalFileExtension = null;
-
-		File file = new File(filePath);
-		if (file.exists() == false) {
-			file.mkdirs();
-		}
-
-		while (iterator.hasNext()) {
-			multipartFile = multipartHttpServletRequest.getFile(iterator.next());
-			if (multipartFile.isEmpty() == false) {
-				originalFileName = multipartFile.getOriginalFilename();
-				originalFileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
-				
-				file = new File(filePath + originalFileName);
-				multipartFile.transferTo(file);
+			File file = new File(filePath);
+			if (file.exists() == false) {
+				file.mkdirs();
 			}
+			while (iterator.hasNext()) {
+				multipartFile = multipartHttpServletRequest.getFile(iterator.next());
+				if (multipartFile.isEmpty() == false) {
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss"); 
+					String today= formatter.format(new java.util.Date());
+					originalFileName = multipartFile.getOriginalFilename();
+					originalFileExtension = today + originalFileName.substring(originalFileName.lastIndexOf("."));
+					file = new File(filePath + originalFileExtension);
+					multipartFile.transferTo(file);
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
-		
-	}
-	
-	@RequestMapping(value="/seminar/fileUpload_dropzone.do")
-	public String fileUpload_jquery_fileUpload_dropzone(HttpServletRequest request)  {
-		
-		return null;
+//		return "/seminar/insert.do";
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////
 	@RequestMapping("/seminar/photoUpload.do") 
 	public String singlePhotoUpload(HttpServletRequest request, HttpServletResponse response, PhotoVO editor){ 
 		String return1=request.getParameter("callback"); 
-		System.out.println("return 1 : " + return1);
 		String return2="?callback_func=" + request.getParameter("callback_func");
-		System.out.println("return 2 : " + return2);
 		String return3=""; 
 		String name = ""; 
 		
@@ -218,7 +216,7 @@ public class BasicSeminarController {
 					//파일 기본경로 
 					String dftFilePath = request.getSession().getServletContext().getRealPath("/"); 
 					//파일 기본경로 _ 상세경로
-					String filePath = dftFilePath + "resources"+ File.separator + "editor" + File.separator +"upload" + File.separator; 
+					String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
 					File file = new File(filePath); 
 					
 					if(!file.exists()) { 
@@ -226,16 +224,22 @@ public class BasicSeminarController {
 					} 
 					
 					String realFileNm = ""; 
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMdd"); 
+					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss"); 
 					String today= formatter.format(new java.util.Date()); 
-					realFileNm = today+UUID.randomUUID().toString() + name.substring(name.lastIndexOf("."));
+					realFileNm = today + name.substring(name.lastIndexOf("."));
 					String rlFileNm = filePath + realFileNm; 
 					///////////////// 서버에 파일쓰기 ///////////////// 
+					BoardImageVO image = new BoardImageVO();
+					image.setF_img_name(request.getHeader("file-name"));
+					image.setF_img_path(rlFileNm);
+					image.setF_type("SE");
+					boardService.insertBoardImage(image);
+					
 					editor.getFiledata().transferTo(new File(rlFileNm)); 
 					///////////////// 서버에 파일쓰기 ///////////////// 
 					return3 += "&bNewLine=true"; 
 					return3 += "&sFileName="+ name; 
-					return3 += "&sFileURL=/resources/editor/upload/"+realFileNm; 
+					return3 += "&sFileURL=/resources/photo_upload/"+realFileNm; 
 					} 
 				}
 			else { 
@@ -244,7 +248,6 @@ public class BasicSeminarController {
 		}catch (Exception e) { 
 			e.printStackTrace();
 		} 
-		System.out.println("return : " + return1+return2+return3);
 		return "redirect:"+return1+return2+return3; 
 	}
 	
@@ -265,7 +268,7 @@ public class BasicSeminarController {
 	         //파일 기본경로
 	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 	         //파일 기본경로 _ 상세경로
-	         String filePath = dftFilePath + "resource" + File.separator + "photo_upload" + File.separator;
+	         String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
 	         File file = new File(filePath);
 	         if(!file.exists()) {
 	            file.mkdirs();
@@ -302,7 +305,7 @@ public class BasicSeminarController {
 	         sFileInfo += "&bNewLine=true";
 	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	         sFileInfo += "&sFileName="+ filename;;
-	         sFileInfo += "&sFileURL="+"/resource/photo_upload/"+realFileNm;
+	         sFileInfo += "&sFileURL="+"/resources/photo_upload/"+realFileNm;
 	         System.out.println(sFileInfo);
 	         PrintWriter print = response.getWriter();
 	         print.print(sFileInfo);
@@ -313,5 +316,6 @@ public class BasicSeminarController {
 	        e.printStackTrace();
 	    }
 	}
-}
 
+
+}
