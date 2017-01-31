@@ -163,6 +163,7 @@ public class BasicSeminarController {
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 
+			
 			MultipartFile multipartFile = null;
 			String originalFileName = null;
 			String originalFileExtension = null;

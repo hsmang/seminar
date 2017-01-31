@@ -79,7 +79,6 @@
 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("div#file-dropzone", {
 			url: "/seminar/fileUpload.do"
-			
 		});
 		
 		
