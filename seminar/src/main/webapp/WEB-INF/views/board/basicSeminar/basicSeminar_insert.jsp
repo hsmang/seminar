@@ -84,7 +84,7 @@
 		
  		$('#btn_save').on("click", function() {
 			if(frm.subject.value == "") {
-				alert("제목을 입력해주세요.");
+				alert("제목을 입력해주세요123");
 				return;
 			}
 			if(smartEditor.getById["content"] == "") {

@@ -172,6 +172,7 @@ public class BasicSeminarController {
 			if (file.exists() == false) {
 				file.mkdirs();
 			}
+			System.out.println("@@@@@@@@@@@@@@@@@");
 			while (iterator.hasNext()) {
 				multipartFile = multipartHttpServletRequest.getFile(iterator.next());
 				if (multipartFile.isEmpty() == false) {
