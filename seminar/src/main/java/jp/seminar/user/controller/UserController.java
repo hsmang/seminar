@@ -2,9 +2,12 @@ package jp.seminar.user.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -16,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import jp.seminar.board.vo.BoardVO;
+import jp.seminar.paging.Paging;
+import jp.seminar.paging.FirstRowPageSize;
 import jp.seminar.user.model.UserVO;
 import jp.seminar.user.service.UserService;
 
@@ -75,6 +81,51 @@ public class UserController {
 		return mav ;
 	}
 	
+	@RequestMapping(value = "/info.do", method = RequestMethod.GET)
+	public ModelAndView user_info(HttpSession session) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		ModelAndView mav = new ModelAndView();
+		if(user == null){
+			mav.setViewName("redirect:/index.do");
+		}else{
+			mav.addObject("user", user);
+			mav.setViewName("/user/info");
+		}
+		
+		return mav ;
+	}
 	
+	@RequestMapping(value = "/update_proc.do", method = RequestMethod.POST)
+	public ModelAndView updateProc(HttpSession session, UserVO updateUser) {
+		UserVO user = (UserVO) session.getAttribute("user");
+		updateUser.setUser_idx(user.getUser_idx());
+		int result = userService.userUpdateProc(updateUser);
+		session.setAttribute("user", updateUser);
+		System.out.println("result : " + result);
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("redirect:/index.do");
+		
+		return mav ;
+	}
+	
+	@RequestMapping(value = "/userList.do")
+	public ModelAndView getUserList(String order, String pageNumber, String pageSize,HttpServletResponse response, HttpServletRequest request) throws Exception{
+		
+		String url = request.getRequestURL().toString();
+		int totalCount = userService.getTotalCount(order);
+		System.out.println(totalCount);
+		Paging boardPaging = new Paging(pageNumber, pageSize , totalCount, url); // 페이징처리
+		FirstRowPageSize  firstRowpageSize = new FirstRowPageSize(); // db limit 설정하기
+		firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
+		firstRowpageSize.setPageSize(boardPaging.getPageSize());
+		
+		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
+		/*List<UserVO> boardList = userService.getUserList(firstRowpageSize);
+		
+		mv.addObject("boardList", boardList);*/
+		mv.addObject("paging", boardPaging);
+		
+		return mv;
+	}
 	
 }

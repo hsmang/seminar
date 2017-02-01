@@ -51,4 +51,21 @@
     		user_email = #{user_email}
     </select>
     
+    <update id="userUpdateProc" parameterType="jp.seminar.user.model.UserVO">
+		UPDATE `seminar`.`user_info` 
+		SET 
+			`user_no` = #{user_no}, 
+			`user_pw` = #{user_pw}, 
+			`user_name` = #{user_name}, 
+			`user_hp` = #{user_hp},
+			`update_date` = now() 
+		WHERE `user_info`.`user_idx` = #{user_idx}; 
+    </update>
+    <select id="getTotalCount" parameterType="int" resultType="int">
+    	SELECT
+    		count(*)
+    	FROM user_info
+    	WHERE user_role &lt;= #{role}
+    </select>
+    
 </mapper>

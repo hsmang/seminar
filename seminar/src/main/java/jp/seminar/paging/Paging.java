@@ -1,7 +1,7 @@
 package jp.seminar.paging;
 
 
-public class BoardPaging {
+public class Paging {
 	private int totalCount = 0 ; 
 	private int totalPage = 0 ; 
 	
@@ -18,7 +18,7 @@ public class BoardPaging {
 	private String pagingHtml = "";
 	private String pagingStatus = ""; 
 	
-	public BoardPaging(String _pageNumber, String _pageSize, int totalCount, String url) {		
+	public Paging(String _pageNumber, String _pageSize, int totalCount, String url) {		
 		this.pageNumber = _pageNumber == null ? 1 : Integer.parseInt( _pageNumber ) ;
 		this.pageSize = _pageSize == null ? 10 : Integer.parseInt( _pageSize ) ;
 		this.totalCount = totalCount ;
@@ -41,7 +41,7 @@ public class BoardPaging {
 		
 	}
 	
-	public BoardPaging(String _pageNumber, String _pageSize, int totalCount, String url, String search) {		
+	public Paging(String _pageNumber, String _pageSize, int totalCount, String url, String search) {		
 		
 		this.pageNumber = _pageNumber == null ? 1 : Integer.parseInt( _pageNumber ) ;
 		this.pageSize = _pageSize == null ? 10 : Integer.parseInt( _pageSize ) ;

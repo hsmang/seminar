@@ -14,7 +14,6 @@ public class UserDaoImpl implements UserDao{
 
 	@Override
 	public int count() {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("user.count");
 	}
 
@@ -46,5 +45,33 @@ public class UserDaoImpl implements UserDao{
 	public UserVO getUserInfo(UserVO user) {
 		
 		return sqlSession.selectOne("user.getUserInfoByEmail", user);
+	}
+
+	@Override
+	public int userUpdateProc(UserVO user) {
+		int result = 0;
+		try {
+			sqlSession.update("user.userUpdateProc", user);
+			result = 1;
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = 0;
+		}
+		return result;
+	}
+
+	@Override
+	public int getTotalCount(String order) {
+		int role = 0 ;
+		switch(order){
+		case "all" :
+			role = 4;
+			break;
+		case "manager" :
+			role = 2;
+			break;
+		}
+		
+		return sqlSession.selectOne("user.getTotalCount",role);
 	}
 }

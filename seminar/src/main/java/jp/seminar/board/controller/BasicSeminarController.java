@@ -31,7 +31,7 @@ import jp.seminar.board.vo.Board_UserVO;
 import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
-import jp.seminar.paging.BoardPaging;
+import jp.seminar.paging.Paging;
 import jp.seminar.paging.FirstRowPageSize;
 import jp.seminar.user.model.UserVO;
 
@@ -49,7 +49,7 @@ public class BasicSeminarController {
 		
 		String url = request.getRequestURL().toString();
 		int totalCount = boardService.getTotalCount(); 
-		BoardPaging boardPaging = new BoardPaging(pageNumber, pageSize , totalCount, url); // 페이징처리
+		Paging boardPaging = new Paging(pageNumber, pageSize , totalCount, url); // 페이징처리
 		FirstRowPageSize  firstRowpageSize = new FirstRowPageSize(); // db limit 설정하기
 		firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
 		firstRowpageSize.setPageSize(boardPaging.getPageSize());
@@ -87,11 +87,11 @@ public class BasicSeminarController {
 	}
 	
 	@RequestMapping(value = "/seminar/insertReply.do")
-	public String insertBasicSeminarReply(HttpServletRequest request, int board_idx, String f_type) throws Exception{
-		ReplyVO reply = new ReplyVO();
+	public String insertBasicSeminarReply(ReplyVO reply ,HttpServletRequest request, int board_idx, String f_type) throws Exception{
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
-		reply.setReply_content((String)request.getParameter("reply_content"));
+		//reply.setReply_content((String)request.getParameter("reply_content")); ReplyVO 안에 추가되어있어서 이부분 삭제
+		
 		boardService.insertReply(reply);
 		
 		return "redirect:/seminar/detail.do?board_idx="+board_idx+"&f_type="+f_type;
@@ -109,13 +109,11 @@ public class BasicSeminarController {
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////
+	/*
+	 * boardVO 매개변수로 다 받음
+	 */
 	@RequestMapping(value = "/seminar/updateProc.do")
-		public String updateProcBasicSeminarBoardDetail(HttpServletRequest request) throws Exception{
-		
-		BoardVO board = new BoardVO();
-		board.setBoard_subject((String)request.getParameter("subject"));
-		board.setBoard_content((String)request.getParameter("content"));
-		board.setBoard_idx(Integer.parseInt(request.getParameter("board_idx")));
+		public String updateProcBasicSeminarBoardDetail(BoardVO board, HttpServletRequest request) throws Exception{
 		
 		boardService.updateBoardDetail(board);
 		
@@ -140,11 +138,8 @@ public class BasicSeminarController {
 ///////////////////////////////////////////////////////////////////////////////
 	
 	@RequestMapping(value = "/seminar/insertProc.do")
-	public String insertProcBasicSeminarBoard(HttpServletRequest request, HttpSession session) throws Exception{
+	public String insertProcBasicSeminarBoard(BoardVO board, HttpServletRequest request, HttpSession session) throws Exception{
 		UserVO user = (UserVO) session.getAttribute("user");
-		BoardVO board = new BoardVO();
-		board.setBoard_subject((String)request.getParameter("subject"));
-		board.setBoard_content((String)request.getParameter("content"));
 		board.setUser_idx(user.getUser_idx());
 		boardService.insertBoard(board);
 		

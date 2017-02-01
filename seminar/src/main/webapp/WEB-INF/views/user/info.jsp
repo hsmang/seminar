@@ -7,13 +7,13 @@
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Sign us
-                    <small>회원가입</small>
+                <h1 class="page-header">User Info
+                    <small>회원정보</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="index.html">Home</a>
                     </li>
-                    <li class="active">Sign us</li>
+                    <li class="active">User Info</li>
                 </ol>
             </div>
         </div>
@@ -22,12 +22,12 @@
         <!-- Join Form -->
         <div class="row">
             <div class="col-md-8">
-                <h3>Join Form</h3>
-                <form name="sentMessage" action="/user/join_proc.do" id="joinForm" method="post" novalidate>
+                <h3>User Information</h3>
+                <form name="sentMessage" action="/user/update_proc.do" id="joinForm" method="post" novalidate>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Email Address :</label>
-                            <input type="email" class="form-control" id="email" name="user_email" required data-validation-required-message="Please enter your email.">
+                            <input type="email" class="form-control" readonly="readonly" id="email" name="user_email" required data-validation-required-message="Please enter your email." value="${user.user_email }">
                             <p class="help-block"></p>
                         </div>
                     </div>
@@ -46,25 +46,25 @@
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Name :</label>
-                            <input type="text" class="form-control" id="name" name="user_name" required data-validation-required-message="Please enter your email.">
+                            <input type="text" class="form-control" id="name" name="user_name" required data-validation-required-message="Please enter your email." value="${user.user_name }">
                             <p class="help-block"></p>
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Student no :</label>
-                            <input type="text" class="form-control" id="no" name="user_no" required data-validation-required-message="Please enter your student no.">
+                            <input type="text" class="form-control" id="no" name="user_no" required data-validation-required-message="Please enter your student no." value="${user.user_no }">
                         </div>
                     </div>
                     <div class="control-group form-group">
                         <div class="controls">
                             <label>Phone no :</label>
-                            <input type="number" class="form-control" id="hp" name="user_hp" required data-validation-required-message="Please enter your hp number.">
+                            <input type="number" class="form-control" id="hp" name="user_hp" required data-validation-required-message="Please enter your hp number." value="${user.user_hp }">
                         </div>
                     </div>
                     <div id="success"></div>
                     <!-- For success/fail messages -->
-                    <button type="submit" class="btn btn-primary">Join</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form>
             </div>
 

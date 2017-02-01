@@ -67,7 +67,7 @@
                     		String user_name = user.getUser_name();
                     %>
                     <div class="top-big-link">
-                            	<a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-login"><%=user_name %>님 환영합니다 !</a>
+                            	<a class="btn btn-link-1 loging" href="#" data-modal-id="modal-login"><%=user_name %>님 환영합니다 !</a>
                             </div>
                     
                             <%}else { %>
@@ -109,7 +109,7 @@
 	                        </div>
 	                        <button type="submit" class="btn">Sign in!</button>
 	                    </form>
-	                    
+	                    <button type="button" id="join_btn" class="btn">Join !</button>
         			</div>
         			
         		</div>

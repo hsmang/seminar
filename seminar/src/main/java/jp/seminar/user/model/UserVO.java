@@ -3,7 +3,7 @@ package jp.seminar.user.model;
 public class UserVO {
 	
 	private int user_idx;
-	private int user_no;
+	private String user_no;
 	private String user_pw;
 	private String user_name;
 	private String user_email;
@@ -20,10 +20,10 @@ public class UserVO {
 	public void setUser_idx(int user_idx) {
 		this.user_idx = user_idx;
 	}
-	public int getUser_no() {
+	public String getUser_no() {
 		return user_no;
 	}
-	public void setUser_no(int user_no) {
+	public void setUser_no(String user_no) {
 		this.user_no = user_no;
 	}
 	public String getUser_pw() {

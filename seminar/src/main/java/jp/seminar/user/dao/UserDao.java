@@ -10,4 +10,6 @@ public interface UserDao {
 	int userJoinProc(UserVO user);
 	int userLoginProc(UserVO user);
 	UserVO getUserInfo(UserVO user);
+	int userUpdateProc(UserVO user);
+	int getTotalCount(String order);
 }

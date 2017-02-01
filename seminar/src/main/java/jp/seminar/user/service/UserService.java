@@ -10,4 +10,6 @@ public interface UserService {
 	
 	int userJoinProc(UserVO user);
 	int userLoginProc(UserVO user);
+	int userUpdateProc(UserVO user);
+	int getTotalCount(String order);
 }

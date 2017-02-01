@@ -44,4 +44,19 @@ public class UserServiceImpl implements UserService{
 		return userDao.getUserInfo(user);
 	}
 
+	@Override
+	public int userUpdateProc(UserVO user) {
+		int count = userDao.userUpdateProc(user);
+		if(count != 1){
+			return 0;
+		}else{
+			return 1;
+		}
+	}
+
+	@Override
+	public int getTotalCount(String order) {
+		return userDao.getTotalCount(order);
+	}
+
 }
