@@ -32,7 +32,7 @@
 				<div class="form-group">
 					<label for="inputSubject" class="col-sm-1 control-label">제목</label>
 			    	<div class="col-sm-11">
-			    		<input class="form-control" type="text" id="subject" name="subject">
+			    		<input class="form-control" type="text" id="subject" name="board_subject">
 			    	</div>
 			    </div>
 			    <hr>
@@ -46,7 +46,7 @@
 				<div class="form-group">
 			    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 			    	<div class="col-sm-11">
-			    		<textarea name="content" id="content" style="width:100%; height:500px;"></textarea>
+			    		<textarea name="board_content" id="content" style="width:100%; height:500px;"></textarea>
 					</div>
 			    </div>
 			    <hr>

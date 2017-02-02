@@ -22,14 +22,11 @@
 	<form id="frm" method="post" class="form-horizontal">
 		<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 		<hr>
-		<c:choose>
-			<c:when test="${fn:length(list) > 0}">
-				<c:forEach items="${list }" var="detail">
-				<input type="hidden" id="board_idx" name="board_idx" value="${detail.board_idx }">
+				<input type="hidden" id="board_idx" name="board_idx" value="${board.board_idx }">
 					<div class="form-group">
 						<label for="inputSubject" class="col-sm-1 control-label">제목</label>
 				    	<div class="col-sm-11">
-				    		<input class="form-control" type="text" id="subject" name="subject" value="${detail.board_subject }">
+				    		<input class="form-control" type="text" id="subject" name="subject" value="${board.board_subject }">
 				    	</div>
 				    </div>
 				    <hr>
@@ -42,15 +39,12 @@
 				    <div class="form-group">
 				    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 				    	<div class="col-sm-11">
-				    		<textarea name="content" id="content" style="width:100%">${detail.board_content }</textarea>
+				    		<textarea name="content" id="content" style="width:100%">${board.board_content }</textarea>
 				    	</div>
 				    </div>
 				    <hr>
 					<input class="btn btn-default" type="button" id="btn_save" value="저장"> 
 					<input class="btn btn-default" type="button" value="이전" onclick="javascript:history.back(-1);">
-				</c:forEach>
-			</c:when>
-		</c:choose>
 	</form>
 
 	<script type="text/javascript">

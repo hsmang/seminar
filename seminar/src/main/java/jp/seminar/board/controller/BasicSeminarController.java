@@ -102,8 +102,8 @@ public class BasicSeminarController {
 	public ModelAndView updateBasicSeminarBoardDetail(int board_idx) throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar_update");
 		
-		/*List<Map<String, Object>> list = boardService.getBoardDetail(board_idx);
-		mv.addObject("list", list);*/
+		BoardVO board = boardService.getBoardDetail(board_idx);
+		mv.addObject("board", board);
 				
 		return mv;
 	}

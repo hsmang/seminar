@@ -109,7 +109,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/userList.do")
-	public ModelAndView getUserList(String order, String pageNumber, String pageSize,HttpServletResponse response, HttpServletRequest request) throws Exception{
+	public ModelAndView getUserList(String order, String pageNumber, String pageSize,HttpServletResponse response, HttpServletRequest request, HttpSession session) throws Exception{
+		UserVO user = (UserVO) session.getAttribute("user");
+		ModelAndView mav = new ModelAndView("/user/userList");
+		if(user == null){
+			mav.setViewName("redirect:/index.do");
+			return mav;
+		}else{
+			if(user.getUser_role() != 0){
+				mav.setViewName("redirect:/index.do");
+				return mav;
+			}
+		}
 		
 		String url = request.getRequestURL().toString();
 		int totalCount = userService.getTotalCount(order);
@@ -119,13 +130,35 @@ public class UserController {
 		firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
 		firstRowpageSize.setPageSize(boardPaging.getPageSize());
 		
-		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
-		/*List<UserVO> boardList = userService.getUserList(firstRowpageSize);
 		
-		mv.addObject("boardList", boardList);*/
-		mv.addObject("paging", boardPaging);
+		List<UserVO> userList = userService.getUserList(firstRowpageSize, order);
 		
-		return mv;
+		mav.addObject("userList", userList);
+		mav.addObject("paging", boardPaging);
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/role_change.do", method = RequestMethod.POST)
+	public ModelAndView roleChangeProc(HttpServletRequest request, HttpSession session, UserVO updateUser) {
+		ModelAndView mav = new ModelAndView();
+		UserVO user = (UserVO) session.getAttribute("user");
+		if(user == null){
+			mav.setViewName("redirect:/index.do");
+			return mav;
+		}else{
+			if(user.getUser_role() != 0){
+				mav.setViewName("redirect:/index.do");
+				return mav;
+			}
+		}
+		String url = request.getRequestURL().toString();
+		String old_url = request.getHeader("REFERER");
+		int result = userService.userRoleProc(updateUser);
+		
+		mav.setViewName("jsonView");
+		mav.addObject("result",true);
+		return mav ;
 	}
 	
 }

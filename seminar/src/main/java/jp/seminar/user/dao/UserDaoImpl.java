@@ -1,9 +1,13 @@
 package jp.seminar.user.dao;
 
+import java.util.HashMap;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import jp.seminar.paging.FirstRowPageSize;
 import jp.seminar.user.model.UserVO;
 
 @Repository("userDao")
@@ -68,10 +72,42 @@ public class UserDaoImpl implements UserDao{
 			role = 4;
 			break;
 		case "manager" :
-			role = 2;
+			role = 1;
+			break;
+		case "admin" :
+			role = 0;
 			break;
 		}
 		
 		return sqlSession.selectOne("user.getTotalCount",role);
+	}
+
+	@Override
+	public List<UserVO> getUserList(FirstRowPageSize firstRowpageSize, String order) {
+		int role = 0;
+		switch(order){
+		case "all" :
+			role = 4;
+			break;
+		case "manager" :
+			role = 1;
+			break;
+		case "admin" :
+			role = 0;
+			break;
+		case "member" :
+			role = 2;
+			break;
+		}
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("firstRow", firstRowpageSize.getFirstRow());
+		map.put("pageSize", firstRowpageSize.getPageSize());
+		map.put("role", role);
+		return sqlSession.selectList("user.getUserList", map);
+	}
+
+	@Override
+	public int userRoleProc(UserVO user) {
+		return sqlSession.update("user.userRoleChange", user);
 	}
 }

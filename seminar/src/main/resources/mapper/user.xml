@@ -68,4 +68,24 @@
     	WHERE user_role &lt;= #{role}
     </select>
     
+    <select id="getUserList" parameterType="hashmap" resultType="jp.seminar.user.model.UserVO">
+    	SELECT 
+    		`user_idx`,`user_no`,`user_email`,`user_name`,`user_hp`,`user_role`,`user_state`,`reg_date`,`update_date`
+    	FROM
+    		`user_info`
+    	<if test="role != 4">
+    		WHERE user_role = #{role}
+  		</if>
+    	
+    	ORDER BY user_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    
+    <update id="userRoleChange" parameterType="jp.seminar.user.model.UserVO">
+		UPDATE `seminar`.`user_info` 
+		SET 
+			`user_role` = #{user_role} 
+		WHERE `user_info`.`user_idx` = #{user_idx}; 
+    </update>
+    
 </mapper>

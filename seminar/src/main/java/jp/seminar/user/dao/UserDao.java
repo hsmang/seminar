@@ -1,5 +1,8 @@
 package jp.seminar.user.dao;
 
+import java.util.List;
+
+import jp.seminar.paging.FirstRowPageSize;
 import jp.seminar.user.model.UserVO;
 
 public interface UserDao {
@@ -12,4 +15,6 @@ public interface UserDao {
 	UserVO getUserInfo(UserVO user);
 	int userUpdateProc(UserVO user);
 	int getTotalCount(String order);
+	List<UserVO> getUserList(FirstRowPageSize firstRowpageSize, String order);
+	int userRoleProc(UserVO user);
 }

@@ -45,7 +45,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">세마니 자료용<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">세미나 자료용<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
                                 <a href="/productdev.do">상품개발</a>
@@ -61,21 +61,33 @@
                             </li>
                         </ul>
                     </li>
-                    <li>
+                    
                     <%
                     	if(user != null){
                     		String user_name = user.getUser_name();
                     %>
-                    <div class="top-big-link">
+                   		 <%if(user.getUser_role() == 0){ %>
+                   		 <li>
+                                <a href="/user/userList.do?order=all&pageNumber=1&pageSize=10">Members</a>
+                         </li>
+                            <%} %>
+                            <li>
+                    <!-- <div class="top-big-link"> -->
                             	<a class="btn btn-link-1 loging" href="#" data-modal-id="modal-login"><%=user_name %>님 환영합니다 !</a>
-                            </div>
+                            <!-- </div> -->
+                            </li>
+                            <li>
+                    <a href="/user/logout.do">Logout</a>
+                    </li>      
                     
-                            <%}else { %>
+                    <%}else { %>
+                    <li>
                     <div class="top-big-link">
                             	<a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-login">Sign in</a>
-                            </div>        
+                            </div>
+                            </li>        
                     <%} %>
-                    </li>
+                    
                     
                 </ul>
             </div>

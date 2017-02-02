@@ -1,9 +1,12 @@
 package jp.seminar.user.service;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import jp.seminar.paging.FirstRowPageSize;
 import jp.seminar.user.dao.UserDao;
 import jp.seminar.user.model.UserVO;
 
@@ -57,6 +60,16 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public int getTotalCount(String order) {
 		return userDao.getTotalCount(order);
+	}
+
+	@Override
+	public List<UserVO> getUserList(FirstRowPageSize firstRowpageSize, String order) {
+		return userDao.getUserList(firstRowpageSize, order);
+	}
+
+	@Override
+	public int userRoleProc(UserVO user) {
+		return userDao.userRoleProc(user);
 	}
 
 }
