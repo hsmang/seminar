@@ -65,7 +65,8 @@ $(function(){
 								<td>Member</td>
 							</c:if>
 							<td>
-								<select id="role_change" onchange="role_change(${user.user_idx } , this.value)">
+							<div class="btn-group">
+								<select class="form-control" id="role_change" onchange="role_change(${user.user_idx } , this.value)">
 							<c:if test="${user.user_role == 0 }">
 								<option selected value="0">Admin</option>
 								<option value="1">Manager</option>
@@ -82,6 +83,7 @@ $(function(){
 								<option selected value="2">Member</option>
 							</c:if>
 								</select>
+								</div>
 							</td>
 						</tr>
 					</c:forEach>
