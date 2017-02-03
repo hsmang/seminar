@@ -26,7 +26,8 @@
 	
 	<div class="row">
 		<div class="col-lg-12">
-			<form id="frm" action="/seminar/insertProc.do" method="post" class="form-horizontal">
+			
+			<form id="frm" action="/seminar/insertProc.do" method="post" class="form-horizontal" >
 				<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				<hr>
 				<div class="form-group">
@@ -35,14 +36,16 @@
 			    		<input class="form-control" type="text" id="subject" name="board_subject">
 			    	</div>
 			    </div>
-			    <hr>
-			    <div class="form-group">
+			   <hr>
+			   <div class="form-group">
 			    	<label for="inputFile" class="col-sm-1 control-label">첨부파일</label>
 			    	<div class="col-sm-11">
 						<div class="dropzone" id="file-dropzone"></div>
+						
 					</div>
 				</div>
 				<hr>
+				
 				<div class="form-group">
 			    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 			    	<div class="col-sm-11">
@@ -53,10 +56,10 @@
 			     
 			    <input class="btn btn-default" type="button" value="이전" onclick="javascript:history.back(-1);">
 			    <input class="btn btn-default" type="button" id="btn_save" value="저장">
-			    
 			</form>
 		</div>
-	</div>
+    </div>
+
 
 <script type="text/javascript">
 
@@ -79,20 +82,8 @@
 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("div#file-dropzone", {
 			url: "/seminar/fileUpload.do",
-			init: function(){
-				this.on('complete',function(result){
-					alert(result +";;"); 
-					a = result;
-				})
-				/* 
-				this.on('drop', function(file) {
-			          // 파일이 드롭되면Upload Progress 나와줘야 된다.
-			          $("#file-dropzone").hide();
-			          $(".upload-progress").show();
-			      }); */
-			}
+			addRemoveLinks: true
 		});
-		
 		
  		$('#btn_save').on("click", function() {
 			if(frm.subject.value == "") {
@@ -106,6 +97,7 @@
 			smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 			frm.submit();
 		});
+		
 	});
 </script>
 
