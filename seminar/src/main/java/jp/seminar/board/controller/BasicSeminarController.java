@@ -6,8 +6,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -19,6 +21,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -149,7 +152,8 @@ public class BasicSeminarController {
 ///////////////////////////////////////////////////////////////////////////////
 	
 	@RequestMapping(value="/seminar/fileUpload.do")
-	public void fileUpload(HttpServletRequest request, FileVO filevo) throws Exception  {
+	@ResponseBody
+	public Map<String,String> fileUpload(HttpServletRequest request, FileVO filevo) throws Exception  {
 		
 		try{
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/"); 
@@ -183,6 +187,10 @@ public class BasicSeminarController {
 		}catch(Exception e){
 			e.printStackTrace();
 		}
+		
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("result", "success");
+		return resultMap;
 //		return "/seminar/insert.do";
 	}
 	
