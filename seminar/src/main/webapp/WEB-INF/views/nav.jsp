@@ -73,7 +73,7 @@
                             <%} %>
                             <li>
                     <!-- <div class="top-big-link"> -->
-                            	<a class="btn btn-link-1 loging" href="#" data-modal-id="modal-login"><%=user_name %>님 환영합니다 !</a>
+                            	<a class="modal_btn btn-link-1 loging" href="#" data-modal-id="modal-login"><%=user_name %>님 환영합니다 !</a>
                             <!-- </div> -->
                             </li>
                             <li>
@@ -83,7 +83,7 @@
                     <%}else { %>
                     <li>
                     <div class="top-big-link">
-                            	<a class="btn btn-link-1 launch-modal" href="#" data-modal-id="modal-login">Sign in</a>
+                            	<a class="modal_btn btn-link-1 launch-modal" href="#" data-modal-id="modal-login">Sign in</a>
                             </div>
                             </li>        
                     <%} %>
@@ -119,9 +119,9 @@
 	                        	<label class="sr-only" for="form-password">Password</label>
 	                        	<input type="password" name="user_pw" placeholder="Password..." class="form-password form-control" id="form-password">
 	                        </div>
-	                        <button type="submit" class="btn">Sign in!</button>
+	                        <button type="submit" class="modal_btn">Sign in!</button>
 	                    </form>
-	                    <button type="button" id="join_btn" class="btn">Join !</button>
+	                    <button type="button" id="join_btn" class="modal_btn">Join !</button>
         			</div>
         			
         		</div>
