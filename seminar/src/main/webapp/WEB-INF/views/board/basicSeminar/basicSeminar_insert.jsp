@@ -2,8 +2,6 @@
 <%@include file="../../nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
-<script src="http://hayageek.github.io/jQuery-Upload-File/4.0.10/jquery.uploadfile.min.js"></script>
-
 <script type="text/javascript" src="/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 
 <script type="text/javascript" src="/resources/dropzone/dropzone.js" charset="utf-8"></script>
@@ -40,8 +38,9 @@
 			   <div class="form-group">
 			    	<label for="inputFile" class="col-sm-1 control-label">첨부파일</label>
 			    	<div class="col-sm-11">
-						<div class="dropzone" id="file-dropzone"></div>
-						
+						<div class="dropzone" id="file-dropzone" style="border:2px dashed #0087F7;">
+							<div class="dz-message" style="font-size: large;">Drag and Drop files here or click to upload</div>
+						</div>
 					</div>
 				</div>
 				<hr>
@@ -77,17 +76,21 @@
             bUseModeChanger : true,
         }
 	});
-	var a;
 	$(document).ready(function() {
 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("div#file-dropzone", {
 			url: "/seminar/fileUpload.do",
-			addRemoveLinks: true
+			addRemoveLinks: true,
+			maxFileSize: 10, // MB
+			maxFile: 5,
+			dictMaxFilesExceeded : "You can only upload upto 5 Files",
+			dictRemoveFile : "delete",
+			dictCancelUploadConfirmation:"Are you sure to cancel upload?"
 		});
 		
  		$('#btn_save').on("click", function() {
 			if(frm.subject.value == "") {
-				alert("제목을 입력해주세요123");
+				alert("제목을 입력해주세요");
 				return;
 			}
 			if(smartEditor.getById["content"] == "") {

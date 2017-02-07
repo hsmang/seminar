@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.Board_UserVO;
+import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
@@ -80,5 +81,19 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 		return sqlSession.selectList("reply.selectReply", reply);
 	}
 
+	@Override
+	public int insertFileinfo(FileVO fileinfo) {
+		return sqlSession.insert("file.insertFileinfo", fileinfo);
+	}
+
+	@Override
+	public int getMaxBoard_idx() {
+		return sqlSession.selectOne("basicSeminar.getMaxIdx");
+	}
+
+	@Override
+	public List<FileVO> getFileList(int board_idx) {
+		return sqlSession.selectList("file.selectFileList", board_idx);
+	}
 
 }

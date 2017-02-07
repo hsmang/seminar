@@ -1,11 +1,11 @@
 package jp.seminar.board.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.Board_UserVO;
+import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
@@ -31,10 +31,15 @@ public interface BoardDAO {
 	
 	public int insertBoardImage(BoardImageVO image);
 	
-	int getTotalCount();
+	public int getTotalCount();
 	
-	Board_UserVO getCertainUser(int user_idx);
+	public Board_UserVO getCertainUser(int user_idx);
 
+	public int insertFileinfo(FileVO fileinfo);
 	
+	public int getMaxBoard_idx();
+	
+	public List<FileVO> getFileList(int board_idx);
 }
+
 

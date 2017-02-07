@@ -24,17 +24,18 @@
 	
 	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 	
-	<beans:bean id="viewResolver"
-	    class="org.springframework.web.servlet.view.BeanNameViewResolver">
+	<beans:bean id="fileDownloadView" class="jp.seminar.board.util.FileDownloadView"/>
+	
+	<beans:bean id="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="1"></beans:property>
 	</beans:bean>
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-            <!-- 최대 업로드 수치(bytes) : 50mb 제한 -->
+            <!-- 최대 업로드 수치(limit size bytes) : 50mb limit -->
             <beans:property name="maxUploadSize" value="52428800" />  
             <!-- 업로드 파일 인코딩 -->
             <beans:property name="defaultEncoding" value="UTF-8" />
-      </beans:bean>
+    </beans:bean>
 	
 	<context:component-scan base-package="jp.seminar" />
 	

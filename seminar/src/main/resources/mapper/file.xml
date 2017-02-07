@@ -1,6 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="file">
-
+	<insert id="insertFileinfo" parameterType="jp.seminar.board.vo.FileVO">
+	    	INSERT INTO
+	    		board_attach
+	    		(
+	    			f_attach_path,
+	    			f_attach_name,
+	    			board_idx,
+	    			f_type,
+	    			f_attach_date
+	    		)
+	    	VALUES
+	    		(
+	    			#{f_attach_path},
+	    			#{f_attach_name},
+	    			#{board_idx},
+	    			#{f_type},
+	    			NOW()
+	    		)
+	</insert> 
+	
+	<select id="selectFileList" parameterType="int" resultType="jp.seminar.board.vo.FileVO">
+        SELECT
+        	f_attach_idx,
+        	f_attach_path,
+        	f_attach_name
+        FROM
+        	board_attach
+        WHERE
+        	board_idx = #{board_idx}        
+    </select>
 	
 </mapper>

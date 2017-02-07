@@ -1,17 +1,18 @@
 package jp.seminar.board.service;
 
-import java.util.HashMap;
+import java.io.File;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import jp.seminar.board.dao.BasicSeminarDAOImpl;
+import jp.seminar.board.util.FileSizeCalc;
+import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.Board_UserVO;
-import jp.seminar.board.vo.BoardImageVO;
+import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
@@ -117,4 +118,32 @@ public class BasicSeminarServiceImpl implements BoardService {
 		return replyList;
 	}
 
+	@Override
+	public int insertFile(FileVO fileinfo) {
+		int maxIdx = boardDAO.getMaxBoard_idx();
+		fileinfo.setBoard_idx(++maxIdx);
+		return boardDAO.insertFileinfo(fileinfo);
+	}
+
+	@Override
+	public List<FileVO> getFileList(int board_idx) {
+		List<FileVO> fileList = boardDAO.getFileList(board_idx);
+		FileSizeCalc calc = new FileSizeCalc();
+		int index = 0;
+		for (FileVO fileVO : fileList) {
+			FileVO fileOne = new FileVO();
+			fileOne.setF_attach_idx(fileVO.getF_attach_idx());
+			fileOne.setF_attach_name(fileVO.getF_attach_name());
+			fileOne.setF_attach_path(fileVO.getF_attach_path());
+			File file = new File(fileVO.getF_attach_path()+fileVO.getF_attach_name());
+			fileOne.setOriginal_fileSize(Long.toString(file.length()));
+			fileOne.setFileSize(calc.sizeCalc(fileVO.getF_attach_path()+fileVO.getF_attach_name()));
+			fileList.set((index++), fileOne);
+		}
+		return fileList;
+	}
+
 }
+
+
+

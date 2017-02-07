@@ -26,7 +26,17 @@
 				<h2>${detail.board_subject }</h2>
 					<!-- Date/Time -->
 					<p><i class="fa fa-clock-o"></i> Posted on ${detail.board_reg_date } / ${user.user_name }(${user.user_no }) </p>
-				<a href="#">첨부파일_추가.jpg</a>
+					<form id="fileFrm" method="post">
+					<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
+					<c:choose>
+						<c:when test="${fn:length(fileList) > 0}">
+							<c:forEach items="${fileList }" var="fileList">
+								<input type="hidden" id="path" value="${fileList.f_attach_path }">
+								<a href="#this" id="file">${fileList.f_attach_name }</a> (${fileList.fileSize })
+							</c:forEach>
+						</c:when>
+					</c:choose>
+					</form>
 				<hr>
 				<p>${detail.board_content }</p>
 				<hr>
@@ -66,7 +76,8 @@
 
 	<script>
 		$(document).ready(function() {
-			$('#btn_save').on("click",function() {
+			$('#btn_save').on("click",function(e) {
+				e.preventDefault();
 				var board_idx = document.getElementById('board_idx').value;
 				$("#frm").attr("action","/seminar/insertReply.do?board_idx="+ board_idx + "&f_type=SE");
 				if(frm.reply_content.value == "") {
@@ -76,6 +87,18 @@
 				frm.submit();
 				history.pushState(null, 'page -1',"/seminar.do");
 			});
+			
+			$('a[id="file"]').on("click", function(e){
+				e.preventDefault();
+				fn_downloadFile($(this));
+			});
 		});
+		
+		function fn_downloadFile(obj){
+			var filePath = $('#path').val()+obj.html(); 
+			$("#fileFrm").attr("action", "/seminar/fileDownload.do");
+			$("#fileFrm").append('<input type="hidden" name="filePath" id="filePath" value="' +filePath+ '">');
+			fileFrm.submit();
+		}		
 	</script>
 <%@include file="../../footer.jsp"%>
