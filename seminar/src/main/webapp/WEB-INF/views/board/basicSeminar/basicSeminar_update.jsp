@@ -85,12 +85,16 @@
 				dictCancelUploadConfirmation:"Are you sure to cancel upload?",
 				init:function(file){
 					var mockFile = { name : json.name, size : json.oriFilesize };
-					this.emit("addedfile", mockFile, json.path);
+					//this.emit("addedfile", mockFile, json.path);
+					this.emit("addedfile", mockFile);
+					//this.createThumbnailFromUrl(mockFile, "F:\\seminar\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\seminar\\resources\\file_upload\\2017\\02\\07\\22484\\Hydrangeas.jpg");
+					this.createThumbnailFromUrl(mockFile, "http://localhost:8080\\resources\\file_upload\\2017\\02\\07\\22484\\Hydrangeas.jpg");
 					this.emit("complete", mockFile);
 					var existingFileCount = 5;
 					this.options.maxFiles = this.options.maxFiles - existingFileCount;
 				}
 			});
+			
 			
 			$('#btn_save').on("click", function(){
 				smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
