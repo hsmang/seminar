@@ -6,6 +6,25 @@
 
 <script type="text/javascript" src="/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
 
+<c:set var="board_user_idx" value="${board_user_idx }"/>
+<%
+	
+	if(user== null){
+		response.sendRedirect("/seminar.do");
+	}else if(user.getUser_role() == 0){
+		
+	}else if(user.getUser_role() == 1){
+		
+	}
+	else if(user.getUser_role() == 2){
+		int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
+		int user_idx = user.getUser_idx();
+		if(board_user_idx != user_idx){
+			response.sendRedirect("/seminar.do");
+		}
+	}
+%>
+
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row">
@@ -28,7 +47,7 @@
 					<div class="form-group">
 						<label for="inputSubject" class="col-sm-1 control-label">제목</label>
 				    	<div class="col-sm-11">
-				    		<input class="form-control" type="text" id="subject" name="subject" value="${board.board_subject }">
+				    		<input class="form-control" type="text" id="subject" name="board_subject" value="${board.board_subject }">
 				    	</div>
 				    </div>
 				    <hr>
@@ -44,7 +63,7 @@
 				    <div class="form-group">
 				    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 				    	<div class="col-sm-11">
-				    		<textarea name="content" id="content" style="width:100%">${board.board_content }</textarea>
+				    		<textarea name="board_content" id="content" style="width:100%">${board.board_content }</textarea>
 				    	</div>
 				    </div>
 				    <hr>
@@ -62,37 +81,56 @@
 		});
 		
 		$(document).ready(function(){
-			var json = new Object();
+			var file_name = [];
+			var file_oriSize = [];
+			var file_path = [];
 			<c:choose>
-			<c:when test="${fn:length(fileList) > 0}">
-				<c:forEach items="${fileList }" var="fileList">
-					json.path = "${fileList.f_attach_path}${fileList.f_attach_name}";
-					json.name = "${fileList.f_attach_name}";
-					json.oriFilesize = "${fileList.original_fileSize}";
-				</c:forEach>
-			</c:when>
+				<c:when test="${fn:length(fileList) > 0}">
+					<c:forEach items="${fileList }" var="fileList" varStatus="status">
+						file_path[${status.index}] = "${fileList.f_attach_path}${fileList.f_attach_name}";
+						file_name[${status.index}] = "${fileList.f_attach_name}";
+						file_oriSize[${status.index}] =  "${fileList.original_fileSize}";
+					</c:forEach>
+				</c:when>
 			</c:choose>
-			console.log(json);
 			
 			Dropzone.autoDiscover = false;
 			var myDropzone = new Dropzone("div#file-dropzone", {
 				url: "/seminar/fileUpload.do",
-				addRemoveLinks: true,
+				filesizeBase: 1024,
 				maxFileSize: 10, // MB
 				maxFile: 5,
 				dictMaxFilesExceeded : "You can only upload upto 5 Files",
-				dictRemoveFile : "delete",
 				dictCancelUploadConfirmation:"Are you sure to cancel upload?",
+				
 				init:function(file){
-					var mockFile = { name : json.name, size : json.oriFilesize };
-					//this.emit("addedfile", mockFile, json.path);
-					this.emit("addedfile", mockFile);
-					//this.createThumbnailFromUrl(mockFile, "F:\\seminar\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\seminar\\resources\\file_upload\\2017\\02\\07\\22484\\Hydrangeas.jpg");
-					this.createThumbnailFromUrl(mockFile, "http://localhost:8080\\resources\\file_upload\\2017\\02\\07\\22484\\Hydrangeas.jpg");
-					this.emit("complete", mockFile);
-					var existingFileCount = 5;
-					this.options.maxFiles = this.options.maxFiles - existingFileCount;
-				}
+					for(var i=0; i<file_name.length; i++){
+						var mockFile = { name : file_name[i], size : file_oriSize[i] };
+						this.emit("addedfile", mockFile);
+						//this.createThumbnailFromUrl(mockFile, "F:\\seminar\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\seminar\\resources\\file_upload\\2017\\02\\07\\22484\\Hydrangeas.jpg");
+						//this.createThumbnailFromUrl(mockFile, "http://localhost:8080\\resources\\file_upload\\2017\\02\\07\\26501\\test22222.png");
+						this.emit("complete", mockFile);
+						var existingFileCount = 5;
+						this.options.maxFiles = this.options.maxFiles - existingFileCount;
+					}
+				},
+				
+				addRemoveLinks: true,
+				dictRemoveFile : "delete",
+
+				dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+			    dictInvalidFileType: "You can't upload files of this type.",
+			    dictResponseError: "Server responded with {{statusCode}} code."
+			});
+			
+			myDropzone.on('removedfile', function(file){
+				$.ajax({
+					type : 'POST',
+					url : "/seminar/fileDelete.do",
+					data : { "name" : file.name } 
+				});
+				console.log(file);
+ 				console.log(file);
 			});
 			
 			

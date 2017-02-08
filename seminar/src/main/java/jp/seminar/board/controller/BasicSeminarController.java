@@ -5,11 +5,6 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -24,8 +19,6 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -55,7 +48,7 @@ public class BasicSeminarController {
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar.do")
-	public ModelAndView getBasicSeminarBoardList(String pageNumber, String pageSize,HttpServletResponse response, HttpServletRequest request) throws Exception{
+	public ModelAndView getBasicSeminarBoardList(String pageNumber, String pageSize,HttpServletResponse response, HttpServletRequest request, HttpSession session) throws Exception{
 		
 		String url = request.getRequestURL().toString();
 		int totalCount = boardService.getTotalCount(); 
@@ -66,7 +59,7 @@ public class BasicSeminarController {
 		
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
 		List<BoardVO> boardList = boardService.getBoardList(firstRowpageSize);
-		
+
 		mv.addObject("boardList", boardList);
 		mv.addObject("paging", boardPaging);
 		
@@ -83,6 +76,7 @@ public class BasicSeminarController {
 		BoardVO detail = new BoardVO();
 		detail = boardService.getBoardDetail(board_idx);
 		mv.addObject("detail", detail);
+		mv.addObject("board_user_idx", detail.getUser_idx());
 		
 		Board_UserVO uservo = boardService.getCertainUser(detail.getUser_idx());
 		mv.addObject("user", uservo);
@@ -124,11 +118,10 @@ public class BasicSeminarController {
 		
 		BoardVO board = boardService.getBoardDetail(board_idx);
 		mv.addObject("board", board);
-		
+		mv.addObject("board_user_idx", board.getUser_idx());
 		List<FileVO> fileList = boardService.getFileList(board_idx);
 		mv.addObject("fileList", fileList);
-		
-				
+						
 		return mv;
 	}
 	
@@ -137,7 +130,7 @@ public class BasicSeminarController {
 	 * boardVO 매개변수로 다 받음
 	 */
 	@RequestMapping(value = "/seminar/updateProc.do")
-		public String updateProcBasicSeminarBoardDetail(BoardVO board, HttpServletRequest request) throws Exception{
+	public String updateProcBasicSeminarBoardDetail(BoardVO board, HttpServletRequest request) throws Exception{
 		
 		boardService.updateBoardDetail(board);
 		
@@ -222,7 +215,16 @@ public class BasicSeminarController {
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("result", "success");
 		return resultMap;
-//		return "/seminar/insert.do";
+	}
+	
+	@RequestMapping(value="/seminar/fileDelete.do")
+	@ResponseBody
+	public Map<String,String> fileDelete(String name) throws Exception  {
+		
+		Map<String, String> resultMap = new HashMap<String, String>();
+		resultMap.put("result", "success");
+		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + name);
+		return resultMap;
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////

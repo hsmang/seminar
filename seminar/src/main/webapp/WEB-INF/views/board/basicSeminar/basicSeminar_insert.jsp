@@ -6,6 +6,11 @@
 
 <script type="text/javascript" src="/resources/dropzone/dropzone.js" charset="utf-8"></script>
 
+<%
+	if(user== null){
+		response.sendRedirect("/seminar.do");
+	}
+%>
 
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->

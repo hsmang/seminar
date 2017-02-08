@@ -2,6 +2,7 @@
 <%@include file="../../nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
+
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row">
@@ -40,8 +41,21 @@
 				<hr>
 				<p>${detail.board_content }</p>
 				<hr>
-				<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">수정</button>
-				<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>
+				<c:set var="board_user_idx" value="${board_user_idx }"/>
+				<%
+				if(user != null){
+						if(user.getUser_role() == 2){
+							int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
+							int user_idx = user.getUser_idx();
+							if(board_user_idx == user_idx){%>
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">수정</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>
+							<% }
+						}else{%>
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">수정</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>	
+						<%} %>
+				<%} %>
 				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">목록</button>
 				<br><br>
 		

@@ -1,6 +1,8 @@
 <%@include file="../../head.jsp"%>
 <%@include file="../../nav.jsp"%>
-<%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page language ="java" pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<%@ page session="true" %>
+<%@page import="jp.seminar.user.model.UserVO"%>
 
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->
@@ -42,7 +44,6 @@
 		</table>
 	</div>
 
-
 	<hr>
 	<!-- Pagination -->
 	<div class="row text-center">
@@ -64,9 +65,17 @@
 		</select>
 	</div>
 	<input class="btn btn-default" type="text" placeholder="검색내용">
-	<button type="button" class="btn btn-default">검색</button>
-	<button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/seminar/insert.do'">작성</button>
-
+	<button type="button" id="btn_search" class="btn btn-default">검색</button>
+	<%
+		if(user != null){
+	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/seminar/insert.do'" >작성</button>
+	<%} %>
 	<hr>
+	
+	<script>
+	$(document).ready(function(){
+
+	});
+	</script>
 
 <%@include file="../../footer.jsp"%>
