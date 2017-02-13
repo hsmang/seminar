@@ -63,8 +63,8 @@
     	UPDATE
     		basic_seminar
     	SET
-    		board_subject = #{subject},
-    		board_content = #{content},
+    		board_subject = #{board_subject},
+    		board_content = #{board_content},
     		board_update_date = NOW()
     	WHERE
     		board_idx = #{board_idx}
