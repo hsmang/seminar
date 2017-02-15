@@ -35,5 +35,5 @@
 		    </authentication-provider>
 	</authentication-manager>	
 
-	<beans:bean id="memberService" class="jp.seminar.auth.service.MemberService" />
+	<beans:bean id="memberService" class="jp.seminar_copy.auth.service.MemberService" />
 </beans:beans>

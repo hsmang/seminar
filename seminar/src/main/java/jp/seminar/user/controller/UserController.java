@@ -51,7 +51,13 @@ public class UserController {
 		int result = userService.userJoinProc(joinUser);
 		System.out.println("result : " + result);
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/index.do");
+		//mav.setViewName("redirect:/index.do");
+		mav.setViewName("jsonView");
+		if(result != 1){
+			mav.addObject("result", false);
+		}else{
+			mav.addObject("result", true);
+		}
 		
 		return mav ;
 	}

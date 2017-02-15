@@ -105,14 +105,14 @@
         					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
         				</button>
         				<h3 class="modal-title" id="modal-login-label">Login to our site</h3>
-        				<p>Enter your username and password to log on:</p>
+        				<p>Enter your email and password to log on:</p>
         			</div>
         			
         			<div class="modal-body">
         				
 	                    <form role="form" action="/user/login_proc.do" method="post" class="login-form">
 	                    	<div class="form-group">
-	                    		<label class="sr-only" for="form-username">Username</label>
+	                    		<label class="sr-only" for="form-username">Email</label>
 	                        	<input type="text" name="user_email" placeholder="Username..." class="form-username form-control" id="form-username">
 	                        </div>
 	                        <div class="form-group">

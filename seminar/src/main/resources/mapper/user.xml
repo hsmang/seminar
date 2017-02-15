@@ -25,11 +25,20 @@
     		user_name = #{username}
     </select>
     
+    <select id="getCountUserByID" parameterType="jp.seminar.user.model.UserVO" resultType="int">
+    	SELECT
+    		count(*)
+    	FROM
+    		`seminar`.`user_info`
+    	WHERE
+    		user_email = #{user_email}
+    </select>
+    
     <insert id="userJoinProc" parameterMap="userVO">
     	INSERT INTO `seminar`.`user_info` 
     	(`user_email`, `user_pw`, `user_no`, `user_name`, `user_hp`, `user_role`, `user_state`, `reg_date`, `update_date`) 
     	VALUES 
-    	( ? , ? , ? , ? , ? , '0', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    	( ? , ? , ? , ? , ? , '3', '1', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
     </insert>
     
     <select id="userLoginProc" parameterType="jp.seminar.user.model.UserVO" resultType="int">

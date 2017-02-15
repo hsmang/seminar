@@ -30,8 +30,13 @@ public class UserDaoImpl implements UserDao{
 	public int userJoinProc(UserVO user) {
 		int result = 0;
 		try {
-			sqlSession.insert("user.userJoinProc", user);
-			result = 1;
+			result = sqlSession.selectOne("user.getCountUserByID",user);
+			if(result == 0){
+				sqlSession.insert("user.userJoinProc", user);
+				result = 1;
+			}else{
+				result = 0;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			result = 0;
