@@ -38,5 +38,7 @@ public interface BoardService {
 	int insertFile(FileVO fileinfo);
 
 	List<FileVO> getFileList(int board_idx);
+
+	int deleteFileinfo(FileVO fileinfo);
 	
 }

@@ -63,7 +63,7 @@
 				    <div class="form-group">
 				    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
 				    	<div class="col-sm-11">
-				    		<textarea name="board_content" id="content" style="width:100%">${board.board_content }</textarea>
+				    		<textarea name="board_content" id="content" style="width:100%; height:500px;">${board.board_content }</textarea>
 				    	</div>
 				    </div>
 				    <hr>
@@ -80,19 +80,20 @@
 			fCreator : "createSEditor2"
 		});
 		
+		var file_name = [];
+		var file_oriSize = [];
+		var file_path = [];
+		<c:choose>
+			<c:when test="${fn:length(fileList) > 0}">
+				<c:forEach items="${fileList }" var="fileList" varStatus="status">
+					file_path[${status.index}] = "${fileList.f_attach_path}${fileList.f_attach_name}";
+					file_name[${status.index}] = "${fileList.f_attach_name}";
+					file_oriSize[${status.index}] =  "${fileList.original_fileSize}";
+				</c:forEach>
+			</c:when>
+		</c:choose>
+		
 		$(document).ready(function(){
-			var file_name = [];
-			var file_oriSize = [];
-			var file_path = [];
-			<c:choose>
-				<c:when test="${fn:length(fileList) > 0}">
-					<c:forEach items="${fileList }" var="fileList" varStatus="status">
-						file_path[${status.index}] = "${fileList.f_attach_path}${fileList.f_attach_name}";
-						file_name[${status.index}] = "${fileList.f_attach_name}";
-						file_oriSize[${status.index}] =  "${fileList.original_fileSize}";
-					</c:forEach>
-				</c:when>
-			</c:choose>
 			
 			Dropzone.autoDiscover = false;
 			var myDropzone = new Dropzone("div#file-dropzone", {
@@ -124,13 +125,15 @@
 			});
 			
 			myDropzone.on('removedfile', function(file){
+				board_idx = $("#board_idx").val();
 				$.ajax({
 					type : 'POST',
 					url : "/seminar/fileDelete.do",
-					data : { "name" : file.name } 
+					data : { "name" : file.name,
+							 "index" : board_idx
+					}
 				});
 				console.log(file);
- 				console.log(file);
 			});
 			
 			

@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.annotation.Resource;
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -21,8 +21,8 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.context.ServletContextAware;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -34,8 +34,8 @@ import jp.seminar.board.vo.Board_UserVO;
 import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
-import jp.seminar.paging.Paging;
 import jp.seminar.paging.FirstRowPageSize;
+import jp.seminar.paging.Paging;
 import jp.seminar.user.model.UserVO;
 
 @Controller
@@ -87,7 +87,17 @@ public class BasicSeminarController {
 		List<ReplyVO> replyList = boardService.getReply(reply);
 		mv.addObject("replyList", replyList);
 		
+		List<FileVO> fileList = boardService.getFileList(board_idx);
+		mv.addObject("fileList", fileList);
+		
 		return mv;
+	}
+	
+	@RequestMapping(value = "/seminar/fileDownload.do")
+	public ModelAndView fileDownload(@RequestParam("filePath") String filePath) throws Exception {
+		String path = filePath;
+		File downloadFile = new File(path);
+	    return new ModelAndView("fileDownloadView", "downloadFile", downloadFile);
 	}
 	
 	@RequestMapping(value = "/seminar/insertReply.do")
@@ -110,8 +120,8 @@ public class BasicSeminarController {
 		mv.addObject("board", board);
 		mv.addObject("board_user_idx", board.getUser_idx());
 		List<FileVO> fileList = boardService.getFileList(board_idx);
-		System.out.println(fileList.size());
 		mv.addObject("fileList", fileList);
+						
 		return mv;
 	}
 	
@@ -159,51 +169,72 @@ public class BasicSeminarController {
 	@ResponseBody
 	public Map<String,String> fileUpload(HttpServletRequest request, FileVO filevo) throws Exception  {
 		
+		Map<String, String> resultMap = new HashMap<String, String>();
+		
 		try{
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/"); 
-			String filePath = dftFilePath + "/resources/file_upload/";
-		
+			String filePath = dftFilePath + "resources\\file_upload\\";
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
-
-			
 			MultipartFile multipartFile = null;
 			String originalFileName = null;
-			String originalFileExtension = null;
-
-			File file = new File(filePath);
-			if (file.exists() == false) {
-				file.mkdirs();
-			}
-			System.out.println("@@@@@@@@@@@@@@@@@");
+			
 			while (iterator.hasNext()) {
 				multipartFile = multipartHttpServletRequest.getFile(iterator.next());
 				if (multipartFile.isEmpty() == false) {
-					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss"); 
-					String today= formatter.format(new java.util.Date());
+					SimpleDateFormat year   = new SimpleDateFormat("yyyy");
+					SimpleDateFormat month  = new SimpleDateFormat("MM");
+					SimpleDateFormat day    = new SimpleDateFormat("dd");
+					String year_format = year.format(new java.util.Date());
+					String month_format= month.format(new java.util.Date());
+					String day_format  = day.format(new java.util.Date());
+					Random rand = new Random();
+					int r = rand.nextInt(99999);
+					filePath = filePath + year_format + "\\" + month_format + "\\" + day_format + "\\" + r + "\\";
+					
+					File file = new File(filePath);
+					if (file.exists() == false) {
+						file.mkdirs();
+					}
+					
 					originalFileName = multipartFile.getOriginalFilename();
-					originalFileExtension = today + originalFileName.substring(originalFileName.lastIndexOf("."));
-					file = new File(filePath + originalFileExtension);
+					
+					file = new File(filePath + originalFileName);
 					System.out.println(file.getAbsolutePath());
 					multipartFile.transferTo(file);
+					
+					/*FileVO fileinfo = new FileVO();
+					fileinfo.setF_attach_path(filePath);
+					fileinfo.setF_attach_name(originalFileName);
+					fileinfo.setF_type("SE");
+					boardService.insertFile(fileinfo);*/
+					resultMap.put("filePath", file.getAbsolutePath());
 				}
 			}
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
-		Map<String, String> resultMap = new HashMap<String, String>();
+		
 		resultMap.put("result", "success");
 		return resultMap;
 	}
 	
 	@RequestMapping(value="/seminar/fileDelete.do")
 	@ResponseBody
-	public Map<String,String> fileDelete(String name) throws Exception  {
+	public Map<String,String> fileDelete(String name, int board_index) throws Exception  {
+		
+		System.out.println("name : " + name);
+		System.out.println("board_index : " + board_index);
+		
+		FileVO fileinfo = new FileVO();
+		fileinfo.setBoard_idx(board_index);
+		fileinfo.setF_attach_name(name);
+		
+		//boardService.deleteFileinfo(fileinfo);
 		
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("result", "success");
-		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@" + name);
 		return resultMap;
 	}
 	
@@ -237,7 +268,6 @@ public class BasicSeminarController {
 					//파일 기본경로 _ 상세경로
 					String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
 					File file = new File(filePath); 
-					
 					if(!file.exists()) { 
 						file.mkdirs(); 
 					} 

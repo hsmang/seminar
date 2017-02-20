@@ -31,5 +31,14 @@
         WHERE
         	board_idx = #{board_idx}        
     </select>
+    
+    <delete id="deleteFileinfo" parameterType="jp.seminar.board.vo.FileVO">
+    	DELETE FROM
+    		board_attach
+    	WHERE
+    		board_idx = #{board_idx} 
+    		AND
+    		f_attach_name = #{f_attach_name}
+    </delete>
 	
 </mapper>

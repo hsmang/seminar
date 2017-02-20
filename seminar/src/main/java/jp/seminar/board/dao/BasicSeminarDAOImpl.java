@@ -96,4 +96,9 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 		return sqlSession.selectList("file.selectFileList", board_idx);
 	}
 
+	public int deleteFileinfo(FileVO fileinfo) {
+		// TODO Auto-generated method stub
+		return sqlSession.delete("file.deleteFileinfo", fileinfo);
+	}
+
 }

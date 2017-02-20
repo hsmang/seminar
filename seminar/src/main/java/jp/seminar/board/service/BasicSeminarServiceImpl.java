@@ -143,6 +143,11 @@ public class BasicSeminarServiceImpl implements BoardService {
 		return fileList;
 	}
 
+	@Override
+	public int deleteFileinfo(FileVO fileinfo) {
+		return boardDAO.deleteFileinfo(fileinfo);
+	}
+
 }
 
 
