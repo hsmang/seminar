@@ -203,11 +203,11 @@ public class BasicSeminarController {
 					System.out.println(file.getAbsolutePath());
 					multipartFile.transferTo(file);
 					
-					/*FileVO fileinfo = new FileVO();
+					FileVO fileinfo = new FileVO();
 					fileinfo.setF_attach_path(filePath);
 					fileinfo.setF_attach_name(originalFileName);
 					fileinfo.setF_type("SE");
-					boardService.insertFile(fileinfo);*/
+					boardService.insertFile(fileinfo);
 					resultMap.put("filePath", file.getAbsolutePath());
 				}
 			}
@@ -222,16 +222,12 @@ public class BasicSeminarController {
 	
 	@RequestMapping(value="/seminar/fileDelete.do")
 	@ResponseBody
-	public Map<String,String> fileDelete(String name, int board_index) throws Exception  {
-		
-		System.out.println("name : " + name);
-		System.out.println("board_index : " + board_index);
-		
+	public Map<String,String> fileDelete(String name, int index) throws Exception  {
 		FileVO fileinfo = new FileVO();
-		fileinfo.setBoard_idx(board_index);
+		fileinfo.setBoard_idx(index);
 		fileinfo.setF_attach_name(name);
 		
-		//boardService.deleteFileinfo(fileinfo);
+		boardService.deleteFileinfo(fileinfo);
 		
 		Map<String, String> resultMap = new HashMap<String, String>();
 		resultMap.put("result", "success");

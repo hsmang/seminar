@@ -99,10 +99,21 @@
 			var myDropzone = new Dropzone("div#file-dropzone", {
 				url: "/seminar/fileUpload.do",
 				filesizeBase: 1024,
+				addRemoveLinks: true,
 				maxFileSize: 10, // MB
 				maxFile: 5,
 				dictMaxFilesExceeded : "You can only upload upto 5 Files",
+				dictRemoveFile : "delete",
 				dictCancelUploadConfirmation:"Are you sure to cancel upload?",
+				
+				autoProcessQueue : false,			
+				
+				preventDuplicates: true,
+				dictDuplicateFile: "Duplicate Files Cannot Be Uploaded",
+				
+				dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
+				dictInvalidFileType: "You can't upload files of this type.",
+				dictResponseError: "Server responded with {{statusCode}} code.",
 				
 				init:function(file){
 					for(var i=0; i<file_name.length; i++){
@@ -114,32 +125,53 @@
 						var existingFileCount = 5;
 						this.options.maxFiles = this.options.maxFiles - existingFileCount;
 					}
-				},
+				}
 				
-				addRemoveLinks: true,
-				dictRemoveFile : "delete",
+			});
+			
+			var index = 0;
+			var prevFilename = [];
+			myDropzone.on("addedfile", function(file){
+				/* 중복체크 if문 */
+				if(fn_checkFileDuplicate(file.name, index++) == 0){
+					this.removeFile(file);
+					alert('Duplicate file 중복 파일');
+				}
+			});
 
-				dictFallbackMessage: "Your browser does not support drag'n'drop file uploads.",
-			    dictInvalidFileType: "You can't upload files of this type.",
-			    dictResponseError: "Server responded with {{statusCode}} code."
-			});
-			
-			myDropzone.on('removedfile', function(file){
-				board_idx = $("#board_idx").val();
-				$.ajax({
-					type : 'POST',
-					url : "/seminar/fileDelete.do",
-					data : { "name" : file.name,
-							 "index" : board_idx
+			/* 중복 체크 함수 */
+			function fn_checkFileDuplicate(filename, idx){
+				if(idx != 0){
+					for(var i=0; i<idx; i++){
+						if(prevFilename[i] == filename){
+							return 0;
+						}				
 					}
-				});
-				console.log(file);
-			});
+					prevFilename[idx] = filename;
+					return 1;
+				}else{
+					prevFilename[idx] = filename;
+					return 1;
+				}
+			}
 			
+			var rIdx = 0;
+			var fileName = [];
+			myDropzone.on('removedfile', function(file){
+				fileName[rIdx] = file.name;
+				rIdx++;
+			});
 			
 			$('#btn_save').on("click", function(){
+				board_idx = $("#board_idx").val();
 				smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 				$("#frm").attr("action", "/seminar/updateProc.do");
+				for(var i=0; i<=rIdx; i++){
+					$.post("/seminar/fileDelete.do", {
+						name : fileName[i],
+	  					index : board_idx
+					});
+				}
 				frm.submit();
 			});
 		});
