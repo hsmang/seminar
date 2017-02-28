@@ -1,7 +1,11 @@
 package jp.seminar.board.service;
 
+import static org.hamcrest.CoreMatchers.nullValue;
+
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -30,6 +34,29 @@ public class BasicSeminarServiceImpl implements BoardService {
 	@Override
 	public List<BoardVO> getBoardList(FirstRowPageSize  firstRowpageSize) throws Exception{
 		List<BoardVO> boardList = boardDAO.selectList(firstRowpageSize);
+		List<Board_UserVO> userList = boardDAO.selectUserList();
+		
+		for(int i=0; i<boardList.size(); i++){
+			for(int j=0; j<userList.size(); j++){
+				BoardVO board = new BoardVO();
+				if( boardList.get(i).getUser_idx() == userList.get(j).getUser_idx()){
+					board.setBoard_idx(boardList.get(i).getBoard_idx());
+					board.setBoard_content(boardList.get(i).getBoard_content());
+					board.setBoard_count(boardList.get(i).getBoard_count());
+					board.setBoard_reg_date(boardList.get(i).getBoard_reg_date());
+					board.setBoard_subject(boardList.get(i).getBoard_subject());
+					board.setBoard_update_date(boardList.get(i).getBoard_update_date());
+					board.setUser_name(userList.get(j).getUser_name());
+					boardList.set(i, board);
+				}
+			}
+		}
+		return boardList;
+	}
+
+	@Override
+	public List<BoardVO> getBoardSearchList(FirstRowPageSize  firstRowpageSize) {
+		List<BoardVO> boardList = boardDAO.selectSearchList(firstRowpageSize);
 		List<Board_UserVO> userList = boardDAO.selectUserList();
 		
 		for(int i=0; i<boardList.size(); i++){
@@ -91,6 +118,15 @@ public class BasicSeminarServiceImpl implements BoardService {
 		return boardDAO.getTotalCount();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public int getSearchCount(String search_type, String search_value) {
+		Map searchMap = new HashMap();
+		searchMap.put("type", search_type);
+		searchMap.put("value", search_value);
+		return boardDAO.getSearchCount(searchMap);
+	}
+	
 	@Override
 	public Board_UserVO getCertainUser(int user_idx) {
 		return boardDAO.getCertainUser(user_idx);
@@ -120,8 +156,18 @@ public class BasicSeminarServiceImpl implements BoardService {
 
 	@Override
 	public int insertFile(FileVO fileinfo) {
-		int maxIdx = boardDAO.getMaxBoard_idx();
-		fileinfo.setBoard_idx(maxIdx);
+		int	maxIdx = 0;
+		maxIdx = boardDAO.getMaxBoard_idx();
+		if(maxIdx == 0){
+			maxIdx = 1;
+		}
+		fileinfo.setBoard_idx(++maxIdx);
+		return boardDAO.insertFileinfo(fileinfo);
+	}
+	
+	@Override
+	public int insertFile(FileVO fileinfo, String board_idx) {
+		fileinfo.setBoard_idx(Integer.parseInt(board_idx));
 		return boardDAO.insertFileinfo(fileinfo);
 	}
 
@@ -147,6 +193,8 @@ public class BasicSeminarServiceImpl implements BoardService {
 	public int deleteFileinfo(FileVO fileinfo) {
 		return boardDAO.deleteFileinfo(fileinfo);
 	}
+
+
 
 }
 

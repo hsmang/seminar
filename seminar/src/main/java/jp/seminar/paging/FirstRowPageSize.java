@@ -3,6 +3,21 @@ package jp.seminar.paging;
 public class FirstRowPageSize {
 	private int firstRow;
 	private int pageSize;
+	private String value;
+	private String type;
+	
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	public int getFirstRow() {
 		return firstRow;
 	}

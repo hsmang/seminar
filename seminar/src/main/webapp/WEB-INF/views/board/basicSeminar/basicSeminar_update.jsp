@@ -96,13 +96,15 @@
 		$(document).ready(function(){
 			
 			Dropzone.autoDiscover = false;
+			var idx = $("#board_idx").val();
 			var myDropzone = new Dropzone("div#file-dropzone", {
-				url: "/seminar/fileUpload.do",
+				url: "/seminar/fileUpload.do?board_idx="+idx,
 				filesizeBase: 1024,
 				addRemoveLinks: true,
-				maxFileSize: 10, // MB
-				maxFile: 5,
-				dictMaxFilesExceeded : "You can only upload upto 5 Files",
+				maxFilesize: 10, // MB
+				maxFiles: 10,
+				parallelUploads: 10,
+				dictMaxFilesExceeded : "You can only upload upto 10 Files",
 				dictRemoveFile : "delete",
 				dictCancelUploadConfirmation:"Are you sure to cancel upload?",
 				
@@ -122,11 +124,16 @@
 						//this.createThumbnailFromUrl(mockFile, "F:\\seminar\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\seminar\\resources\\file_upload\\2017\\02\\07\\22484\\Hydrangeas.jpg");
 						//this.createThumbnailFromUrl(mockFile, "http://localhost:8080\\resources\\file_upload\\2017\\02\\07\\26501\\test22222.png");
 						this.emit("complete", mockFile);
-						var existingFileCount = 5;
-						this.options.maxFiles = this.options.maxFiles - existingFileCount;
+						//var existingFileCount = 5;
+						//this.options.maxFiles = this.options.maxFiles - existingFileCount;
 					}
 				}
 				
+			});
+			
+			myDropzone.on("maxfilesexceeded", function(file){
+				alert('You can only upload upto 10 Files');
+				this.removeFile(file);
 			});
 			
 			var index = 0;
@@ -134,8 +141,8 @@
 			myDropzone.on("addedfile", function(file){
 				/* 중복체크 if문 */
 				if(fn_checkFileDuplicate(file.name, index++) == 0){
-					this.removeFile(file);
 					alert('Duplicate file 중복 파일');
+					this.removeFile(file);
 				}
 			});
 
@@ -172,6 +179,7 @@
 	  					index : board_idx
 					});
 				}
+				myDropzone.processQueue();
 				frm.submit();
 			});
 		});

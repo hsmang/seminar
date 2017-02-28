@@ -2,6 +2,10 @@
 <%@include file="../../nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
+<%
+	
+
+%>
 
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->
@@ -26,7 +30,7 @@
 				<hr>
 				<h2>${detail.board_subject }</h2>
 					<!-- Date/Time -->
-					<p><i class="fa fa-clock-o"></i> Posted on ${detail.board_reg_date } / ${user.user_name }(${user.user_no }) </p>
+					<p><i class="fa fa-clock-o"></i> Posted on ${detail.board_reg_date } / ${user.user_name }</p>
 					<form id="fileFrm" method="post">
 					<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 					<c:choose>

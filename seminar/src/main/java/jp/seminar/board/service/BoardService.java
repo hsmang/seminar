@@ -1,6 +1,7 @@
 package jp.seminar.board.service;
 
 import java.util.List;
+import java.util.Map;
 
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
@@ -36,9 +37,14 @@ public interface BoardService {
 	List<ReplyVO> getReply(ReplyVO reply);
 
 	int insertFile(FileVO fileinfo);
+	int insertFile(FileVO fileinfo, String board_idx);
 
 	List<FileVO> getFileList(int board_idx);
 
 	int deleteFileinfo(FileVO fileinfo);
+
+	List<BoardVO> getBoardSearchList(FirstRowPageSize  firstRowpageSize);
+
+	int getSearchCount(String search_type, String search_value);
 	
 }

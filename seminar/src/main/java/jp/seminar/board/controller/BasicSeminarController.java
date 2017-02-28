@@ -48,22 +48,43 @@ public class BasicSeminarController {
 	
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/seminar.do")
-	public ModelAndView getBasicSeminarBoardList(String pageNumber, String pageSize,HttpServletResponse response, HttpServletRequest request, HttpSession session) throws Exception{
+	public ModelAndView getBasicSeminarBoardList(String pageNumber, String pageSize, String search_value, String search_type, HttpServletResponse response, HttpServletRequest request, HttpSession session) throws Exception{
 		
 		String url = request.getRequestURL().toString();
-		int totalCount = boardService.getTotalCount(); 
-		Paging boardPaging = new Paging(pageNumber, pageSize , totalCount, url); // 페이징처리
-		FirstRowPageSize  firstRowpageSize = new FirstRowPageSize(); // db limit 설정하기
-		firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
-		firstRowpageSize.setPageSize(boardPaging.getPageSize());
 		
-		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
-		List<BoardVO> boardList = boardService.getBoardList(firstRowpageSize);
+		if(search_value == null && search_type == null){
+			int totalCount = boardService.getTotalCount();
+			Paging boardPaging = new Paging(pageNumber, pageSize, totalCount, url); // 페이징처리
+			FirstRowPageSize firstRowpageSize = new FirstRowPageSize(); // db limit
+			firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
+			firstRowpageSize.setPageSize(boardPaging.getPageSize());
 
-		mv.addObject("boardList", boardList);
-		mv.addObject("paging", boardPaging);
-		
-		return mv;
+			ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
+			List<BoardVO> boardList = boardService.getBoardList(firstRowpageSize);
+
+			mv.addObject("boardList", boardList);
+			mv.addObject("paging", boardPaging);
+
+			return mv;
+
+		}else{
+			int totalCount = boardService.getSearchCount(search_type, search_value);
+			Paging boardPaging = new Paging(pageNumber, pageSize, totalCount, url, search_type, search_value); // 페이징처리
+			FirstRowPageSize firstRowpageSize = new FirstRowPageSize(); // db limit
+																		// 설정하기
+			firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
+			firstRowpageSize.setPageSize(boardPaging.getPageSize());
+			firstRowpageSize.setType(search_type);
+			firstRowpageSize.setValue(search_value);
+
+			ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar");
+			List<BoardVO> boardList = boardService.getBoardSearchList(firstRowpageSize);
+
+			mv.addObject("boardList", boardList);
+			mv.addObject("paging", boardPaging);
+
+			return mv;
+		}
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////
@@ -167,7 +188,7 @@ public class BasicSeminarController {
 	
 	@RequestMapping(value="/seminar/fileUpload.do")
 	@ResponseBody
-	public Map<String,String> fileUpload(HttpServletRequest request, FileVO filevo) throws Exception  {
+	public Map<String,String> fileUpload(HttpServletRequest request, FileVO filevo, String board_idx) throws Exception  {
 		
 		Map<String, String> resultMap = new HashMap<String, String>();
 		
@@ -207,7 +228,10 @@ public class BasicSeminarController {
 					fileinfo.setF_attach_path(filePath);
 					fileinfo.setF_attach_name(originalFileName);
 					fileinfo.setF_type("SE");
-					boardService.insertFile(fileinfo);
+					if(board_idx == null)
+						boardService.insertFile(fileinfo);
+					else
+						boardService.insertFile(fileinfo, board_idx);
 					resultMap.put("filePath", file.getAbsolutePath());
 				}
 			}

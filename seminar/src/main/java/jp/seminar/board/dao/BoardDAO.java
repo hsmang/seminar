@@ -1,6 +1,7 @@
 package jp.seminar.board.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
@@ -42,6 +43,10 @@ public interface BoardDAO {
 	public List<FileVO> getFileList(int board_idx);
 	
 	public int deleteFileinfo(FileVO fileinfo);
+
+	List<BoardVO> selectSearchList(FirstRowPageSize  firstRowpageSize);
+
+	int getSearchCount(Map searchMap);
 }
 
 

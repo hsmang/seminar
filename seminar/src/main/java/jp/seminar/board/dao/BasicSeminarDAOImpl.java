@@ -70,6 +70,11 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	public int getTotalCount() {
 		return sqlSession.selectOne("basicSeminar.getTotalCount");
 	}
+	
+	@Override
+	public int getSearchCount(Map searchMap) {
+		return sqlSession.selectOne("basicSeminar.getSearchCount", searchMap);
+	}
 
 	@Override
 	public Board_UserVO getCertainUser(int user_idx) {
@@ -96,9 +101,15 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 		return sqlSession.selectList("file.selectFileList", board_idx);
 	}
 
+	@Override
 	public int deleteFileinfo(FileVO fileinfo) {
-		// TODO Auto-generated method stub
 		return sqlSession.delete("file.deleteFileinfo", fileinfo);
 	}
+
+	@Override
+	public List<BoardVO> selectSearchList(FirstRowPageSize  firstRowpageSize) {
+		return sqlSession.selectList("basicSeminar.selectSearchList", firstRowpageSize);
+	}
+
 
 }

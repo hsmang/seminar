@@ -20,13 +20,13 @@
 	<br>
 
 	<div class="table-responsive">
-		<table class="table">
+		<table class="table" style="text-align: center;">
 			<tr>
-				<td>번호idx</td>
-				<td>제목subject</td>
-				<td>작성자user_idx</td>
-				<td>날짜reg_date or update_date</td>
-				<td>조회수count</td>
+				<td style="width:10%">번호</td>
+				<td style="width:40%">제목</td>
+				<td style="width:20%">작성자</td>
+				<td style="width:20%">날짜</td>
+				<td style="width:10%">조회수</td>
 			</tr>
 			<c:choose>
 				<c:when test="${fn:length(boardList) > 0}">
@@ -56,26 +56,65 @@
 	</div>
 	<!-- /.row -->
 
-	<div class="btn-group">
-		<select class="form-control">
-			<option>제목</option>
-			<option>제목+내용</option>
-			<option>내용</option>
-			<option>작성자</option>
-		</select>
-	</div>
-	<input class="btn btn-default" type="text" placeholder="검색내용">
-	<button type="button" id="btn_search" class="btn btn-default">검색</button>
+	<form id="search_form" method="get"> 
+		<div class="btn-group">
+			<select class="form-control" id="search_type" name="search_type">
+				<option value="subject" selected="selected">제목</option>
+				<option value="subjectcontent">제목+내용</option>
+				<option value="content">내용</option>
+				<option value="writer">작성자</option>
+			</select>
+		</div>
+	<input type=hidden id="pageNumber" name="pageNumber" value="1">
+	<input type=hidden id="pageSize" name="pageSize" value="10">
+	<input class="btn btn-default" id="search_value" name="search_value" type="text" placeholder="검색내용">
+	<button type="button" id="btn_search" class="btn btn-default" onclick="fn_search()">검색</button>
+	
+	
 	<%
 		if(user != null){
 	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/seminar/insert.do'" >작성</button>
 	<%} %>
+	</form>
 	<hr>
 	
 	<script>
-	$(document).ready(function(){
+	function fn_search(){
+		var search_value = $('#search_value').val();
+		if(search_value == ""){
+			alert("Please enter your search term.");
+		}else{
+			$("#search_form").attr("action", "/seminar.do?pageNumber=1&pageSize=10");
+			search_form.submit();
+		}
+	}
+	
+	function fn_goList(){
+		location.href='/seminar.do?pageNumber=1&pageSize=10';
+	}
+	
+	$(document).ready(function() {
+		var getUrlParameter = function getUrlParameter(sParam) {
+		    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+		        sURLVariables = sPageURL.split('&'),
+		        sParameterName,
+		        i;
 
+		    for (i = 0; i < sURLVariables.length; i++) {
+		        sParameterName = sURLVariables[i].split('=');
+
+		        if (sParameterName[0] === sParam) {
+		            return sParameterName[1] === undefined ? true : sParameterName[1];
+		        }
+		    }
+		};
+		
+		var search_value = getUrlParameter('search_value');
+		if(search_value != null){
+			$("#btn_search").after("&nbsp;<button type='button' id='btn_search' class='btn btn-default' onclick='fn_goList()'>목록</button>");
+		}
 	});
+		
 	</script>
 
 <%@include file="../../footer.jsp"%>

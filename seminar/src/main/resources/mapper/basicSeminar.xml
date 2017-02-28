@@ -16,6 +16,38 @@
         LIMIT #{firstRow} , #{pageSize}
     </select>
     
+    <select id="selectSearchList" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+    	SELECT 
+    		*
+    	FROM
+    		basic_seminar
+    	<where>
+	    	<choose> 
+		    	<when test="type == 'subject'"> AND board_subject like CONCAT('%', #{value} , '%') </when> 
+		    	<when test="type == 'content'"> AND board_content like CONCAT('%', #{value} , '%') </when>
+		    	<when test="type == 'subjectcontent'">AND ( board_subject like CONCAT('%', #{value} , '%') OR board_content like CONCAT('%', #{value} , '%') )</when> 
+		    	<!-- <when test="type == 'user_name'"> AND user_name like CONCAT('%', #{value} , '%') </when> --> 
+    		</choose>
+    	</where>
+    	ORDER BY board_idx DESC
+    	LIMIT #{firstRow} , #{pageSize}
+    </select>
+    
+    <select id="getSearchCount" parameterType="hashmap" resultType="int">
+    	SELECT 
+    		count(*)
+    	FROM
+    		basic_seminar
+    	<where>
+	    	<choose> 
+		    	<when test="type == 'subject'"> AND board_subject like CONCAT('%', #{value} , '%') </when> 
+		    	<when test="type == 'content'"> AND board_content like CONCAT('%', #{value} , '%') </when>
+		    	<when test="type == 'subjectcontent'">AND ( board_subject like CONCAT('%', #{value} , '%') OR board_content like CONCAT('%', #{value} , '%') )</when> 
+		    	<!-- <when test="type == 'user_name'"> AND user_name like CONCAT('%', #{value} , '%') </when> --> 
+    		</choose>
+    	</where>
+    </select>
+    
     <select id="selectUserList" resultType="jp.seminar.board.vo.Board_UserVO">
 		SELECT
 			user_idx,
@@ -102,7 +134,7 @@
     </select>
     
     <select id="getMaxIdx" resultType="int">
-    	SELECT MAX(board_idx) FROM basic_seminar 
+    	SELECT MAX(board_idx) FROM basic_seminar
     </select>
     
 </mapper>
