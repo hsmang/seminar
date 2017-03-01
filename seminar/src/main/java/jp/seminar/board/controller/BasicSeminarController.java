@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.mysql.jdbc.StringUtils;
 
 import jp.seminar.board.service.BoardService;
 import jp.seminar.board.vo.BoardImageVO;
@@ -88,10 +91,20 @@ public class BasicSeminarController {
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////
+	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
 	@RequestMapping(value = "/seminar/detail.do", method=RequestMethod.GET)
-	public ModelAndView getBasicSeminarBoardDetail(int board_idx, String f_type, HttpSession session) throws Exception{
+	public ModelAndView getBasicSeminarBoardDetail(int board_idx, String f_type, HttpSession session, HttpServletRequest request, HttpServletResponse response) throws Exception{
 		ModelAndView mv = new ModelAndView("/board/basicSeminar/basicSeminar_detail");
 
+		Cookie cookies[] = request.getCookies();
+		Map mapCookie = new HashMap();
+		if(request.getCookies() != null){
+			for(int i=0; i<cookies.length; i++){
+				Cookie obj = cookies[i];
+				mapCookie.put(obj.getName(), obj.getValue());
+			}
+		}
+		
 		UserVO user = (UserVO) session.getAttribute("user");
 		
 		BoardVO detail = new BoardVO();
@@ -110,6 +123,15 @@ public class BasicSeminarController {
 		
 		List<FileVO> fileList = boardService.getFileList(board_idx);
 		mv.addObject("fileList", fileList);
+		
+		String cookie_read_count = (String) mapCookie.get("read_count");
+		String new_cookie_read_count = "|" + board_idx;
+		
+		if(StringUtils.indexOfIgnoreCase(cookie_read_count, new_cookie_read_count) == -1){
+			Cookie cookie = new Cookie("read_count", cookie_read_count + new_cookie_read_count);
+			response.addCookie(cookie);
+			boardService.updateBoardCount(board_idx);
+		}
 		
 		return mv;
 	}

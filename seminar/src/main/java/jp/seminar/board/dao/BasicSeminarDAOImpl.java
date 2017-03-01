@@ -57,8 +57,8 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	}
 	
 	@Override
-	public int updateBoardCount(BoardVO board) {
-		return sqlSession.insert("basicSeminar.updateBoardCount", board);
+	public int updateBoardCount(int board_idx) {
+		return sqlSession.insert("basicSeminar.updateBoardCount", board_idx);
 	}
 
 	@Override

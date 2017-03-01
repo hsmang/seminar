@@ -82,11 +82,11 @@
         	board_idx = #{board_idx}
     </select>
     
-    <update id="updateBoardCount" parameterType="jp.seminar.board.vo.BoardVO">
+    <update id="updateBoardCount" parameterType="int">
     	UPDATE
     		basic_seminar
     	SET
-   			board_count = #{board_count}
+   			board_count = board_count + 1
     	WHERE
    			board_idx = #{board_idx}
     </update>

@@ -18,7 +18,7 @@ public interface BoardService {
 	
 	BoardVO getBoardDetail(int board_idx) throws Exception;
 	
-	int updateBoardCount(BoardVO board) throws Exception;
+	int updateBoardCount(int board_idx) throws Exception;
 	
 	int updateBoardDetail(BoardVO board) throws Exception;
 	

@@ -28,7 +28,7 @@ public interface BoardDAO {
 	
 	public List<ReplyVO> getReply(ReplyVO reply);
 	
-	public int updateBoardCount(BoardVO board);
+	public int updateBoardCount(int board_idx);
 	
 	public int insertBoardImage(BoardImageVO image);
 	

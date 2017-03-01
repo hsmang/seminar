@@ -31,8 +31,8 @@
 	</beans:bean>
 	
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-            <!-- 최대 업로드 수치(limit size bytes) : 50mb limit -->
-            <beans:property name="maxUploadSize" value="52428800" />  
+            <!-- 최대 업로드 수치(limit size bytes) : 10mb limit -->
+            <beans:property name="maxUploadSize" value="10000000" />  
             <!-- 업로드 파일 인코딩 -->
             <beans:property name="defaultEncoding" value="UTF-8" />
     </beans:bean>

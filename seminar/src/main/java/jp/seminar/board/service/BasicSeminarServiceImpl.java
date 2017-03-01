@@ -104,8 +104,8 @@ public class BasicSeminarServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int updateBoardCount(BoardVO board) throws Exception {
-		return boardDAO.updateBoardCount(board);
+	public int updateBoardCount(int board_idx) throws Exception {
+		return boardDAO.updateBoardCount(board_idx);
 	}
 
 	@Override
