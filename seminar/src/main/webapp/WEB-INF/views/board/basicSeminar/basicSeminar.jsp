@@ -8,26 +8,26 @@
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">
-				Basic Seminar <small>Subheading</small>
-			</h1>
+			<h1 class="page-header">기초 세미나 <small>Subheading</small></h1>
 			<ol class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
-				<li class="active">Basic Seminar</li>
+				<li><a href="/index.do">Home</a></li>
+				<li class="active">기초 세미나</li>
 			</ol>
 		</div>
 	</div>
 	<br>
 
-	<div class="table-responsive">
-		<table class="table" style="text-align: center;">
+	<table class="table table-hover table-responsive">
+		<thead>
 			<tr>
-				<td style="width:10%">번호</td>
-				<td style="width:40%">제목</td>
-				<td style="width:20%">작성자</td>
-				<td style="width:20%">날짜</td>
-				<td style="width:10%">조회수</td>
+				<th style="width:10%">번호</th>
+				<th style="width:40%">제목</th>
+				<th style="width:20%">작성자</th>
+				<th style="width:20%">날짜</th>
+				<th style="width:10%">조회수</th>
 			</tr>
+		</thead>
+		<tbody>
 			<c:choose>
 				<c:when test="${fn:length(boardList) > 0}">
 					<c:forEach items="${boardList }" var="list">
@@ -35,14 +35,15 @@
 							<td id="idx">${list.board_idx }</td>
 							<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
 							<td>${list.user_name }</td>
-							<td>${list.board_update_date }</td>
+							<td><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
+								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></td>
 							<td>${list.board_count }</td>
 						</tr>
 					</c:forEach>
 				</c:when>
 			</c:choose>
-		</table>
-	</div>
+		</tbody>
+	</table>
 
 	<hr>
 	<!-- Pagination -->
@@ -62,7 +63,6 @@
 				<option value="subject" selected="selected">제목</option>
 				<option value="subjectcontent">제목+내용</option>
 				<option value="content">내용</option>
-				<option value="writer">작성자</option>
 			</select>
 		</div>
 	<input type=hidden id="pageNumber" name="pageNumber" value="1">

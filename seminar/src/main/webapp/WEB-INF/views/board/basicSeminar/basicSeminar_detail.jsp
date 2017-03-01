@@ -15,7 +15,7 @@
 				Basic Seminar <small>Subheading</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
+				<li><a href="/index.do">Home</a></li>
 				<li class="active">Basic Seminar</li>
 			</ol>
 		</div>
@@ -30,14 +30,17 @@
 				<hr>
 				<h2>${detail.board_subject }</h2>
 					<!-- Date/Time -->
-					<p><i class="fa fa-clock-o"></i> Posted on ${detail.board_reg_date } / ${user.user_name }</p>
+					<p><i class="fa fa-clock-o"></i> Posted on <fmt:parseDate value='${detail.board_update_date }' var='update_date' pattern='yyyy-MM-dd HH:mm'/>
+															   <fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd HH:mm"/>
+															   &nbsp;&nbsp;&nbsp;&nbsp;<i class="fa fa-pencil" aria-hidden="true"></i>  ${user.user_name }</p>
 					<form id="fileFrm" method="post">
 					<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 					<c:choose>
 						<c:when test="${fn:length(fileList) > 0}">
 							<c:forEach items="${fileList }" var="fileList">
 								<input type="hidden" id="path" value="${fileList.f_attach_path }">
-								<a href="#this" id="file">${fileList.f_attach_name }</a> (${fileList.fileSize })
+								<i class="fa fa-file-o" aria-hidden="true"></i>
+								<a href="#this" id="file">${fileList.f_attach_name }</a> (${fileList.fileSize })&nbsp;&nbsp;<br>
 							</c:forEach>
 						</c:when>
 					</c:choose>

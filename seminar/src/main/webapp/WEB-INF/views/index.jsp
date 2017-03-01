@@ -13,7 +13,8 @@
         <!-- Wrapper for slides -->
         <div class="carousel-inner">
             <div class="item active">
-                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide One');"></div>
+                <!-- <div class="fill" style="background-image:url('/resources/wordcloud_demo.jpg');"></div> -->
+                <div class="fill"><img src="/resources/wordcloud_demo.jpg" style="width:100%;height:100%;"></div>
                 <div class="carousel-caption">
                     <h2>Caption 1</h2>
                 </div>
