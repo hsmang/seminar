@@ -121,6 +121,7 @@
 	                        </div>
 	                        <button type="submit" class="modal_btn">Sign in!</button>
 	                    </form>
+	                    <br>
 	                    <button type="button" id="join_btn" class="modal_btn">Join !</button>
         			</div>
         			
