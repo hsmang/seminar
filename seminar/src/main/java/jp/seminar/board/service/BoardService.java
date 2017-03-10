@@ -39,7 +39,7 @@ public interface BoardService {
 	int insertFile(FileVO fileinfo);
 	int insertFile(FileVO fileinfo, String board_idx);
 
-	List<FileVO> getFileList(int board_idx);
+	List<FileVO> getFileList(FileVO file);
 
 	int deleteFileinfo(FileVO fileinfo);
 

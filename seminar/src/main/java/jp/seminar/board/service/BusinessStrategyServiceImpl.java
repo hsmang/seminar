@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import jp.seminar.board.dao.BasicSeminarDAOImpl;
+import jp.seminar.board.dao.BusinessStrategyDAOImpl;
 import jp.seminar.board.util.FileSizeCalc;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
@@ -18,11 +18,11 @@ import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
-@Service("basicSeminarService")
-public class BasicSeminarServiceImpl implements BoardService {
+@Service("businessStrategyService")
+public class BusinessStrategyServiceImpl implements BoardService {
 	
-	@Resource(name="basicSeminarDao")
-	private BasicSeminarDAOImpl boardDAO;
+	@Resource(name="businessStrategyDao")
+	private BusinessStrategyDAOImpl boardDAO;
 	
 	@Override
 	public List<Board_UserVO> getUserList() throws Exception {
@@ -156,7 +156,7 @@ public class BasicSeminarServiceImpl implements BoardService {
 	public int insertFile(FileVO fileinfo) {
 		int	maxIdx = 0;
 		maxIdx = boardDAO.getMaxBoard_idx();
-		if(maxIdx == 0 || (Object)maxIdx == null){
+		if(maxIdx == 0){
 			maxIdx = 1;
 		}
 		fileinfo.setBoard_idx(++maxIdx);

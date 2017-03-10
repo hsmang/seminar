@@ -46,7 +46,7 @@ public class BasicSeminarController {
 	Logger log = Logger.getLogger(this.getClass());
 	
 ///////////////////////////////////////////////////////////////////////////////
-	@Resource(name="boardService")
+	@Resource(name="basicSeminarService")
 	private BoardService boardService;
 	
 ///////////////////////////////////////////////////////////////////////////////
@@ -121,7 +121,10 @@ public class BasicSeminarController {
 		List<ReplyVO> replyList = boardService.getReply(reply);
 		mv.addObject("replyList", replyList);
 		
-		List<FileVO> fileList = boardService.getFileList(board_idx);
+		FileVO file = new FileVO();
+		file.setBoard_idx(board_idx);
+		file.setF_type("SE");
+		List<FileVO> fileList = boardService.getFileList(file);
 		mv.addObject("fileList", fileList);
 		
 		String cookie_read_count = (String) mapCookie.get("read_count");
@@ -162,7 +165,10 @@ public class BasicSeminarController {
 		BoardVO board = boardService.getBoardDetail(board_idx);
 		mv.addObject("board", board);
 		mv.addObject("board_user_idx", board.getUser_idx());
-		List<FileVO> fileList = boardService.getFileList(board_idx);
+		FileVO file = new FileVO();
+		file.setBoard_idx(board_idx);
+		file.setF_type("SY");
+		List<FileVO> fileList = boardService.getFileList(file);
 		mv.addObject("fileList", fileList);
 						
 		return mv;

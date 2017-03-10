@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import jp.seminar.board.dao.BasicSeminarDAOImpl;
+import jp.seminar.board.dao.BusinessSystemDAOImpl;
 import jp.seminar.board.util.FileSizeCalc;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
@@ -18,11 +18,11 @@ import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
-@Service("basicSeminarService")
-public class BasicSeminarServiceImpl implements BoardService {
+@Service("businessSystemService")
+public class BusinessSystemServiceImpl implements BoardService {
 	
-	@Resource(name="basicSeminarDao")
-	private BasicSeminarDAOImpl boardDAO;
+	@Resource(name="businessSystemDao")
+	private BusinessSystemDAOImpl boardDAO;
 	
 	@Override
 	public List<Board_UserVO> getUserList() throws Exception {
@@ -156,7 +156,7 @@ public class BasicSeminarServiceImpl implements BoardService {
 	public int insertFile(FileVO fileinfo) {
 		int	maxIdx = 0;
 		maxIdx = boardDAO.getMaxBoard_idx();
-		if(maxIdx == 0 || (Object)maxIdx == null){
+		if(maxIdx == 0){
 			maxIdx = 1;
 		}
 		fileinfo.setBoard_idx(++maxIdx);
@@ -170,8 +170,8 @@ public class BasicSeminarServiceImpl implements BoardService {
 	}
 
 	@Override
-	public List<FileVO> getFileList(FileVO fileinfo) {
-		List<FileVO> fileList = boardDAO.getFileList(fileinfo);
+	public List<FileVO> getFileList(FileVO file) {
+		List<FileVO> fileList = boardDAO.getFileList(file);
 		FileSizeCalc calc = new FileSizeCalc();
 		int index = 0;
 		for (FileVO fileVO : fileList) {
@@ -179,8 +179,9 @@ public class BasicSeminarServiceImpl implements BoardService {
 			fileOne.setF_attach_idx(fileVO.getF_attach_idx());
 			fileOne.setF_attach_name(fileVO.getF_attach_name());
 			fileOne.setF_attach_path(fileVO.getF_attach_path());
-			File file = new File(fileVO.getF_attach_path()+fileVO.getF_attach_name());
-			fileOne.setOriginal_fileSize(Long.toString(file.length()));
+			fileOne.setF_type(fileVO.getF_type());
+			File fileTmp = new File(fileVO.getF_attach_path()+fileVO.getF_attach_name());
+			fileOne.setOriginal_fileSize(Long.toString(fileTmp.length()));
 			fileOne.setFileSize(calc.sizeCalc(fileVO.getF_attach_path()+fileVO.getF_attach_name()));
 			fileList.set((index++), fileOne);
 		}

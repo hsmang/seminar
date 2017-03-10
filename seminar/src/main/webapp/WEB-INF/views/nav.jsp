@@ -34,13 +34,13 @@
                                 <a href="/seminar.do?pageNumber=1&pageSize=10">기초세미나</a>
                             </li>
                             <li>
-                                <a href="/businessadmin.do">경영학</a>
+                                <a href="/businessAdmin.do?pageNumber=1&pageSize=10">경영학</a>
                             </li>
                             <li>
-                                <a href="/businessstrategy.do">경영전략론</a>
+                                <a href="/businessStrategy.do?pageNumber=1&pageSize=10">경영전략론</a>
                             </li>
                             <li>
-                                <a href="/businesssystem.do">사업시스템론</a>
+                                <a href="/businessSystem.do?pageNumber=1&pageSize=10">사업시스템론</a>
                             </li>
                         </ul>
                     </li>
