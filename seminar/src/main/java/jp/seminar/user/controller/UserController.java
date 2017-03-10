@@ -38,6 +38,14 @@ public class UserController {
 	@Resource(name="userService")
 	private UserService userService;
 	
+	@RequestMapping(value = "/login.do", method = RequestMethod.GET)
+	public ModelAndView login(String type) {
+		ModelAndView mav = new ModelAndView();
+		mav.setViewName("user/login");
+		mav.addObject("type", type);
+		return mav ;
+	}
+	
 	@RequestMapping(value = "/join.do", method = RequestMethod.GET)
 	public ModelAndView join(UserVO joinUser) {
 		ModelAndView mav = new ModelAndView();
@@ -161,6 +169,28 @@ public class UserController {
 		String url = request.getRequestURL().toString();
 		String old_url = request.getHeader("REFERER");
 		int result = userService.userRoleProc(updateUser);
+		
+		mav.setViewName("jsonView");
+		mav.addObject("result",true);
+		return mav ;
+	}
+	
+	@RequestMapping(value = "/state_change.do", method = RequestMethod.POST)
+	public ModelAndView stateChangeProc(HttpServletRequest request, HttpSession session, UserVO updateUser) {
+		ModelAndView mav = new ModelAndView();
+		UserVO user = (UserVO) session.getAttribute("user");
+		if(user == null){
+			mav.setViewName("redirect:/index.do");
+			return mav;
+		}else{
+			if(user.getUser_role() != 0){
+				mav.setViewName("redirect:/index.do");
+				return mav;
+			}
+		}
+		String url = request.getRequestURL().toString();
+		String old_url = request.getHeader("REFERER");
+		int result = userService.userStateProc(updateUser);
 		
 		mav.setViewName("jsonView");
 		mav.addObject("result",true);

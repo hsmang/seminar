@@ -31,18 +31,18 @@
             <div class="col-md-4">
                 <h3>Contact Details</h3>
                 <p>
-                    3481 Melrose Place<br>Beverly Hills, CA 90210<br>
+                    〒577-8502 大阪府東大阪市小若江3-4-1<br>
                 </p>
                 <p><i class="fa fa-phone"></i> 
-                    <abbr title="Phone">P</abbr>: (123) 456-7890</p>
+                    <abbr title="Phone">P</abbr>: (06)6721-2332</p>
                 <p><i class="fa fa-envelope-o"></i> 
-                    <abbr title="Email">E</abbr>: <a href="mailto:name@example.com">name@example.com</a>
+                    <abbr title="Email">E</abbr>: <a href="mailto:kindaibusinesskim@gmail.com">kindaibusinesskim@gmail.com</a>
                 </p>
                 <p><i class="fa fa-clock-o"></i> 
-                    <abbr title="Hours">H</abbr>: Monday - Friday: 9:00 AM to 5:00 PM</p>
+                    <abbr title="Hours">H</abbr>: 月曜日　13：00 ~ 14：40分</p>
                 <ul class="list-unstyled list-inline list-social-icons">
                     <li>
-                        <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                        <a href="http://facebook.com/kindaibusinesskim"><i class="fa fa-facebook-square fa-2x"></i></a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-linkedin-square fa-2x"></i></a>

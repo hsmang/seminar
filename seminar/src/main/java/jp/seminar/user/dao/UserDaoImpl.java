@@ -115,4 +115,9 @@ public class UserDaoImpl implements UserDao{
 	public int userRoleProc(UserVO user) {
 		return sqlSession.update("user.userRoleChange", user);
 	}
+
+	@Override
+	public int userStateProc(UserVO user) {
+		return sqlSession.update("user.userStateChange", user);
+	}
 }

@@ -7,6 +7,7 @@ $(function(){
 	$("#role_view option[value=" + order + "]").attr('selected', 'selected');
 })
 </script>
+<script type="text/javascript" src="/resources/js/admin/user_script.js"></script>
 <div class="container">
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row">
@@ -44,6 +45,7 @@ $(function(){
 				<td>date</td>
 				<td>role</td>
 				<td>role_change</td>
+				<td>state_change</td>
 			</tr>
 			<c:choose>
 				<c:when test="${fn:length(userList) > 0}">
@@ -81,6 +83,27 @@ $(function(){
 								<option value="0">Admin</option>
 								<option value="1">Manager</option>
 								<option selected value="2">Member</option>
+							</c:if>
+								</select>
+								</div>
+							</td>
+							<td>
+							<div class="btn-group">
+								<select class="form-control" id="state_change" onchange="state_change(${user.user_idx } , this.value)">
+							<c:if test="${user.user_state == 0 }">
+								<option selected value="0">waiting</option>
+								<option value="1">Member</option>
+								<option value="2">Out</option>
+							</c:if>
+							<c:if test="${user.user_state == 1 }">
+								<option value="0">Waiting</option>
+								<option selected value="1">Member</option>
+								<option value="2">Out</option>
+							</c:if>
+							<c:if test="${user.user_state == 2 }">
+								<option value="0">Waiting</option>
+								<option value="1">Member</option>
+								<option selected value="2">Out</option>
 							</c:if>
 								</select>
 								</div>

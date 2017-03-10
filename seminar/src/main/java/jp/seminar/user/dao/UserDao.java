@@ -17,4 +17,5 @@ public interface UserDao {
 	int getTotalCount(String order);
 	List<UserVO> getUserList(FirstRowPageSize firstRowpageSize, String order);
 	int userRoleProc(UserVO user);
+	int userStateProc(UserVO user);
 }

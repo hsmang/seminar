@@ -30,10 +30,8 @@ $(document).ready(function(){
                 data: param,
                 cache: false,
                 success: function(result) {
-                	console.log(result);
                 	if(result.result){
-                		alert("회원가입 완료");
-                		location.href="/index.do";
+                		location.href="/user/login.do?type=join";
                 	}else{
                 		$('#success').html("<div class='alert alert-danger'>");
                         $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")

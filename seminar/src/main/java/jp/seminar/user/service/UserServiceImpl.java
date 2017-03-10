@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService{
 		return userDao.userRoleProc(user);
 	}
 
+	@Override
+	public int userStateProc(UserVO user) {
+		return userDao.userStateProc(user);
+	}
+
 }

@@ -34,14 +34,3 @@ function getQuerystring(paramName){
 	}
 }
 
-function role_change(user_idx, user_role){
-	$.ajax({
-		url : "/user/role_change.do?user_idx=" + user_idx + "&user_role=" + user_role,
-		type : "post",
-		success : function(result){
-			if(result){
-				location.reload();
-			}
-		}
-	})
-}

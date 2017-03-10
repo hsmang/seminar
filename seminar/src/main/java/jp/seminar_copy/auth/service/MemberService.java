@@ -1,4 +1,4 @@
-package jp.seminar_copy.auth.service;
+/*package jp.seminar_copy.auth.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -36,3 +36,4 @@ public class MemberService implements UserDetailsService{
 		return user;
 	}
 }
+*/

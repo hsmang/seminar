@@ -19,4 +19,5 @@ public interface UserService {
 	List<UserVO> getUserList(FirstRowPageSize firstRowpageSize, String order);
 
 	int userRoleProc(UserVO user);
+	int userStateProc(UserVO user);
 }

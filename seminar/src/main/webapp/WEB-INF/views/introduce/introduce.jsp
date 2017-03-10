@@ -34,7 +34,7 @@
         </div>
         <!-- /.row -->
 
-        <!-- Team Members -->
+        <!-- <!-- Team Members -->
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="page-header">Our Team</h2>
@@ -154,9 +154,9 @@
                 </div>
             </div>
         </div>
-        <!-- /.row -->
+        /.row
 
-        <!-- Our Customers -->
+        Our Customers
         <div class="row">
             <div class="col-lg-12">
                 <h2 class="page-header">Our Customers</h2>
@@ -179,7 +179,7 @@
             <div class="col-md-2 col-sm-4 col-xs-6">
                 <img class="img-responsive customer-img" src="http://placehold.it/500x300" alt="">
             </div>
-        </div>
+        </div> -->
         <!-- /.row -->
 
 <%@include file="../footer.jsp"%>

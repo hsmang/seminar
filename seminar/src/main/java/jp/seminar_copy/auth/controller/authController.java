@@ -1,4 +1,4 @@
-package jp.seminar_copy.auth.controller;
+/*package jp.seminar_copy.auth.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,3 +33,4 @@ public class authController {
 		return mv;
 	}
 }
+*/
