@@ -397,7 +397,9 @@ public class BusinessAdminController {
 			image.setF_img_path(rlFileNm);
 			image.setF_type("AD");
 			boardService.insertBoardImage(image);
-
+/*
+ * 우시끼끼끼끼끼끼끾ㄲ
+ */
 			///////////////// 서버에 파일쓰기 /////////////////
 			// 정보 출력
 			sFileInfo += "&bNewLine=true";
