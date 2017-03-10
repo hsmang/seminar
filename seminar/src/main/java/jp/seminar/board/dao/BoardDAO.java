@@ -40,7 +40,7 @@ public interface BoardDAO {
 	
 	public int getMaxBoard_idx();
 	
-	public List<FileVO> getFileList(int board_idx);
+	public List<FileVO> getFileList(FileVO file);
 	
 	public int deleteFileinfo(FileVO fileinfo);
 

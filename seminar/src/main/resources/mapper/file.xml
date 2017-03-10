@@ -21,7 +21,7 @@
 	    		)
 	</insert> 
 	
-	<select id="selectFileList" parameterType="int" resultType="jp.seminar.board.vo.FileVO">
+	<select id="selectFileList" parameterType="jp.seminar.board.vo.FileVO" resultType="jp.seminar.board.vo.FileVO">
         SELECT
         	f_attach_idx,
         	f_attach_path,
@@ -29,7 +29,9 @@
         FROM
         	board_attach
         WHERE
-        	board_idx = #{board_idx}        
+        	board_idx = #{board_idx}  
+        	AND
+        	f_type = #{f_type}
     </select>
     
     <delete id="deleteFileinfo" parameterType="jp.seminar.board.vo.FileVO">

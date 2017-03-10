@@ -15,7 +15,7 @@ import jp.seminar.board.vo.ReplyVO;
 import jp.seminar.paging.FirstRowPageSize;
 
 
-@Repository("boardDao")
+@Repository("basicSeminarDao")
 public class BasicSeminarDAOImpl implements BoardDAO {
 
 	@Autowired
@@ -97,8 +97,8 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public List<FileVO> getFileList(int board_idx) {
-		return sqlSession.selectList("file.selectFileList", board_idx);
+	public List<FileVO> getFileList(FileVO file) {
+		return sqlSession.selectList("file.selectFileList", file);
 	}
 
 	@Override

@@ -4,12 +4,7 @@
 <mapper namespace="basicSeminar">
     <select id="selectList" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
         SELECT
-        	board_idx,
-        	board_subject,
-        	user_idx,
-        	board_reg_date,
-        	board_count,
-        	board_update_date
+        	*
         FROM
         	basic_seminar
         ORDER BY board_idx DESC
@@ -69,13 +64,7 @@
     
     <select id="selectDetail" parameterType="int" resultType="jp.seminar.board.vo.BoardVO">
         SELECT
-        	board_idx,
-        	board_subject,
-        	board_content,
-        	board_reg_date,
-        	user_idx,
-        	board_count,
-        	board_update_date
+        	*
         FROM
         	basic_seminar
         WHERE
