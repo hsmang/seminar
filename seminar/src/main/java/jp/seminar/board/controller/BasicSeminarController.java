@@ -167,10 +167,10 @@ public class BasicSeminarController {
 		mv.addObject("board_user_idx", board.getUser_idx());
 		FileVO file = new FileVO();
 		file.setBoard_idx(board_idx);
-		file.setF_type("SY");
+		file.setF_type("SE");
 		List<FileVO> fileList = boardService.getFileList(file);
 		mv.addObject("fileList", fileList);
-						
+		System.out.println(fileList);
 		return mv;
 	}
 	
