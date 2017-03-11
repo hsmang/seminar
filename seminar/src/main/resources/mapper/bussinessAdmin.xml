@@ -124,7 +124,8 @@
     </select>
     
     <select id="getMaxIdx" resultType="int">
-    	SELECT MAX(board_idx) FROM business_admin
+    	SELECT if( isnull(MAX(board_idx)), 0, MAX(board_idx))
+    	FROM business_admin
     </select>
 
 </mapper>

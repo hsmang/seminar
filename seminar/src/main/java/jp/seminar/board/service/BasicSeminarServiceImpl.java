@@ -154,11 +154,7 @@ public class BasicSeminarServiceImpl implements BoardService {
 
 	@Override
 	public int insertFile(FileVO fileinfo) {
-		int	maxIdx = 0;
-		maxIdx = boardDAO.getMaxBoard_idx();
-		if(maxIdx == 0 || (Object)maxIdx == null){
-			maxIdx = 1;
-		}
+		int	maxIdx = boardDAO.getMaxBoard_idx();
 		fileinfo.setBoard_idx(++maxIdx);
 		return boardDAO.insertFileinfo(fileinfo);
 	}

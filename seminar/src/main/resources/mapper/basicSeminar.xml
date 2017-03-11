@@ -123,7 +123,8 @@
     </select>
     
     <select id="getMaxIdx" resultType="int">
-    	SELECT MAX(board_idx) FROM basic_seminar
+    	SELECT if( isnull(MAX(board_idx)), 0, MAX(board_idx))
+    	FROM basic_seminar
     </select>
     
 </mapper>
