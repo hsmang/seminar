@@ -226,7 +226,7 @@ public class BusinessSystemController {
 
 		try {
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
-			String filePath = dftFilePath + "resources\\file_upload\\";
+			String filePath = dftFilePath + "resources/file_upload/";
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 			MultipartFile multipartFile = null;
@@ -243,7 +243,7 @@ public class BusinessSystemController {
 					String day_format = day.format(new java.util.Date());
 					Random rand = new Random();
 					int r = rand.nextInt(99999);
-					filePath = filePath + year_format + "\\" + month_format + "\\" + day_format + "\\" + r + "\\";
+					filePath = filePath + year_format + "/" + month_format + "/" + day_format + "/" + r + "/";
 
 					File file = new File(filePath);
 					if (file.exists() == false) {
@@ -319,7 +319,7 @@ public class BusinessSystemController {
 					// 파일 기본경로
 					String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 					// 파일 기본경로 _ 상세경로
-					String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
+					String filePath = dftFilePath + "resources/photo_upload/";
 					File file = new File(filePath);
 					if (!file.exists()) {
 						file.mkdirs();
@@ -367,7 +367,7 @@ public class BusinessSystemController {
 			// 파일 기본경로
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			// 파일 기본경로 _ 상세경로
-			String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
+			String filePath = dftFilePath + "resources/photo_upload/";
 			File file = new File(filePath);
 			if (!file.exists()) {
 				file.mkdirs();

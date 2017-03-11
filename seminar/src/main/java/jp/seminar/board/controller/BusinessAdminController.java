@@ -225,7 +225,7 @@ public class BusinessAdminController {
 
 		try {
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
-			String filePath = dftFilePath + "resources\\file_upload\\";
+			String filePath = dftFilePath + "resources/file_upload/";
 			MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
 			Iterator<String> iterator = multipartHttpServletRequest.getFileNames();
 			MultipartFile multipartFile = null;
@@ -242,7 +242,7 @@ public class BusinessAdminController {
 					String day_format = day.format(new java.util.Date());
 					Random rand = new Random();
 					int r = rand.nextInt(99999);
-					filePath = filePath + year_format + "\\" + month_format + "\\" + day_format + "\\" + r + "\\";
+					filePath = filePath + year_format + "/" + month_format + "/" + day_format + "/" + r + "/";
 
 					File file = new File(filePath);
 					if (file.exists() == false) {
@@ -318,7 +318,7 @@ public class BusinessAdminController {
 					// 파일 기본경로
 					String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 					// 파일 기본경로 _ 상세경로
-					String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
+					String filePath = dftFilePath + "resources/photo_upload/";
 					File file = new File(filePath);
 					if (!file.exists()) {
 						file.mkdirs();
@@ -366,7 +366,7 @@ public class BusinessAdminController {
 			// 파일 기본경로
 			String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 			// 파일 기본경로 _ 상세경로
-			String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
+			String filePath = dftFilePath + "resources/photo_upload/";
 			File file = new File(filePath);
 			if (!file.exists()) {
 				file.mkdirs();
@@ -397,9 +397,6 @@ public class BusinessAdminController {
 			image.setF_img_path(rlFileNm);
 			image.setF_type("AD");
 			boardService.insertBoardImage(image);
-/*
- * 우시끼끼끼끼끼끼끾ㄲ
- */
 			///////////////// 서버에 파일쓰기 /////////////////
 			// 정보 출력
 			sFileInfo += "&bNewLine=true";
