@@ -48,13 +48,13 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">세미나 자료용<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/productdev.do">상품개발</a>
+                                <a href="/product.do">상품개발</a>
                             </li>
                             <li>
-                                <a href="/businesscontest.do">비지니스 컨테스트</a>
+                                <a href="/contest.do">비지니스 컨테스트</a>
                             </li>
                             <li>
-                                <a href="/tourbusiness.do">관광사업</a>
+                                <a href="/tour.do">관광사업</a>
                             </li>
                             <li>
                                 <a href="/album.do">앨범</a>

@@ -1,4 +1,4 @@
-package jp.seminar.board.controller;
+package jp.seminar.dataBoard.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,25 +29,25 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.mysql.jdbc.StringUtils;
 
-import jp.seminar.board.service.BoardService;
 import jp.seminar.board.vo.BoardImageVO;
 import jp.seminar.board.vo.BoardVO;
 import jp.seminar.board.vo.Board_UserVO;
 import jp.seminar.board.vo.FileVO;
 import jp.seminar.board.vo.PhotoVO;
 import jp.seminar.board.vo.ReplyVO;
+import jp.seminar.dataBoard.service.DataBoardService;
 import jp.seminar.paging.FirstRowPageSize;
 import jp.seminar.paging.Paging;
 import jp.seminar.user.model.UserVO;
 @Controller
-public class BusinessStrategyController {
+public class TourController {
 	///////////////////////////////////////////////////////////////////////////////
-	@Resource(name = "businessStrategyService")
-	private BoardService boardService;
+	@Resource(name = "tourService")
+	private DataBoardService boardService;
 
 	///////////////////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/businessStrategy.do")
-	public ModelAndView getBusinessStrategyBoardList(String pageNumber, String pageSize, String search_value,
+	@RequestMapping(value = "/tour.do")
+	public ModelAndView getTourBoardList(String pageNumber, String pageSize, String search_value,
 			String search_type, HttpServletResponse response, HttpServletRequest request, HttpSession session)
 			throws Exception {
 
@@ -61,7 +61,7 @@ public class BusinessStrategyController {
 			firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
 			firstRowpageSize.setPageSize(boardPaging.getPageSize());
 
-			ModelAndView mv = new ModelAndView("/board/businessStrategy/businessStrategy");
+			ModelAndView mv = new ModelAndView("/seminar/tour/tour");
 			List<BoardVO> boardList = boardService.getBoardList(firstRowpageSize);
 
 			mv.addObject("boardList", boardList);
@@ -80,7 +80,7 @@ public class BusinessStrategyController {
 			firstRowpageSize.setType(search_type);
 			firstRowpageSize.setValue(search_value);
 
-			ModelAndView mv = new ModelAndView("/board/businessStrategy/businessStrategy");
+			ModelAndView mv = new ModelAndView("/seminar/tour/tour");
 			List<BoardVO> boardList = boardService.getBoardSearchList(firstRowpageSize);
 
 			mv.addObject("boardList", boardList);
@@ -92,10 +92,10 @@ public class BusinessStrategyController {
 
 	///////////////////////////////////////////////////////////////////////////////
 	@SuppressWarnings({ "rawtypes", "unchecked", "unused" })
-	@RequestMapping(value = "/businessStrategy/detail.do", method = RequestMethod.GET)
-	public ModelAndView getBusinessStrategyBoardDetail(int board_idx, String f_type, HttpSession session,
+	@RequestMapping(value = "/tour/detail.do", method = RequestMethod.GET)
+	public ModelAndView getTourBoardDetail(int board_idx, String f_type, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws Exception {
-		ModelAndView mv = new ModelAndView("/board/businessStrategy/businessStrategy_detail");
+		ModelAndView mv = new ModelAndView("/seminar/tour/tour_detail");
 
 		Cookie cookies[] = request.getCookies();
 		Map mapCookie = new HashMap();
@@ -120,12 +120,11 @@ public class BusinessStrategyController {
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
 		List<ReplyVO> replyList = boardService.getReply(reply);
-		System.out.println(replyList);
 		mv.addObject("replyList", replyList);
 
 		FileVO file = new FileVO();
 		file.setBoard_idx(board_idx);
-		file.setF_type("ST");
+		file.setF_type("TO");
 		List<FileVO> fileList = boardService.getFileList(file);
 		mv.addObject("fileList", fileList);
 
@@ -141,15 +140,15 @@ public class BusinessStrategyController {
 		return mv;
 	}
 
-	@RequestMapping(value = "/businessStrategy/fileDownload.do")
-	public ModelAndView fileDownload_BusinessStrategy(@RequestParam("filePath") String filePath) throws Exception {
+	@RequestMapping(value = "/tour/fileDownload.do")
+	public ModelAndView fileDownload_Tour(@RequestParam("filePath") String filePath) throws Exception {
 		String path = filePath;
 		File downloadFile = new File(path);
 		return new ModelAndView("fileDownloadView", "downloadFile", downloadFile);
 	}
 
-	@RequestMapping(value = "/businessStrategy/insertReply.do")
-	public String insertBusinessStrategyReply(ReplyVO reply, HttpServletRequest request, int board_idx, String f_type)
+	@RequestMapping(value = "/tour/insertReply.do")
+	public String insertTourReply(ReplyVO reply, HttpServletRequest request, int board_idx, String f_type)
 			throws Exception {
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
@@ -158,13 +157,13 @@ public class BusinessStrategyController {
 
 		boardService.insertReply(reply);
 
-		return "redirect:/businessStrategy/detail.do?board_idx=" + board_idx + "&f_type=" + f_type;
+		return "redirect:/tour/detail.do?board_idx=" + board_idx + "&f_type=" + f_type;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/businessStrategy/update.do", method = RequestMethod.GET)
-	public ModelAndView updateBusinessStrategyBoardDetail(int board_idx) throws Exception {
-		ModelAndView mv = new ModelAndView("/board/businessStrategy/businessStrategy_update");
+	@RequestMapping(value = "/tour/update.do", method = RequestMethod.GET)
+	public ModelAndView updateTourBoardDetail(int board_idx) throws Exception {
+		ModelAndView mv = new ModelAndView("/seminar/tour/tour_update");
 
 		BoardVO board = boardService.getBoardDetail(board_idx);
 		mv.addObject("board", board);
@@ -182,46 +181,46 @@ public class BusinessStrategyController {
 	/*
 	 * boardVO 매개변수로 다 받음
 	 */
-	@RequestMapping(value = "/businessStrategy/updateProc.do")
-	public String updateProcBusinessStrategyBoardDetail(BoardVO board, HttpServletRequest request) throws Exception {
+	@RequestMapping(value = "/tour/updateProc.do")
+	public String updateProcTourBoardDetail(BoardVO board, HttpServletRequest request) throws Exception {
 
 		boardService.updateBoardDetail(board);
 
-		return "redirect:/businessStrategy.do";
+		return "redirect:/tour.do";
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/businessStrategy/deleteProc.do")
-	public String deleteBusinessStrategyBoardDetail(int board_idx) throws Exception {
+	@RequestMapping(value = "/tour/deleteProc.do")
+	public String deleteTourBoardDetail(int board_idx) throws Exception {
 		boardService.deleteBoardDetail(board_idx);
 
-		return "redirect:/businessStrategy.do";
+		return "redirect:/tour.do";
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
-	@RequestMapping(value = "/businessStrategy/insert.do")
-	public String insertBusinessStrategyBoard() throws Exception {
+	@RequestMapping(value = "/tour/insert.do")
+	public String insertTourBoard() throws Exception {
 
-		return "/board/businessStrategy/businessStrategy_insert";
+		return "/seminar/tour/tour_insert";
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
 
-	@RequestMapping(value = "/businessStrategy/insertProc.do")
-	public String insertProcBusinessStrategyBoard(BoardVO board, HttpServletRequest request, HttpSession session)
+	@RequestMapping(value = "/tour/insertProc.do")
+	public String insertProcTourBoard(BoardVO board, HttpServletRequest request, HttpSession session)
 			throws Exception {
 		UserVO user = (UserVO) session.getAttribute("user");
 		board.setUser_idx(user.getUser_idx());
 		boardService.insertBoard(board);
 
-		return "redirect:/businessStrategy.do";
+		return "redirect:/tour.do";
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
 
-	@RequestMapping(value = "/businessStrategy/fileUpload.do")
+	@RequestMapping(value = "/tour/fileUpload.do")
 	@ResponseBody
-	public Map<String, String> fileUpload_BusinessStrategy(HttpServletRequest request, FileVO filevo, String board_idx)
+	public Map<String, String> fileUpload_Tour(HttpServletRequest request, FileVO filevo, String board_idx)
 			throws Exception {
 
 		Map<String, String> resultMap = new HashMap<String, String>();
@@ -261,7 +260,7 @@ public class BusinessStrategyController {
 					FileVO fileinfo = new FileVO();
 					fileinfo.setF_attach_path(filePath);
 					fileinfo.setF_attach_name(originalFileName);
-					fileinfo.setF_type("ST");
+					fileinfo.setF_type("TO");
 					if (board_idx == null)
 						boardService.insertFile(fileinfo);
 					else
@@ -277,9 +276,9 @@ public class BusinessStrategyController {
 		return resultMap;
 	}
 
-	@RequestMapping(value = "/businessStrategy/fileDelete.do")
+	@RequestMapping(value = "/tour/fileDelete.do")
 	@ResponseBody
-	public Map<String, String> fileDelete_BusinessStrategy(String name, int index) throws Exception {
+	public Map<String, String> fileDelete_Tour(String name, int index) throws Exception {
 		FileVO fileinfo = new FileVO();
 		fileinfo.setBoard_idx(index);
 		fileinfo.setF_attach_name(name);
@@ -292,8 +291,8 @@ public class BusinessStrategyController {
 	}
 
 	/////////////////////////////////////////////////////////////////////////////
-	@RequestMapping("/businessStrategy/photoUpload.do")
-	public String singlePhotoUpload_BusinessStrategy(HttpServletRequest request, HttpServletResponse response, PhotoVO editor) {
+	@RequestMapping("/tour/photoUpload.do")
+	public String singlePhotoUpload_Tour(HttpServletRequest request, HttpServletResponse response, PhotoVO editor) {
 		String return1 = request.getParameter("callback");
 		String return2 = "?callback_func=" + request.getParameter("callback_func");
 		String return3 = "";
@@ -336,7 +335,7 @@ public class BusinessStrategyController {
 					BoardImageVO image = new BoardImageVO();
 					image.setF_img_name(request.getHeader("file-name"));
 					image.setF_img_path(rlFileNm);
-					image.setF_type("ST");
+					image.setF_type("TO");
 					boardService.insertBoardImage(image);
 
 					editor.getFiledata().transferTo(new File(rlFileNm));
@@ -355,8 +354,8 @@ public class BusinessStrategyController {
 	}
 
 	///////////////////////////////////////////////////////////////////////////////
-	@RequestMapping("/businessStrategy/multiplePhotoUpload.do")
-	public void multiplePhotoUpload_BusinessStrategy(HttpServletRequest request, HttpServletResponse response) {
+	@RequestMapping("/tour/multiplePhotoUpload.do")
+	public void multiplePhotoUpload_Tour(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			// 파일정보
 			String sFileInfo = "";
@@ -398,7 +397,7 @@ public class BusinessStrategyController {
 			BoardImageVO image = new BoardImageVO();
 			image.setF_img_name(filename);
 			image.setF_img_path(rlFileNm);
-			image.setF_type("ST");
+			image.setF_type("TO");
 			boardService.insertBoardImage(image);
 
 			///////////////// 서버에 파일쓰기 /////////////////

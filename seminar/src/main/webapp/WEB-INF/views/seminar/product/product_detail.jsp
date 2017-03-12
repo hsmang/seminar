@@ -12,11 +12,11 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">
-				BusinessSystem <small>Subheading</small>
+				Business Admin <small>Subheading</small>
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="/index.do">Home</a></li>
-				<li class="active">BusinessSystem</li>
+				<li class="active">Business Admin</li>
 			</ol>
 		</div>
 	</div>
@@ -55,12 +55,12 @@
 							int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
 							int user_idx = user.getUser_idx();
 							if(board_user_idx == user_idx){%>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessSystem/update.do?board_idx=${detail.board_idx}'">수정</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessSystem/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/update.do?board_idx=${detail.board_idx}'">수정</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>
 							<% }
 						}else{%>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessSystem/update.do?board_idx=${detail.board_idx}'">수정</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessSystem/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>	
+							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/update.do?board_idx=${detail.board_idx}'">수정</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>	
 						<%} %>
 				<%} %>
 				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">목록</button>
@@ -100,13 +100,13 @@
 			$('#btn_save').on("click",function(e) {
 				e.preventDefault();
 				var board_idx = document.getElementById('board_idx').value;
-				$("#frm").attr("action","/businessSystem/insertReply.do?board_idx="+ board_idx + "&f_type=SY");
+				$("#frm").attr("action","/businessAdmin/insertReply.do?board_idx="+ board_idx + "&f_type=SE");
 				if(frm.reply_content.value == "") {
 					alert("댓글을 입력해주세요.");
 					return;
 				}
 				frm.submit();
-				history.pushState(null, 'page -1',"/businessSystem.do");
+				history.pushState(null, 'page -1',"/businessAdmin.do");
 			});
 			
 			$('a[id="file"]').on("click", function(e){
@@ -117,7 +117,7 @@
 		
 		function fn_downloadFile(obj){
 			var filePath = $('#path').val()+obj.html(); 
-			$("#fileFrm").attr("action", "/businessSystem/fileDownload.do");
+			$("#fileFrm").attr("action", "/seminar/fileDownload.do");
 			$("#fileFrm").append('<input type="hidden" name="filePath" id="filePath" value="' +filePath+ '">');
 			fileFrm.submit();
 		}		

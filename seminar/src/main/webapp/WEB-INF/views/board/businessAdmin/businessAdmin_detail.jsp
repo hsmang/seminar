@@ -100,7 +100,7 @@
 			$('#btn_save').on("click",function(e) {
 				e.preventDefault();
 				var board_idx = document.getElementById('board_idx').value;
-				$("#frm").attr("action","/businessAdmin/insertReply.do?board_idx="+ board_idx + "&f_type=SE");
+				$("#frm").attr("action","/businessAdmin/insertReply.do?board_idx="+ board_idx + "&f_type=AD");
 				if(frm.reply_content.value == "") {
 					alert("댓글을 입력해주세요.");
 					return;
