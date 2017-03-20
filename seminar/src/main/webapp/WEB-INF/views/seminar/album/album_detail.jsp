@@ -11,11 +11,11 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">
-				Basic Seminar <small>Subheading</small>
+				アルバム 
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="/index.do">Home</a></li>
-				<li class="active">Basic Seminar</li>
+				<li class="active">アルバム</li>
 			</ol>
 		</div>
 	</div>
@@ -54,15 +54,15 @@
 							int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
 							int user_idx = user.getUser_idx();
 							if(board_user_idx == user_idx){%>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">수정</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>
 							<% }
 						}else{%>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">수정</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">삭제</button>	
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>	
 						<%} %>
 				<%} %>
-				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">목록</button>
+				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">目録</button>
 				<br><br>
 		
 				<!-- Comments Form -->
@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <textarea class="form-control" id="reply_content" name="reply_content" rows="3" form="frm" ></textarea>
                         </div>
-                        <input class="btn btn-primary" type="button" id="btn_save" value="댓글 저장">
+                        <input class="btn btn-primary" type="button" id="btn_save" value="コメントセーブ">
                     </form>
                 </div>
                 <hr> 
@@ -101,7 +101,7 @@
 				var board_idx = document.getElementById('board_idx').value;
 				$("#frm").attr("action","/seminar/insertReply.do?board_idx="+ board_idx + "&f_type=SE");
 				if(frm.reply_content.value == "") {
-					alert("댓글을 입력해주세요.");
+					alert("コメントを入力してください。");
 					return;
 				}
 				frm.submit();

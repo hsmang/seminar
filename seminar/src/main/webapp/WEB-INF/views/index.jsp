@@ -2,6 +2,7 @@
 <%@include file="nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <!-- Header Carousel -->
+<div class="container">
     <header id="myCarousel" class="carousel slide">
         <!-- Indicators -->
         <ol class="carousel-indicators">
@@ -14,21 +15,20 @@
         <div class="carousel-inner">
             <div class="item active">
                 <!-- <div class="fill" style="background-image:url('/resources/wordcloud_demo.jpg');"></div> -->
-                <div class="fill"><img src="/resources/wordcloud_demo.jpg" style="width:100%;height:100%;"></div>
+                <div class="fill"><img class="img-responsives" src="/resources/img/book.png" style="width:100%;"> 
+                <!-- style="background-image:url('/resources/img/book.png');"> --></div>
                 <div class="carousel-caption">
-                    <h2>Caption 1</h2>
+                    <!-- <h2>Caption 1</h2> -->
                 </div>
             </div>
             <div class="item">
-                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Two');"></div>
+                <div class="fill"><img class="img-responsive" src="/resources/img/member.jpg" style="width:100%;"></div>
                 <div class="carousel-caption">
-                    <h2>Caption 2</h2>
                 </div>
             </div>
             <div class="item">
-                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Slide Three');"></div>
+                <div class="fill"><img class="img-responsive" src="/resources/img/member2.jpg" style="width:100%;"></div>
                 <div class="carousel-caption">
-                    <h2>Caption 3</h2>
                 </div>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <span class="icon-next"></span>
         </a>
     </header>
-
+</div>
     <!-- Page Content -->
     <div class="container">
 
@@ -49,7 +49,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">
-                    Welcome to Seminar Homepage
+                    金泰旭ゼミナールへようこそ！
                 </h1>
             </div>
             

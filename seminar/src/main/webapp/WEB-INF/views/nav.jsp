@@ -16,48 +16,48 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="/index.do">메인페이지로</a>
+                <a class="navbar-brand" href="/index.do">HOME</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav navbar-right">
                     <li>
-                        <a href="/introduce.do">교수 소개</a>
+                        <a href="/introduce.do">教員紹介</a>
                     </li>
                     <li>
-                        <a href="/qna.do">문의사항</a>
+                        <a href="/qna.do">お問い合わせ</a>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">수업 자료용 <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">授業資料 <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/seminar.do?pageNumber=1&pageSize=10">기초세미나</a>
+                                <a href="/seminar.do?pageNumber=1&pageSize=10">基礎ゼミ</a>
                             </li>
                             <li>
-                                <a href="/businessAdmin.do?pageNumber=1&pageSize=10">경영학</a>
+                                <a href="/businessAdmin.do?pageNumber=1&pageSize=10">経営学</a>
                             </li>
                             <li>
-                                <a href="/businessStrategy.do?pageNumber=1&pageSize=10">경영전략론</a>
+                                <a href="/businessStrategy.do?pageNumber=1&pageSize=10">経営戦略論</a>
                             </li>
                             <li>
-                                <a href="/businessSystem.do?pageNumber=1&pageSize=10">사업시스템론</a>
+                                <a href="/businessSystem.do?pageNumber=1&pageSize=10">事業システム論</a>
                             </li>
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">세미나 자료용<b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">ゼミナール紹介<b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li>
-                                <a href="/product.do">상품개발</a>
+                                <a href="/product.do">商品開発</a>
                             </li>
                             <li>
-                                <a href="/contest.do">비지니스 컨테스트</a>
+                                <a href="/contest.do">ビジネスコンテスト</a>
                             </li>
                             <li>
-                                <a href="/tour.do">관광사업</a>
+                                <a href="/tour.do">観光事業関連</a>
                             </li>
                             <li>
-                                <a href="/album.do">앨범</a>
+                                <a href="/album.do">アルバム</a>
                             </li>
                         </ul>
                     </li>
@@ -68,12 +68,12 @@
                     %>
                    		 <%if(user.getUser_role() == 0){ %>
                    		 <li>
-                                <a href="/user/userList.do?order=all&pageNumber=1&pageSize=10">Members</a>
+                                <a href="/user/userList.do?order=all&pageNumber=1&pageSize=10">管理者ページ</a>
                          </li>
                             <%} %>
                             <li>
                     <!-- <div class="top-big-link"> -->
-                            	<a class="modal_btn btn-link-1 loging" href="#" data-modal-id="modal-login"><%=user_name %>님 환영합니다 !</a>
+                            	<a class="modal_btn btn-link-1 loging" href="#" data-modal-id="modal-login"><%=user_name %>様</a>
                             <!-- </div> -->
                             </li>
                             <li>

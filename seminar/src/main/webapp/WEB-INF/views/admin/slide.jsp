@@ -7,12 +7,13 @@
         <!-- Page Heading/Breadcrumbs -->
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">会員情報
+                <h1 class="page-header">Slide
+                    <small>Slide img</small>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="index.html">Home</a>
+                    <li><a href="index.html">Admin</a>
                     </li>
-                    <li class="active">会員情報</li>
+                    <li class="active">Slide</li>
                 </ol>
             </div>
         </div>
@@ -21,7 +22,7 @@
         <!-- Join Form -->
         <div class="row">
             <div class="col-md-8">
-                <h3>会員情報</h3>
+                <h3>User Information</h3>
                 <form name="sentMessage" action="/user/update_proc.do" id="joinForm" method="post" novalidate>
                     <div class="control-group form-group">
                         <div class="controls">

@@ -84,6 +84,7 @@ $(document).ready(function(){
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">Sign us
+                    <small>회원가입</small>
                 </h1>
                 <ol class="breadcrumb">
                     <li><a href="index.html">Home</a>

@@ -30,11 +30,11 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">
-				About <small>Subheading</small>
+				経営学 
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="/index.do">Home</a></li>
-				<li class="active">About</li>
+				<li class="active">経営学</li>
 			</ol>
 		</div>
 	</div>
@@ -45,14 +45,14 @@
 		<hr>
 				<input type="hidden" id="board_idx" name="board_idx" value="${board.board_idx }">
 					<div class="form-group">
-						<label for="inputSubject" class="col-sm-1 control-label">제목</label>
+						<label for="inputSubject" class="col-sm-1 control-label">タイトル</label>
 				    	<div class="col-sm-11">
 				    		<input class="form-control" type="text" id="subject" name="board_subject" value="${board.board_subject }">
 				    	</div>
 				    </div>
 				    <hr>
 				    <div class="form-group">
-				    	<label for="inputFile" class="col-sm-1 control-label">첨부파일</label>
+				    	<label for="inputFile" class="col-sm-1 control-label">添付ファイル</label>
 				    	<div class="col-sm-11">
 				    		<div class="dropzone" id="file-dropzone" style="border:2px dashed #0087F7;">
 								<div class="dz-message" style="font-size: large;">Drag and Drop files here or click to upload</div>
@@ -61,14 +61,14 @@
 				    </div>
 				    <hr>	
 				    <div class="form-group">
-				    	<label for="inputContent" class="col-sm-1 control-label">내용</label>
+				    	<label for="inputContent" class="col-sm-1 control-label">内容</label>
 				    	<div class="col-sm-11">
 				    		<textarea name="board_content" id="content" style="width:100%; height:500px;">${board.board_content }</textarea>
 				    	</div>
 				    </div>
 				    <hr>
-					<input class="btn btn-default" type="button" id="btn_save" value="저장"> 
-					<input class="btn btn-default" type="button" value="이전" onclick="javascript:history.back(-1);">
+					<input class="btn btn-default" type="button" id="btn_save" value="セーブ"> 
+					<input class="btn btn-default" type="button" value="以前" onclick="javascript:history.back(-1);">
 	</form>
 	
 	<script type="text/javascript">
@@ -141,7 +141,7 @@
 			myDropzone.on("addedfile", function(file){
 				/* 중복체크 if문 */
 				if(fn_checkFileDuplicate(file.name, index++) == 0){
-					alert('Duplicate file 중복 파일');
+					alert('Duplicate file 重複ファイル');
 					this.removeFile(file);
 				}
 			});

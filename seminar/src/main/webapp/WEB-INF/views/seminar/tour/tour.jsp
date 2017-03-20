@@ -8,10 +8,10 @@
 	<!-- Page Heading/Breadcrumbs -->
 	<div class="row">
 		<div class="col-lg-12">
-			<h1 class="page-header">Business System <small>Subheading</small></h1>
+			<h1 class="page-header">観光事業関連</h1>
 			<ol class="breadcrumb">
 				<li><a href="/index.do">Home</a></li>
-				<li class="active">Business System</li>
+				<li class="active">観光事業関連</li>
 			</ol>
 		</div>
 	</div>
@@ -20,11 +20,11 @@
 	<table class="table table-hover table-responsive">
 		<thead>
 			<tr>
-				<th style="width:10%">번호</th>
-				<th style="width:40%">제목</th>
-				<th style="width:20%">작성자</th>
-				<th style="width:20%">날짜</th>
-				<th style="width:10%">조회수</th>
+				<th style="width:10%">番号</th>
+				<th style="width:40%">タイトル</th>
+				<th style="width:20%">作成者</th>
+				<th style="width:20%">DATE</th>
+				<th style="width:10%">COUNT</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -60,20 +60,20 @@
 	<form id="search_form" method="get"> 
 		<div class="btn-group">
 			<select class="form-control" id="search_type" name="search_type">
-				<option value="subject" selected="selected">제목</option>
-				<option value="subjectcontent">제목+내용</option>
-				<option value="content">내용</option>
+				<option value="subject" selected="selected">タイトル</option>
+				<option value="subjectcontent">タイトル＋内容</option>
+				<option value="content">内容</option>
 			</select>
 		</div>
 	<input type=hidden id="pageNumber" name="pageNumber" value="1">
 	<input type=hidden id="pageSize" name="pageSize" value="10">
-	<input class="btn btn-default" id="search_value" name="search_value" type="text" placeholder="검색내용">
-	<button type="button" id="btn_search" class="btn btn-default" onclick="fn_search()">검색</button>
+	<input class="btn btn-default" id="search_value" name="search_value" type="text" placeholder="検索語を入力してください。">
+	<button type="button" id="btn_search" class="btn btn-default" onclick="fn_search()">検索</button>
 	
 	
 	<%
 		if(user != null){
-	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/businessSystem/insert.do'" >작성</button>
+	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/businessSystem/insert.do'" >作成</button>
 	<%} %>
 	</form>
 	<hr>

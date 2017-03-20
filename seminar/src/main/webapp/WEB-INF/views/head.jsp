@@ -43,5 +43,5 @@
     <script src="/resources/assets/js/scripts.js"></script>
     <script src="/resources/js/main.js"></script>
         
-<title>Insert title here</title>
+<title>近畿大学金泰旭ゼミナール</title>
 </head>
