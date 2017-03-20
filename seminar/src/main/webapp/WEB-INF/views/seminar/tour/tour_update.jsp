@@ -10,7 +10,7 @@
 <%
 	
 	if(user== null){
-		response.sendRedirect("/businessSystem.do");
+		response.sendRedirect("/tour.do");
 	}else if(user.getUser_role() == 0){
 		
 	}else if(user.getUser_role() == 1){
@@ -20,7 +20,7 @@
 		int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
 		int user_idx = user.getUser_idx();
 		if(board_user_idx != user_idx){
-			response.sendRedirect("/businessSystem.do");
+			response.sendRedirect("/tour.do");
 		}
 	}
 %>
@@ -98,7 +98,7 @@
 			Dropzone.autoDiscover = false;
 			var idx = $("#board_idx").val();
 			var myDropzone = new Dropzone("div#file-dropzone", {
-				url: "/businessSystem/fileUpload.do?board_idx="+idx,
+				url: "/tour/fileUpload.do?board_idx="+idx,
 				filesizeBase: 1024,
 				addRemoveLinks: true,
 				maxFilesize: 10, // MB
@@ -174,7 +174,7 @@
 				smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
 				$("#frm").attr("action", "/seminar/updateProc.do");
 				for(var i=0; i<=rIdx; i++){
-					$.post("/businessSystem/fileDelete.do", {
+					$.post("/tour/fileDelete.do", {
 						name : fileName[i],
 	  					index : board_idx
 					});

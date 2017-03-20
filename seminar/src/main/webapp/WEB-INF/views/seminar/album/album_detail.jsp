@@ -99,13 +99,13 @@
 			$('#btn_save').on("click",function(e) {
 				e.preventDefault();
 				var board_idx = document.getElementById('board_idx').value;
-				$("#frm").attr("action","/seminar/insertReply.do?board_idx="+ board_idx + "&f_type=SE");
+				$("#frm").attr("action","/album/insertReply.do?board_idx="+ board_idx + "&f_type=AL");
 				if(frm.reply_content.value == "") {
 					alert("コメントを入力してください。");
 					return;
 				}
 				frm.submit();
-				history.pushState(null, 'page -1',"/seminar.do");
+				history.pushState(null, 'page -1',"/album.do");
 			});
 			
 			$('a[id="file"]').on("click", function(e){
@@ -116,7 +116,7 @@
 		
 		function fn_downloadFile(obj){
 			var filePath = $('#path').val()+obj.html(); 
-			$("#fileFrm").attr("action", "/seminar/fileDownload.do");
+			$("#fileFrm").attr("action", "/album/fileDownload.do");
 			$("#fileFrm").append('<input type="hidden" name="filePath" id="filePath" value="' +filePath+ '">');
 			fileFrm.submit();
 		}		

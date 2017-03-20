@@ -55,12 +55,12 @@
 							int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
 							int user_idx = user.getUser_idx();
 							if(board_user_idx == user_idx){%>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/update.do?board_idx=${detail.board_idx}'">修正</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/product/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/product/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>
 							<% }
 						}else{%>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/update.do?board_idx=${detail.board_idx}'">修正</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/businessAdmin/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>	
+							<button type="button" class="btn btn-default" onclick="location.href='/product/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/product/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>	
 						<%} %>
 				<%} %>
 				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">目録</button>
@@ -100,13 +100,13 @@
 			$('#btn_save').on("click",function(e) {
 				e.preventDefault();
 				var board_idx = document.getElementById('board_idx').value;
-				$("#frm").attr("action","/businessAdmin/insertReply.do?board_idx="+ board_idx + "&f_type=SE");
+				$("#frm").attr("action","/product/insertReply.do?board_idx="+ board_idx + "&f_type=PR");
 				if(frm.reply_content.value == "") {
 					alert("コメントを入力してください。");
 					return;
 				}
 				frm.submit();
-				history.pushState(null, 'page -1',"/businessAdmin.do");
+				history.pushState(null, 'page -1',"/product.do");
 			});
 			
 			$('a[id="file"]').on("click", function(e){
@@ -117,7 +117,7 @@
 		
 		function fn_downloadFile(obj){
 			var filePath = $('#path').val()+obj.html(); 
-			$("#fileFrm").attr("action", "/seminar/fileDownload.do");
+			$("#fileFrm").attr("action", "/product/fileDownload.do");
 			$("#fileFrm").append('<input type="hidden" name="filePath" id="filePath" value="' +filePath+ '">');
 			fileFrm.submit();
 		}		

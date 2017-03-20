@@ -10,7 +10,7 @@
 <%
 	
 	if(user== null){
-		response.sendRedirect("/seminar.do");
+		response.sendRedirect("/album.do");
 	}else if(user.getUser_role() == 0){
 		
 	}else if(user.getUser_role() == 1){
@@ -20,7 +20,7 @@
 		int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
 		int user_idx = user.getUser_idx();
 		if(board_user_idx != user_idx){
-			response.sendRedirect("/seminar.do");
+			response.sendRedirect("/album.do");
 		}
 	}
 %>
@@ -98,7 +98,7 @@
 			Dropzone.autoDiscover = false;
 			var idx = $("#board_idx").val();
 			var myDropzone = new Dropzone("div#file-dropzone", {
-				url: "/seminar/fileUpload.do?board_idx="+idx,
+				url: "/album/fileUpload.do?board_idx="+idx,
 				filesizeBase: 1024,
 				addRemoveLinks: true,
 				maxFilesize: 10, // MB
@@ -172,9 +172,9 @@
 			$('#btn_save').on("click", function(){
 				board_idx = $("#board_idx").val();
 				smartEditor.getById["content"].exec("UPDATE_CONTENTS_FIELD", []);
-				$("#frm").attr("action", "/seminar/updateProc.do");
+				$("#frm").attr("action", "/album/updateProc.do");
 				for(var i=0; i<=rIdx; i++){
-					$.post("/seminar/fileDelete.do", {
+					$.post("/album/fileDelete.do", {
 						name : fileName[i],
 	  					index : board_idx
 					});

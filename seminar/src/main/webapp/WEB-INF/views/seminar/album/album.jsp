@@ -33,7 +33,7 @@
 					<c:forEach items="${boardList }" var="list">
 						<tr>
 							<td id="idx">${list.board_idx }</td>
-							<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+							<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=AL" id="subject">${list.board_subject }</a></td>
 							<td>${list.user_name }</td>
 							<td><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
 								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></td>
@@ -73,8 +73,10 @@
 	
 	<%
 		if(user != null){
-	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/seminar/insert.do'" >作成</button>
-	<%} %>
+			if(user.getUser_role() <= 1){
+	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/album/insert.do'" >作成</button>
+	<%} 
+	}%>
 	</form>
 	<hr>
 	
@@ -84,13 +86,13 @@
 		if(search_value == ""){
 			alert("Please enter your search term.");
 		}else{
-			$("#search_form").attr("action", "/seminar.do?pageNumber=1&pageSize=10");
+			$("#search_form").attr("action", "/album.do?pageNumber=1&pageSize=10");
 			search_form.submit();
 		}
 	}
 	
 	function fn_goList(){
-		location.href='/seminar.do?pageNumber=1&pageSize=10';
+		location.href='/album.do?pageNumber=1&pageSize=10';
 	}
 	
 	$(document).ready(function() {

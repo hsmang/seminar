@@ -33,7 +33,7 @@
 					<c:forEach items="${boardList }" var="list">
 						<tr>
 							<td id="idx">${list.board_idx }</td>
-							<td><a href="/businessSystem/detail.do?board_idx=${list.board_idx }&f_type=SY" id="subject">${list.board_subject }</a></td>
+							<td><a href="/tour/detail.do?board_idx=${list.board_idx }&f_type=TO" id="subject">${list.board_subject }</a></td>
 							<td>${list.user_name }</td>
 							<td><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
 								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></td>
@@ -73,7 +73,7 @@
 	
 	<%
 		if(user != null){
-	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/businessSystem/insert.do'" >作成</button>
+	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/tour/insert.do'" >作成</button>
 	<%} %>
 	</form>
 	<hr>
@@ -84,13 +84,13 @@
 		if(search_value == ""){
 			alert("Please enter your search term.");
 		}else{
-			$("#search_form").attr("action", "/businessSystem.do?pageNumber=1&pageSize=10");
+			$("#search_form").attr("action", "/tour.do?pageNumber=1&pageSize=10");
 			search_form.submit();
 		}
 	}
 	
 	function fn_goList(){
-		location.href='/businessSystem.do?pageNumber=1&pageSize=10';
+		location.href='/tour.do?pageNumber=1&pageSize=10';
 	}
 	
 	$(document).ready(function() {

@@ -8,7 +8,7 @@
 
 <%
 	if(user== null){
-		response.sendRedirect("/businessSystem.do");
+		response.sendRedirect("/tour.do");
 	}
 %>
 
@@ -30,7 +30,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			
-			<form id="frm" action="/businessSystem/insertProc.do" method="post" class="form-horizontal" >
+			<form id="frm" action="/tour/insertProc.do" method="post" class="form-horizontal" >
 				<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				<hr>
 				<div class="form-group">
@@ -85,7 +85,7 @@
 	$(document).ready(function() {
 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("div#file-dropzone", {
-			url: "/businessSystem/fileUpload.do",
+			url: "/tour/fileUpload.do",
 			filesizeBase: 1024,
 			addRemoveLinks: true,
 			maxFilesize: 10, // MB

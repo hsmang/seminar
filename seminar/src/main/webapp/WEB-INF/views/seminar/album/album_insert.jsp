@@ -8,7 +8,7 @@
 
 <%
 	if(user== null){
-		response.sendRedirect("/seminar.do");
+		response.sendRedirect("/album.do");
 	}
 %>
 
@@ -20,7 +20,7 @@
 				アルバム
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="index.html">Home</a></li>
+				<li><a href="/index.do">Home</a></li>
 				<li class="active">アルバム</li>
 			</ol>
 		</div>
@@ -30,7 +30,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			
-			<form id="frm" action="/seminar/insertProc.do" method="post" class="form-horizontal" >
+			<form id="frm" action="/album/insertProc.do" method="post" class="form-horizontal" >
 				<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				<hr>
 				<div class="form-group">
@@ -84,7 +84,7 @@
 	$(document).ready(function() {
 		Dropzone.autoDiscover = false;
 		var myDropzone = new Dropzone("div#file-dropzone", {
-			url: "/seminar/fileUpload.do",
+			url: "/album/fileUpload.do",
 			filesizeBase: 1024,
 			addRemoveLinks: true,
 			maxFilesize: 10, // MB
