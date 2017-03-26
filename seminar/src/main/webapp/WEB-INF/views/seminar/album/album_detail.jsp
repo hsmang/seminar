@@ -54,12 +54,12 @@
 							int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
 							int user_idx = user.getUser_idx();
 							if(board_user_idx == user_idx){%>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">修正</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/album/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/album/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>
 							<% }
 						}else{%>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">修正</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>	
+							<button type="button" class="btn btn-default" onclick="location.href='/album/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/album/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>	
 						<%} %>
 				<%} %>
 				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">目録</button>
@@ -81,9 +81,21 @@
 				<c:when test="${fn:length(replyList) > 0}">
 					<c:forEach items="${replyList }" var="replyList">
 						<div class="media">
-							<a class="pull-left" href="#"><img class="media-object"	src="http://placehold.it/64x64" alt=""></a>
 							<div class="media-body">
-								<h4 class="media-heading">${replyList.user_name }&nbsp;&nbsp;<small>${replyList.reply_write_date }</small></h4>
+								<h4 class="media-heading">${replyList.user_name }&nbsp;&nbsp;<small>${replyList.reply_write_date }</small>
+								<%
+								if(user != null){
+										if(user.getUser_role() == 2){
+											int reply_user_idx = (int)pageContext.getAttribute("reply_user_idx");
+											int user_idx = user.getUser_idx();
+											if(reply_user_idx == user_idx){%>
+											<small class="pull-right"><a href="/album/deleteReplyProc.do?reply_idx=${replyList.reply_idx}">削除</a></small>
+											<% }
+										}else{%>
+											<small class="pull-right"><a href="/album/deleteReplyProc.do?reply_idx=${replyList.reply_idx}">削除</a></small>	
+										<%} %>
+								<%} %>
+								</h4>
 								${replyList.reply_content }
 							</div>
 						</div>

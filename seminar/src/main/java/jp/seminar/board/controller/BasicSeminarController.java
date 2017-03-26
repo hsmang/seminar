@@ -147,14 +147,24 @@ public class BasicSeminarController {
 	}
 	
 	@RequestMapping(value = "/seminar/insertReply.do")
-	public String insertBasicSeminarReply(ReplyVO reply ,HttpServletRequest request, int board_idx, String f_type) throws Exception{
+	public String insertBasicSeminarReply(HttpSession session, ReplyVO reply ,HttpServletRequest request, int board_idx, String f_type) throws Exception{
+		UserVO user = (UserVO) session.getAttribute("user");
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
+		reply.setUser_idx(user.getUser_idx());
 		//reply.setReply_content((String)request.getParameter("reply_content")); ReplyVO 안에 추가되어있어서 이부분 삭제
 		
 		boardService.insertReply(reply);
 		
 		return "redirect:/seminar/detail.do?board_idx="+board_idx+"&f_type="+f_type;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/seminar/deleteReplyProc.do")
+	public String deleteSeminarReply(HttpServletRequest request, int reply_idx) throws Exception {
+		boardService.deleteReply(reply_idx);
+		String referer_url = request.getHeader("REFERER");
+		return "redirect:" + referer_url;
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////

@@ -7,7 +7,7 @@
         SELECT
         	*
         FROM
-        	business_admin
+        	business_contest
         ORDER BY board_idx DESC
         LIMIT #{firstRow} , #{pageSize}
     </select>
@@ -16,7 +16,7 @@
     	SELECT 
     		*
     	FROM
-    		business_admin
+    		business_contest
     	<where>
 	    	<choose> 
 		    	<when test="type == 'subject'"> AND board_subject like CONCAT('%', #{value} , '%') </when> 
@@ -33,7 +33,7 @@
     	SELECT 
     		count(*)
     	FROM
-    		business_admin
+    		business_contest
     	<where>
 	    	<choose> 
 		    	<when test="type == 'subject'"> AND board_subject like CONCAT('%', #{value} , '%') </when> 
@@ -67,14 +67,14 @@
         SELECT
         	*
         FROM
-        	business_admin
+        	business_contest
         WHERE
         	board_idx = #{board_idx}
     </select>
     
     <update id="updateBoardCount" parameterType="int">
     	UPDATE
-    		business_admin
+    		business_contest
     	SET
    			board_count = board_count + 1
     	WHERE
@@ -83,7 +83,7 @@
     
     <update id="updateDetail" parameterType="jp.seminar.board.vo.BoardVO">
     	UPDATE
-    		business_admin
+    		business_contest
     	SET
     		board_subject = #{board_subject},
     		board_content = #{board_content},
@@ -94,14 +94,14 @@
     
     <delete id="deleteDetail" parameterType="int">
     	DELETE FROM
-    		business_admin
+    		business_contest
     	WHERE
     		board_idx = #{board_idx}
     </delete>
     
     <insert id="insertDetail" parameterType="jp.seminar.board.vo.BoardVO">
     	INSERT INTO
-    		business_admin
+    		business_contest
     		(
     			board_subject,
     			board_content,
@@ -120,12 +120,12 @@
      </insert> 
     
     <select id="getTotalCount" resultType="int">
-    	SELECT COUNT(*) FROM business_admin
+    	SELECT COUNT(*) FROM business_contest
     </select>
     
     <select id="getMaxIdx" resultType="int">
     	SELECT if( isnull(MAX(board_idx)), 0, MAX(board_idx))
-    	FROM business_admin
+    	FROM business_contest
     </select>
 
 </mapper>

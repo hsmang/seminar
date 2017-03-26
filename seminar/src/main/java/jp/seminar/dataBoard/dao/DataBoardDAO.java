@@ -47,6 +47,8 @@ public interface DataBoardDAO {
 	List<BoardVO> selectSearchList(FirstRowPageSize  firstRowpageSize);
 
 	int getSearchCount(Map searchMap);
+	
+	public int deleteReply(int reply_idx);
 }
 
 

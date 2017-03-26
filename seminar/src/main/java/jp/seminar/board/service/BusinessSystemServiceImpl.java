@@ -145,6 +145,8 @@ public class BusinessSystemServiceImpl implements BoardService {
 					replyOne.setReply_state(replyList.get(i).getReply_state());
 					replyOne.setReply_write_date(replyList.get(i).getReply_write_date());
 					replyOne.setUser_name(userList.get(j).getUser_name());
+					replyOne.setUser_idx(userList.get(j).getUser_idx());
+					replyOne.setReply_idx(replyList.get(i).getReply_idx());
 					replyList.set(i, replyOne);
 				}
 			}
@@ -189,7 +191,10 @@ public class BusinessSystemServiceImpl implements BoardService {
 		return boardDAO.deleteFileinfo(fileinfo);
 	}
 
-
+	@Override
+	public int deleteReply(int reply_idx) {
+		return boardDAO.deleteReply(reply_idx);
+	}
 
 }
 

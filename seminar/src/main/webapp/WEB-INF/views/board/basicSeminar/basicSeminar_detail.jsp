@@ -81,9 +81,21 @@
 				<c:when test="${fn:length(replyList) > 0}">
 					<c:forEach items="${replyList }" var="replyList">
 						<div class="media">
-							<a class="pull-left" href="#"><img class="media-object"	src="http://placehold.it/64x64" alt=""></a>
 							<div class="media-body">
-								<h4 class="media-heading">${replyList.user_name }&nbsp;&nbsp;<small>${replyList.reply_write_date }</small></h4>
+								<h4 class="media-heading">${replyList.user_name }&nbsp;&nbsp;<small>${replyList.reply_write_date }</small>
+								<%
+								if(user != null){
+										if(user.getUser_role() == 2){
+											int reply_user_idx = (int)pageContext.getAttribute("reply_user_idx");
+											int user_idx = user.getUser_idx();
+											if(reply_user_idx == user_idx){%>
+											<small class="pull-right"><a href="/seminar/deleteReplyProc.do?reply_idx=${replyList.reply_idx}">削除</a></small>
+											<% }
+										}else{%>
+											<small class="pull-right"><a href="/seminar/deleteReplyProc.do?reply_idx=${replyList.reply_idx}">削除</a></small>	
+										<%} %>
+								<%} %>
+								</h4>
 								${replyList.reply_content }
 							</div>
 						</div>

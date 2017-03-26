@@ -2,6 +2,7 @@ package jp.seminar.board.vo;
 
 public class ReplyVO {
 	private int user_idx;
+	private int reply_idx;
 	private String reply_content;
 	private String reply_write_date;
 	private String reply_state;
@@ -9,6 +10,13 @@ public class ReplyVO {
 	private String f_type;
 	private String user_name;
 	
+	
+	public int getReply_idx() {
+		return reply_idx;
+	}
+	public void setReply_idx(int reply_idx) {
+		this.reply_idx = reply_idx;
+	}
 	public String getUser_name() {
 		return user_name;
 	}
@@ -50,6 +58,12 @@ public class ReplyVO {
 	}
 	public void setF_type(String f_type) {
 		this.f_type = f_type;
+	}
+	@Override
+	public String toString() {
+		return "ReplyVO [user_idx=" + user_idx + ", reply_idx=" + reply_idx + ", reply_content=" + reply_content
+				+ ", reply_write_date=" + reply_write_date + ", reply_state=" + reply_state + ", board_idx=" + board_idx
+				+ ", f_type=" + f_type + ", user_name=" + user_name + "]";
 	}
 	
 	

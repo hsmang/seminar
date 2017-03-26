@@ -108,4 +108,9 @@ public class BusinessSystemDAOImpl implements BoardDAO{
 	public List<BoardVO> selectSearchList(FirstRowPageSize  firstRowpageSize) {
 		return sqlSession.selectList("businessSystem.selectSearchList", firstRowpageSize);
 	}
+	
+	@Override
+	public int deleteReply(int reply_idx) {
+		return sqlSession.delete("reply.deleteReply", reply_idx);
+	}
 }

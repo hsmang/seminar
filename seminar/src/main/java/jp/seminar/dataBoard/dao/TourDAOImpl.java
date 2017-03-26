@@ -108,4 +108,9 @@ public class TourDAOImpl implements DataBoardDAO{
 	public List<BoardVO> selectSearchList(FirstRowPageSize  firstRowpageSize) {
 		return sqlSession.selectList("tour.selectSearchList", firstRowpageSize);
 	}
+
+	@Override
+	public int deleteReply(int reply_idx) {
+		return sqlSession.delete("reply.deleteReply", reply_idx);
+	}
 }

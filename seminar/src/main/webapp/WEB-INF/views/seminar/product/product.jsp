@@ -17,33 +17,37 @@
 	</div>
 	<br>
 
-	<table class="table table-hover table-responsive">
-		<thead>
-			<tr>
-				<th style="width:10%">番号</th>
-				<th style="width:40%">タイトル</th>
-				<th style="width:20%">作成者</th>
-				<th style="width:20%">DATE</th>
-				<th style="width:10%">COUNT</th>
-			</tr>
-		</thead>
-		<tbody>
+	
 			<c:choose>
 				<c:when test="${fn:length(boardList) > 0}">
 					<c:forEach items="${boardList }" var="list">
-						<tr>
+						<div class="row">
+				            <div class="col-md-7">
+				                <a href="portfolio-item.html">
+				                    <img class="img-responsive img-hover" src="${list.main_img }" alt="">
+				                </a>
+				            </div>
+				            <div class="col-md-5">
+				                <h3><a href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR" id="subject">${list.board_subject }</a></h3>
+				                <h4>${list.user_name } <fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
+								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></h4>
+				                <p>${list.board_content }</p>
+				                <a class="btn btn-primary" href="portfolio-item.html">View Project</i></a>
+				            </div>
+				        </div>
+				        
+						<%-- <tr>
 							<td id="idx">${list.board_idx }</td>
 							<td><a href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR" id="subject">${list.board_subject }</a></td>
 							<td>${list.user_name }</td>
 							<td><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
 								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></td>
 							<td>${list.board_count }</td>
-						</tr>
+						</tr> --%>
 					</c:forEach>
 				</c:when>
 			</c:choose>
-		</tbody>
-	</table>
+	
 
 	<hr>
 	<!-- Pagination -->

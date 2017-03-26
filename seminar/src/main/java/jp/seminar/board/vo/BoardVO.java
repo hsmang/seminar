@@ -9,8 +9,16 @@ public class BoardVO {
 	private int user_idx;
 	private int board_idx;
 	private int board_count;
+	private String main_img;
 	
 	
+	
+	public String getMain_img() {
+		return main_img;
+	}
+	public void setMain_img(String main_img) {
+		this.main_img = main_img;
+	}
 	public String getUser_name() {
 		return user_name;
 	}
@@ -58,6 +66,13 @@ public class BoardVO {
 	}
 	public void setBoard_count(int board_count) {
 		this.board_count = board_count;
+	}
+	@Override
+	public String toString() {
+		return "BoardVO [board_subject=" + board_subject + ", board_content=" + board_content + ", board_reg_date="
+				+ board_reg_date + ", board_update_date=" + board_update_date + ", user_name=" + user_name
+				+ ", user_idx=" + user_idx + ", board_idx=" + board_idx + ", board_count=" + board_count + ", main_img="
+				+ main_img + "]";
 	}
 	
 	

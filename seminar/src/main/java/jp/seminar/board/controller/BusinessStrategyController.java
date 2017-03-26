@@ -149,16 +149,26 @@ public class BusinessStrategyController {
 	}
 
 	@RequestMapping(value = "/businessStrategy/insertReply.do")
-	public String insertBusinessStrategyReply(ReplyVO reply, HttpServletRequest request, int board_idx, String f_type)
+	public String insertBusinessStrategyReply(HttpSession session, ReplyVO reply, HttpServletRequest request, int board_idx, String f_type)
 			throws Exception {
+		UserVO user = (UserVO) session.getAttribute("user");
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
+		reply.setUser_idx(user.getUser_idx());
 		// reply.setReply_content((String)request.getParameter("reply_content"));
 		// ReplyVO 안에 추가되어있어서 이부분 삭제
 
 		boardService.insertReply(reply);
 
 		return "redirect:/businessStrategy/detail.do?board_idx=" + board_idx + "&f_type=" + f_type;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/businessStrategy/deleteReplyProc.do")
+		public String deleteBusinessStrategyReply(HttpServletRequest request, int reply_idx) throws Exception {
+		boardService.deleteReply(reply_idx);
+		String referer_url = request.getHeader("REFERER");
+		return "redirect:" + referer_url;
 	}
 
 	///////////////////////////////////////////////////////////////////////////////

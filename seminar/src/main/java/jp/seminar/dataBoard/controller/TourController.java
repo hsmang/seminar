@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,7 +66,9 @@ public class TourController {
 
 			ModelAndView mv = new ModelAndView("/seminar/tour/tour");
 			List<BoardVO> boardList = boardService.getBoardList(firstRowpageSize);
-
+			for (BoardVO boardVO : boardList) {
+				System.out.println(boardVO);
+			}
 			mv.addObject("boardList", boardList);
 			mv.addObject("paging", boardPaging);
 
@@ -120,6 +125,10 @@ public class TourController {
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
 		List<ReplyVO> replyList = boardService.getReply(reply);
+		for (ReplyVO replyVO : replyList) {
+			System.out.println(replyVO);
+		}
+		System.out.println(replyList);
 		mv.addObject("replyList", replyList);
 
 		FileVO file = new FileVO();
@@ -148,10 +157,12 @@ public class TourController {
 	}
 
 	@RequestMapping(value = "/tour/insertReply.do")
-	public String insertTourReply(ReplyVO reply, HttpServletRequest request, int board_idx, String f_type)
+	public String insertTourReply(HttpSession session, ReplyVO reply, HttpServletRequest request, int board_idx, String f_type)
 			throws Exception {
+		UserVO user = (UserVO) session.getAttribute("user");
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
+		reply.setUser_idx(user.getUser_idx());
 		// reply.setReply_content((String)request.getParameter("reply_content"));
 		// ReplyVO 안에 추가되어있어서 이부분 삭제
 
@@ -159,6 +170,16 @@ public class TourController {
 
 		return "redirect:/tour/detail.do?board_idx=" + board_idx + "&f_type=" + f_type;
 	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/tour/deleteReplyProc.do")
+	public String deleteTourReply(HttpServletRequest request, int reply_idx) throws Exception {
+		boardService.deleteReply(reply_idx);
+		String referer_url = request.getHeader("REFERER");
+		return "redirect:" + referer_url;
+	}
+	
+	
 
 	///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping(value = "/tour/update.do", method = RequestMethod.GET)
@@ -170,7 +191,7 @@ public class TourController {
 		mv.addObject("board_user_idx", board.getUser_idx());
 		FileVO file = new FileVO();
 		file.setBoard_idx(board_idx);
-		file.setF_type("ST");
+		file.setF_type("TO");
 		List<FileVO> fileList = boardService.getFileList(file);
 		mv.addObject("fileList", fileList);
 
@@ -211,8 +232,15 @@ public class TourController {
 			throws Exception {
 		UserVO user = (UserVO) session.getAttribute("user");
 		board.setUser_idx(user.getUser_idx());
+		Document doc = Jsoup.parse(board.getBoard_content());
+		try {
+			Element img = doc.select("img").first();
+			board.setMain_img(img.attr("src"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		boardService.insertBoard(board);
-
 		return "redirect:/tour.do";
 	}
 

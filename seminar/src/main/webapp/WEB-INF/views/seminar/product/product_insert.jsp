@@ -30,7 +30,7 @@
 	<div class="row">
 		<div class="col-lg-12">
 			
-			<form id="frm" action="/product/insertProc.do" method="post" class="form-horizontal" >
+			<form id="frm" action="/product/insertProc.do" method="post"  class="form-horizontal" >
 				<input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
 				<hr>
 				<div class="form-group">

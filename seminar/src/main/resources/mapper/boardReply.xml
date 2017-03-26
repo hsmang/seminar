@@ -32,7 +32,7 @@
     		)
     	VALUES
     		(
-    			1,
+    			#{user_idx},
     			#{reply_content},
     			NOW(),
     			1,
@@ -40,5 +40,9 @@
     			#{f_type}
     		)
 	</insert>
+	
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM `seminar`.`board_reply` WHERE `board_reply`.`reply_idx` = #{reply_idx} 		
+	</delete>
 
 </mapper>

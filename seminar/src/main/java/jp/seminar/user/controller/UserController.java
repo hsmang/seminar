@@ -71,7 +71,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value = "/login_proc.do", method = RequestMethod.POST)
-	public ModelAndView loginProc(UserVO loginUser, HttpSession session) {
+	public ModelAndView loginProc(UserVO loginUser, HttpServletRequest request, HttpSession session) {
 		
 		int result = userService.userLoginProc(loginUser);
 		if(result == 1){
@@ -79,7 +79,10 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		ModelAndView mav = new ModelAndView();
-		mav.setViewName("redirect:/index.do");
+		String referer_url = request.getHeader("REFERER");
+		// domain setting update..
+		String url = referer_url.substring(referer_url.indexOf("8080") + 4);
+		mav.setViewName("redirect:" + referer_url);
 		
 		return mav ;
 	}

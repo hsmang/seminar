@@ -108,4 +108,9 @@ public class AlbumDAOImpl implements DataBoardDAO{
 	public List<BoardVO> selectSearchList(FirstRowPageSize  firstRowpageSize) {
 		return sqlSession.selectList("album.selectSearchList", firstRowpageSize);
 	}
+
+	@Override
+	public int deleteReply(int reply_idx) {
+		return sqlSession.delete("reply.deleteReply", reply_idx);
+	}
 }

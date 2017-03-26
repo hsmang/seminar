@@ -108,4 +108,9 @@ public class ContestDAOImpl implements DataBoardDAO{
 	public List<BoardVO> selectSearchList(FirstRowPageSize  firstRowpageSize) {
 		return sqlSession.selectList("contest.selectSearchList", firstRowpageSize);
 	}
+
+	@Override
+	public int deleteReply(int reply_idx) {
+		return sqlSession.delete("reply.deleteReply", reply_idx);
+	}
 }

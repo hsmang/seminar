@@ -111,5 +111,8 @@ public class BasicSeminarDAOImpl implements BoardDAO {
 		return sqlSession.selectList("basicSeminar.selectSearchList", firstRowpageSize);
 	}
 
-
+	@Override
+	public int deleteReply(int reply_idx) {
+		return sqlSession.delete("reply.deleteReply", reply_idx);
+	}
 }

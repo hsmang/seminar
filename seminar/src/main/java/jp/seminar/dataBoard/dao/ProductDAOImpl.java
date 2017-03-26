@@ -111,5 +111,10 @@ public class ProductDAOImpl implements DataBoardDAO {
 		return sqlSession.selectList("product.selectSearchList", firstRowpageSize);
 	}
 
+	@Override
+	public int deleteReply(int reply_idx) {
+		return sqlSession.delete("reply.deleteReply", reply_idx);
+	}
+
 
 }

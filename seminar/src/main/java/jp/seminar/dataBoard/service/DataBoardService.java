@@ -47,4 +47,6 @@ public interface DataBoardService {
 
 	int getSearchCount(String search_type, String search_value);
 	
+	int deleteReply(int reply_idx);
+	
 }

@@ -19,6 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -64,7 +67,10 @@ public class ProductController {
 
 			ModelAndView mv = new ModelAndView("/seminar/product/product");
 			List<BoardVO> boardList = boardService.getBoardList(firstRowpageSize);
-
+			for (BoardVO boardVO : boardList) {
+				System.out.println(boardVO);
+			}
+			System.out.println(boardList);
 			mv.addObject("boardList", boardList);
 			mv.addObject("paging", boardPaging);
 
@@ -147,14 +153,24 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/product/insertReply.do")
-	public String insertProductReply(ReplyVO reply ,HttpServletRequest request, int board_idx, String f_type) throws Exception{
+	public String insertProductReply(HttpSession session, ReplyVO reply ,HttpServletRequest request, int board_idx, String f_type) throws Exception{
+		UserVO user = (UserVO) session.getAttribute("user");
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
+		reply.setUser_idx(user.getUser_idx());
 		//reply.setReply_content((String)request.getParameter("reply_content")); ReplyVO 안에 추가되어있어서 이부분 삭제
 		
 		boardService.insertReply(reply);
 		
 		return "redirect:/product/detail.do?board_idx="+board_idx+"&f_type="+f_type;
+	}
+	
+	///////////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value = "/product/deleteReplyProc.do")
+	public String deleteProductReply(HttpServletRequest request, int reply_idx) throws Exception {
+		boardService.deleteReply(reply_idx);
+		String referer_url = request.getHeader("REFERER");
+		return "redirect:" + referer_url;
 	}
 	
 ///////////////////////////////////////////////////////////////////////////////
@@ -203,12 +219,23 @@ public class ProductController {
 	
 ///////////////////////////////////////////////////////////////////////////////
 	
-	@RequestMapping(value = "/product/insertProc.do")
-	public String insertProcProductBoard(BoardVO board, HttpServletRequest request, HttpSession session) throws Exception{
+	@RequestMapping(value = "/product/insertProc.do", method=RequestMethod.POST)
+	public String insertProcProductBoard(HttpServletRequest request, HttpSession session,BoardVO board) throws Exception{
 		UserVO user = (UserVO) session.getAttribute("user");
+		System.out.println("here12");
 		board.setUser_idx(user.getUser_idx());
-		boardService.insertBoard(board);
+		Document doc = Jsoup.parse(board.getBoard_content());
+		try {
+			Element img = doc.select("img").first();
+			System.out.println(img.attr("src"));
+			System.out.println(img.html());
+			board.setMain_img(img.attr("src"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		
+		boardService.insertBoard(board);
+		System.out.println("end");
 		return "redirect:/product.do";
 	}
 	

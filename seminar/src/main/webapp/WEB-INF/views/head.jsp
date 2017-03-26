@@ -36,7 +36,7 @@
     <!-- <link rel="stylesheet" href="/resources/assets/css/style.css"> -->
     
     <link rel="stylesheet" href="/resources/font-awesome-4.7.0/css/font-awesome.min.css">
-    
+    <link rel="stylesheet" href="/resources/css/basic.css">
     <script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="/resources/modern-business/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/jquery.backstretch.min.js"></script>
