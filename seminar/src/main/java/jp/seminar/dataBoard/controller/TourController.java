@@ -204,7 +204,13 @@ public class TourController {
 	 */
 	@RequestMapping(value = "/tour/updateProc.do")
 	public String updateProcTourBoardDetail(BoardVO board, HttpServletRequest request) throws Exception {
-
+		Document doc = Jsoup.parse(board.getBoard_content());
+		try {
+			Element img = doc.select("img").first();
+			board.setMain_img(img.attr("src"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		boardService.updateBoardDetail(board);
 
 		return "redirect:/tour.do";

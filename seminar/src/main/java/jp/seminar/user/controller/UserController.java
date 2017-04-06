@@ -1,5 +1,7 @@
 package jp.seminar.user.controller;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.List;
@@ -55,11 +57,9 @@ public class UserController {
 	
 	@RequestMapping(value = "/join_proc.do", method = RequestMethod.POST)
 	public ModelAndView joinProc(UserVO joinUser) {
-		
+		joinUser.setUser_pw(ChangeMD5(joinUser.getUser_pw()));
 		int result = userService.userJoinProc(joinUser);
-		System.out.println("result : " + result);
 		ModelAndView mav = new ModelAndView();
-		//mav.setViewName("redirect:/index.do");
 		mav.setViewName("jsonView");
 		if(result != 1){
 			mav.addObject("result", false);
@@ -72,7 +72,7 @@ public class UserController {
 	
 	@RequestMapping(value = "/login_proc.do", method = RequestMethod.POST)
 	public ModelAndView loginProc(UserVO loginUser, HttpServletRequest request, HttpSession session) {
-		
+		loginUser.setUser_pw(ChangeMD5(loginUser.getUser_pw()));
 		int result = userService.userLoginProc(loginUser);
 		if(result == 1){
 			UserVO user = userService.getUserInfo(loginUser);
@@ -116,9 +116,9 @@ public class UserController {
 	public ModelAndView updateProc(HttpSession session, UserVO updateUser) {
 		UserVO user = (UserVO) session.getAttribute("user");
 		updateUser.setUser_idx(user.getUser_idx());
+		updateUser.setUser_pw(ChangeMD5(updateUser.getUser_pw()));
 		int result = userService.userUpdateProc(updateUser);
 		session.setAttribute("user", updateUser);
-		System.out.println("result : " + result);
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("redirect:/index.do");
 		
@@ -141,7 +141,6 @@ public class UserController {
 		
 		String url = request.getRequestURL().toString();
 		int totalCount = userService.getTotalCount(order);
-		System.out.println(totalCount);
 		Paging boardPaging = new Paging(pageNumber, pageSize , totalCount, url); // 페이징처리
 		FirstRowPageSize  firstRowpageSize = new FirstRowPageSize(); // db limit 설정하기
 		firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
@@ -169,8 +168,6 @@ public class UserController {
 				return mav;
 			}
 		}
-		String url = request.getRequestURL().toString();
-		String old_url = request.getHeader("REFERER");
 		int result = userService.userRoleProc(updateUser);
 		
 		mav.setViewName("jsonView");
@@ -191,13 +188,33 @@ public class UserController {
 				return mav;
 			}
 		}
-		String url = request.getRequestURL().toString();
-		String old_url = request.getHeader("REFERER");
 		int result = userService.userStateProc(updateUser);
 		
 		mav.setViewName("jsonView");
 		mav.addObject("result",true);
 		return mav ;
+	}
+	
+	/*
+	 *  MD5 변환 메소드 , String to MD5 change method 
+	 */
+	public String ChangeMD5(String str){
+		String MD5 = ""; 
+		try{
+			MessageDigest md = MessageDigest.getInstance("MD5"); 
+			md.update(str.getBytes()); 
+			byte byteData[] = md.digest();
+			StringBuffer sb = new StringBuffer(); 
+			for(int i = 0 ; i < byteData.length ; i++){
+				sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
+			}
+			MD5 = sb.toString();
+			
+		}catch(NoSuchAlgorithmException e){
+			e.printStackTrace(); 
+			MD5 = null; 
+		}
+		return MD5;
 	}
 	
 }

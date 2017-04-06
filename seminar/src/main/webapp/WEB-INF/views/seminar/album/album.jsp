@@ -17,34 +17,29 @@
 	</div>
 	<br>
 
-	<table class="table table-hover table-responsive">
-		<thead>
-			<tr>
-				<th style="width:10%">番号</th>
-				<th style="width:40%">タイトル</th>
-				<th style="width:20%">作成者</th>
-				<th style="width:20%">DATE</th>
-				<th style="width:10%">COUNT</th>
-			</tr>
-		</thead>
-		<tbody>
+	
 			<c:choose>
 				<c:when test="${fn:length(boardList) > 0}">
-					<c:forEach items="${boardList }" var="list">
-						<tr>
-							<td id="idx">${list.board_idx }</td>
-							<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=AL" id="subject">${list.board_subject }</a></td>
-							<td>${list.user_name }</td>
-							<td><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
-								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></td>
-							<td>${list.board_count }</td>
-						</tr>
+					<c:forEach items="${boardList }" varStatus="i" var="list">
+						<c:if test="${i.count%4 == 1 }">
+							<div class="row">
+						</c:if>
+						<!-- Projects Row -->
+				        
+				            <div class="col-md-3 img-portfolio">
+				                <a href="/album/detail.do?board_idx=${list.board_idx }&f_type=AL">
+				                    <img class="img-responsive img-hover " src="${list.main_img }" alt="">
+				                </a>
+				                <h3 class="text_overflow"><a href="/album/detail.do?board_idx=${list.board_idx }&f_type=AL" id="subject">${list.board_subject }</a></h3>
+				            </div>
+						<c:if test="${i.count%4 == 0 }">
+							</div>
+						</c:if>
 					</c:forEach>
 				</c:when>
 			</c:choose>
-		</tbody>
-	</table>
-
+		
+	<div class="row"></div>
 	<hr>
 	<!-- Pagination -->
 	<div class="row text-center">
@@ -72,10 +67,9 @@
 	
 	
 	<%
-		if(user != null){
-			if(user.getUser_role() <= 1){
+	if(user != null && user.getUser_role() < 2){
 	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/album/insert.do'" >作成</button>
-	<%} 
+	<% 
 	}%>
 	</form>
 	<hr>

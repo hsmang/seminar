@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -153,8 +156,6 @@ public class AlbumController {
 		reply.setBoard_idx(board_idx);
 		reply.setF_type(f_type);
 		reply.setUser_idx(user.getUser_idx());
-		// reply.setReply_content((String)request.getParameter("reply_content"));
-		// ReplyVO 안에 추가되어있어서 이부분 삭제
 
 		boardService.insertReply(reply);
 
@@ -192,7 +193,14 @@ public class AlbumController {
 	 */
 	@RequestMapping(value = "/album/updateProc.do")
 	public String updateProcAlbumBoardDetail(BoardVO board, HttpServletRequest request) throws Exception {
-
+		
+		try {
+			Document doc = Jsoup.parse(board.getBoard_content());
+			Element img = doc.select("img").first();
+			board.setMain_img(img.attr("src"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		boardService.updateBoardDetail(board);
 
 		return "redirect:/album.do";
@@ -220,8 +228,15 @@ public class AlbumController {
 			throws Exception {
 		UserVO user = (UserVO) session.getAttribute("user");
 		board.setUser_idx(user.getUser_idx());
+		
+		try {
+			Document doc = Jsoup.parse(board.getBoard_content());
+			Element img = doc.select("img").first();
+			board.setMain_img(img.attr("src"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		boardService.insertBoard(board);
-
 		return "redirect:/album.do";
 	}
 

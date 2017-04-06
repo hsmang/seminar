@@ -18,6 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -191,7 +194,13 @@ public class ContestController {
 	 */
 	@RequestMapping(value = "/contest/updateProc.do")
 	public String updateProcContestBoardDetail(BoardVO board, HttpServletRequest request) throws Exception {
-
+		try {
+			Document doc = Jsoup.parse(board.getBoard_content());
+			Element img = doc.select("img").first();
+			board.setMain_img(img.attr("src"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		boardService.updateBoardDetail(board);
 
 		return "redirect:/contest.do";
@@ -219,6 +228,14 @@ public class ContestController {
 			throws Exception {
 		UserVO user = (UserVO) session.getAttribute("user");
 		board.setUser_idx(user.getUser_idx());
+		
+		try {
+			Document doc = Jsoup.parse(board.getBoard_content());
+			Element img = doc.select("img").first();
+			board.setMain_img(img.attr("src"));
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		boardService.insertBoard(board);
 
 		return "redirect:/contest.do";
@@ -343,7 +360,7 @@ public class ContestController {
 					BoardImageVO image = new BoardImageVO();
 					image.setF_img_name(request.getHeader("file-name"));
 					image.setF_img_path(rlFileNm);
-					image.setF_type("AD");
+					image.setF_type("CO");
 					boardService.insertBoardImage(image);
 
 					editor.getFiledata().transferTo(new File(rlFileNm));

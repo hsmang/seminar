@@ -27,7 +27,7 @@
 				                </a>
 				            </div>
 				            <div class="col-md-5">
-				                <h3><a href="/tour/detail.do?board_idx=${list.board_idx }&f_type=TO" id="subject">${list.board_subject }</a></h3>
+				                <h3 class="text_overflow"><a href="/tour/detail.do?board_idx=${list.board_idx }&f_type=TO" id="subject">${list.board_subject }</a></h3>
 				                <h4>${list.user_name } <span class="pull-right"><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
 								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></span></h4>
 				                <p>${list.board_content }</p>
@@ -66,7 +66,7 @@
 	
 	
 	<%
-		if(user != null){
+	if(user != null && user.getUser_role() < 2){
 	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/tour/insert.do'" >作成</button>
 	<%} %>
 	</form>

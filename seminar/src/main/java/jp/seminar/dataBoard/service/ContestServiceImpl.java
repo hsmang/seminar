@@ -39,12 +39,19 @@ public class ContestServiceImpl implements DataBoardService {
 				BoardVO board = new BoardVO();
 				if( boardList.get(i).getUser_idx() == userList.get(j).getUser_idx()){
 					board.setBoard_idx(boardList.get(i).getBoard_idx());
-					board.setBoard_content(boardList.get(i).getBoard_content());
+					String article = boardList.get(i).getBoard_content();
+					article = article.replaceAll("<[^>]*>", "");
+					article = article.replaceAll("\n", "");
+					article = article.replaceAll("&nbsp;", " ");
+					article = article.replaceAll("&#8203;", " ");
+					if(article.length() > 300) article = article.substring(0, 300) + ".....";
+					board.setBoard_content(article);
 					board.setBoard_count(boardList.get(i).getBoard_count());
 					board.setBoard_reg_date(boardList.get(i).getBoard_reg_date());
 					board.setBoard_subject(boardList.get(i).getBoard_subject());
 					board.setBoard_update_date(boardList.get(i).getBoard_update_date());
 					board.setUser_name(userList.get(j).getUser_name());
+					board.setMain_img(boardList.get(i).getMain_img());
 					boardList.set(i, board);
 				}
 			}
@@ -62,12 +69,19 @@ public class ContestServiceImpl implements DataBoardService {
 				BoardVO board = new BoardVO();
 				if( boardList.get(i).getUser_idx() == userList.get(j).getUser_idx()){
 					board.setBoard_idx(boardList.get(i).getBoard_idx());
-					board.setBoard_content(boardList.get(i).getBoard_content());
+					String article = boardList.get(i).getBoard_content();
+					article = article.replaceAll("<[^>]*>", "");
+					article = article.replaceAll("\n", "");
+					article = article.replaceAll("&nbsp;", " ");
+					article = article.replaceAll("&#8203;", " ");
+					if(article.length() > 300) article = article.substring(0, 300) + ".....";
+					board.setBoard_content(article);
 					board.setBoard_count(boardList.get(i).getBoard_count());
 					board.setBoard_reg_date(boardList.get(i).getBoard_reg_date());
 					board.setBoard_subject(boardList.get(i).getBoard_subject());
 					board.setBoard_update_date(boardList.get(i).getBoard_update_date());
 					board.setUser_name(userList.get(j).getUser_name());
+					board.setMain_img(boardList.get(i).getMain_img());
 					boardList.set(i, board);
 				}
 			}

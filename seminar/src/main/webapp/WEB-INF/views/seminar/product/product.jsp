@@ -28,28 +28,19 @@
 				                </a>
 				            </div>
 				            <div class="col-md-5">
-				                <h3><a href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR" id="subject">${list.board_subject }</a></h3>
+				                <h3 class="text_overflow"><a href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR" id="subject">${list.board_subject }</a></h3>
 				                <h4>${list.user_name } <fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
 								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></h4>
 				                <p>${list.board_content }</p>
 				                <a class="btn btn-primary" href="portfolio-item.html">View Project</i></a>
 				            </div>
 				        </div>
-				        
-						<%-- <tr>
-							<td id="idx">${list.board_idx }</td>
-							<td><a href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR" id="subject">${list.board_subject }</a></td>
-							<td>${list.user_name }</td>
-							<td><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
-								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></td>
-							<td>${list.board_count }</td>
-						</tr> --%>
+				        <hr>
 					</c:forEach>
 				</c:when>
 			</c:choose>
 	
 
-	<hr>
 	<!-- Pagination -->
 	<div class="row text-center">
 		<div class="col-lg-12">
@@ -76,7 +67,7 @@
 	
 	
 	<%
-		if(user != null){
+	if(user != null && user.getUser_role() < 2){
 	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/product/insert.do'" >作成</button>
 	<%} %>
 	</form>

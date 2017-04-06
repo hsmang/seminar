@@ -1,7 +1,6 @@
 <%@include file="../head.jsp"%>
 <%@include file="../nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
-<script src="/resources/js/jqBootstrapValidation.js"></script>
 <script>
 $(document).ready(function(){
 	

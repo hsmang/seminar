@@ -1,6 +1,64 @@
 <%@include file="head.jsp"%>
 <%@include file="nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+
+<script>
+$(function(){
+	$("#contactForm input,#contactForm textarea").jqBootstrapValidation({
+        preventSubmit: true,
+        submitError: function($form, event, errors) {
+            // something to have when submit produces an error ?
+            // Not decided if I need it yet
+        },
+        submitSuccess: function($form, event) {
+            event.preventDefault(); // prevent default submit behaviour
+            // get values from FORM
+            var name = $("input#name").val();
+            var phone = $("input#phone").val();
+            var email = $("input#email").val();
+            var message = $("textarea#message").val();
+            var firstName = name; // For Success/Failure Message
+            // Check for white space in name for Success/Fail message
+            if (firstName.indexOf(' ') >= 0) {
+                firstName = name.split(' ').slice(0, -1).join(' ');
+            }
+            var param = $('#contactForm').serialize();
+            $.ajax({
+                url: "/qna/insert.do",
+                type: "POST",
+                data: param,
+                cache: false,
+                success: function(result) {
+                    // Success message
+                    $('#success').html("<div class='alert alert-success'>");
+                    $('#success > .alert-success').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                        .append("</button>");
+                    $('#success > .alert-success')
+                        .append("<strong>Your message has been sent. </strong>");
+                    $('#success > .alert-success')
+                        .append('</div>'); 
+
+                    //clear all fields
+                    
+                },
+                error: function() {
+                    // Fail message
+                    $('#success').html("<div class='alert alert-danger'>");
+                    $('#success > .alert-danger').html("<button type='button' class='close' data-dismiss='alert' aria-hidden='true'>&times;")
+                        .append("</button>");
+                    $('#success > .alert-danger').append("<strong>Sorry " + firstName + " it seems that my mail server is not responding...</strong> Could you please email me directly to <a href='mailto:me@example.com?Subject=Message_Me from myprogrammingblog.com;>me@example.com</a> ? Sorry for the inconvenience!");
+                    $('#success > .alert-danger').append('</div>');
+                    //clear all fields
+                    $('#contactForm').trigger("reset");
+                },
+            })
+        },
+        filter: function() {
+            return $(this).is(":visible");
+        },
+    });
+})
+</script>
 <!-- Header Carousel -->
 <div class="container">
     <header id="myCarousel" class="carousel slide">
@@ -52,54 +110,93 @@
                     金泰旭ゼミナールへようこそ！
                 </h1>
             </div>
-            
             <div class="col-md-4">
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <h4><i class="fa fa-fw fa-check"></i> Tweet</h4>
                     </div>
                     <div class="panel-body">
-                    
-            <a class="twitter-timeline" href="https://twitter.com/sanggi_wjg"
-		data-width="100%" data-height="500px">Tweets by @sanggi_wjg</a>
+            <a class="twitter-timeline" href="https://twitter.com/kindaikimzemi"
+		data-width="100%" data-height="500px">Tweets by @kindaikimzemi</a>
 	<!--	<a class="twitter-timeline" href="https://twitter.com/kimzemi833">Tweets by @kimzemi833</a>-->
 	<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-check"></i> Bootstrap v3.3.7</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                        <a href="#" class="btn btn-default">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-gift"></i> Free &amp; Open Source</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                        <a href="#" class="btn btn-default">Learn More</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h4><i class="fa fa-fw fa-compass"></i> Easy to Use</h4>
-                    </div>
-                    <div class="panel-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Itaque, optio corporis quae nulla aspernatur in alias at numquam rerum ea excepturi expedita tenetur assumenda voluptatibus eveniet incidunt dicta nostrum quod?</p>
-                        <a href="#" class="btn btn-default">Learn More</a>
-                    </div>
-                </div>
+            <div class="col-md-8">
+                <table class="table table-hover table-responsive">
+					<thead>
+						<tr>
+							<th style="width:100%">基礎ゼミ</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${fn:length(seminarList) > 0}">
+								<c:forEach items="${seminarList }" var="list">
+									<tr>
+										<td><a href="/seminar/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</tbody>
+				</table>
+				<table class="table table-hover table-responsive">
+					<thead>
+						<tr>
+							<th style="width:100%">経営学</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${fn:length(adminList) > 0}">
+								<c:forEach items="${adminList }" var="list">
+									<tr>
+										<td><a href="/businessAdmin/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</tbody>
+				</table>
+				<table class="table table-hover table-responsive">
+					<thead>
+						<tr>
+							<th style="width:100%">経営戦略論</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${fn:length(strategyList) > 0}">
+								<c:forEach items="${strategyList }" var="list">
+									<tr>
+										<td><a href="/businessStrategy/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</tbody>
+				</table>
+				<table class="table table-hover table-responsive">
+					<thead>
+						<tr>
+							<th style="width:100%">事業システム論</th>
+						</tr>
+					</thead>
+					<tbody>
+						<c:choose>
+							<c:when test="${fn:length(systemList) > 0}">
+								<c:forEach items="${systemList }" var="list">
+									<tr>
+										<td><a href="/businessSystem/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+									</tr>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+					</tbody>
+				</table>
             </div>
         </div>
         <!-- /.row -->
@@ -107,78 +204,70 @@
         <!-- Portfolio Section -->
         <div class="row">
             <div class="col-lg-12">
-                <h2 class="page-header">Portfolio Heading</h2>
+                <h2 class="page-header">PHOTO</h2>
+            </div>
+           	<div class="col-md-4 col-sm-6">
+                <a href="/product/detail.do?board_idx=${product.board_idx }&f_type=PR">
+                    <img class="img-responsive img-portfolio img-hover" src="${product.main_img }" alt="">
+                </a>
+                <h3 class="text_overflow">${product.board_subject }</h3>
+           	</div>	
+            
+            <div class="col-md-4 col-sm-6">
+                <a href="/contest/detail.do?board_idx=${contest.board_idx }&f_type=CO">
+                    <img class="img-responsive img-portfolio img-hover" src="${contest.main_img }" alt="">
+                </a>
+                <h3 class="text_overflow">${contest.board_subject }</h3>
             </div>
             <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
+                <a href="/album/detail.do?board_idx=${album.board_idx }&f_type=AL">
+                    <img class="img-responsive img-portfolio img-hover" src="${album.main_img }" alt="">
                 </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
-            </div>
-            <div class="col-md-4 col-sm-6">
-                <a href="portfolio-item.html">
-                    <img class="img-responsive img-portfolio img-hover" src="http://placehold.it/700x450" alt="">
-                </a>
+                <h3 class="text_overflow">${album.board_subject }</h3>
             </div>
         </div>
         <!-- /.row -->
-
-        <!-- Features Section -->
+		<hr>
+        <!-- Content Row -->
         <div class="row">
-            <div class="col-lg-12">
-                <h2 class="page-header">Modern Business Features</h2>
+        	<div class="col-lg-12">
+                <h2 class="page-header">Contact</h2>
             </div>
-            <div class="col-md-6">
-                <p>The Modern Business template by Start Bootstrap includes:</p>
-                <ul>
-                    <li><strong>Bootstrap v3.3.7</strong>
+            <!-- Map Column -->
+            <div class="col-md-8">
+                <!-- Embedded Google Map -->
+                <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d6564.228538830766!2d135.588737!3d34.651817!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x222f1e658e84c664!2sKindai+University!5e0!3m2!1sen!2sus!4v1485276131512" width="100%" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+            <!-- Contact Details Column -->
+            <div class="col-md-4">
+                <h3>Contact Details</h3>
+                <p>
+                    〒577-8502 大阪府東大阪市小若江3-4-1<br>
+                </p>
+                <p><i class="fa fa-phone"></i> 
+                    <abbr title="Phone">P</abbr>: (06)6721-2332</p>
+                <p><i class="fa fa-envelope-o"></i> 
+                    <abbr title="Email">E</abbr>: <a href="mailto:kindaibusinesskim@gmail.com">kindaibusinesskim@gmail.com</a>
+                </p>
+                <p><i class="fa fa-clock-o"></i> 
+                    <abbr title="Hours">H</abbr>: 月曜日　13：00 ~ 14：40分</p>
+                <ul class="list-unstyled list-inline list-social-icons">
+                    <li>
+                        <a href="http://facebook.com/kindaibusinesskim"><i class="fa fa-facebook-square fa-2x"></i></a>
                     </li>
-                    <li>jQuery v1.11.1</li>
-                    <li>Font Awesome v4.2.0</li>
-                    <li>Working PHP contact form with validation</li>
-                    <li>Unstyled page elements for easy customization</li>
-                    <li>17 HTML pages</li>
+                    <li>
+                        <a href="#"><i class="fa fa-linkedin-square fa-2x"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-google-plus-square fa-2x"></i></a>
+                    </li>
                 </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis, omnis doloremque non cum id reprehenderit, quisquam totam aspernatur tempora minima unde aliquid ea culpa sunt. Reiciendis quia dolorum ducimus unde.</p>
-            </div>
-            <div class="col-md-6">
-                <img class="img-responsive" src="http://placehold.it/700x450" alt="">
             </div>
         </div>
         <!-- /.row -->
-
-        <hr>
-
-        <!-- Call to Action Section -->
-        <div class="well">
-            <div class="row">
-                <div class="col-md-8">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias, expedita, saepe, vero rerum deleniti beatae veniam harum neque nemo praesentium cum alias asperiores commodi.</p>
-                </div>
-                <div class="col-md-4">
-                    <a class="btn btn-lg btn-default btn-block" href="#">Call to Action</a>
-                </div>
-            </div>
-        </div>
 
         <hr>
 <%@include file="footer.jsp"%>

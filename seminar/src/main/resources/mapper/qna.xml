@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="qna">
+	<parameterMap type="jp.seminar.qna.model.QnaVO" id="qnaVO">
+		<parameter property="user_name"/>
+		<parameter property="user_hp"/>
+		<parameter property="user_email"/>
+		<parameter property="qna_subject"/>
+		<parameter property="qna_content"/>
+	</parameterMap>
+    
+    
+    <insert id="qnaInsertProc" parameterMap="qnaVO">
+    	INSERT INTO `seminar`.`qna` 
+    	(`user_name`, `user_hp`, `user_email`, `qna_subject`, `qna_content`, `qna_state`, `reg_date`, `update_date`) 
+    	VALUES 
+    	( ? , ? , ? , ? , ? , '0' , CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+    </insert>
+    
+    
+    <update id="qnaUpdateProc" parameterType="jp.seminar.qna.model.QnaVO">
+		UPDATE `seminar`.`qna` 
+		SET 
+			`qna_state` = '1',
+			`qna_content` = #{qna_content},
+			`update_date` = now() 
+		WHERE `qna`.`qna_idx` = #{qna_idx}; 
+    </update>
+    <select id="getTotalCount" parameterType="int" resultType="int">
+    	SELECT
+    		count(*)
+    	FROM qna
+    	WHERE qna_state &lt;= #{role}
+    </select>
+    
+    <select id="getQnaList" parameterType="hashmap" resultType="jp.seminar.qna.model.QnaVO">
+    	SELECT 
+    		`qna_idx`,`user_email`,`user_name`,`user_hp`,`qna_subject`,`qna_state`,`reg_date`,`update_date`
+    	FROM
+    		`qna`
+    	<if test="role != 3">
+    		WHERE qna_state = #{role}
+  		</if>
+    	
+    	ORDER BY qna_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    
+    <select id="qnaDetail" parameterType="int" resultType="jp.seminar.qna.model.QnaVO">
+    	SELECT 
+    		*
+    	FROM
+    		`qna`
+    		WHERE qna_idx = #{qna_idx}
+    </select>
+    
+</mapper>

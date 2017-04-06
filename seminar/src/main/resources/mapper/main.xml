@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="main">
+    <select id="selectProduct" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+        SELECT
+        	*
+        FROM
+        	product_dev
+        ORDER BY board_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    <select id="selectAlbum" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+        SELECT
+        	*
+        FROM
+        	album
+        ORDER BY board_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    <select id="selectBusinessContest" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+        SELECT
+        	*
+        FROM
+        	business_contest
+        ORDER BY board_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    <select id="selectSeminar" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+        SELECT
+        	*
+        FROM
+        	basic_seminar
+        ORDER BY board_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    <select id="selectAdmin" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+        SELECT
+        	*
+        FROM
+        	business_admin
+        ORDER BY board_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    <select id="selectStrategy" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+        SELECT
+        	*
+        FROM
+        	business_strategy
+        ORDER BY board_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    <select id="selectSystem" parameterType="jp.seminar.paging.FirstRowPageSize" resultType="jp.seminar.board.vo.BoardVO">
+        SELECT
+        	*
+        FROM
+        	business_system
+        ORDER BY board_idx DESC
+        LIMIT #{firstRow} , #{pageSize}
+    </select>
+    
+    
+</mapper>

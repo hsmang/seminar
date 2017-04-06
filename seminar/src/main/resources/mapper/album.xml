@@ -87,7 +87,8 @@
     	SET
     		board_subject = #{board_subject},
     		board_content = #{board_content},
-    		board_update_date = NOW()
+    		board_update_date = NOW(),
+    		main_img = #{main_img}
     	WHERE
     		board_idx = #{board_idx}
     </update>
@@ -107,7 +108,8 @@
     			board_content,
     			user_idx,
     			board_reg_date,
-    			board_count
+    			board_count,
+    			main_img
     		)
     	VALUES
     		(
@@ -115,7 +117,8 @@
     			#{board_content},
     			#{user_idx},
     			NOW(),
-    			0
+    			0,
+    			#{main_img}
     		)
      </insert> 
     

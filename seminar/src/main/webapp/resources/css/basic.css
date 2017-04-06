@@ -3,3 +3,18 @@
 	height : 300px;
 }
 
+.w7h4_main_img{
+	width : 700px;
+	height : 400px;
+}
+
+.w75h45_main_img{
+	width : 750px;
+	height : 450px;
+}
+
+h3.text_of {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

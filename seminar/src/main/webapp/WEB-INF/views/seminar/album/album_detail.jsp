@@ -69,10 +69,18 @@
                 <div class="well">
                     <h4>Leave a Comment:</h4>
                     <form role="form" id="frm" method="post">
-                        <div class="form-group">
+                        <%
+                    	if(user == null){
+                    	%>
+                    	<div class="form-group">
+                            <textarea class="form-control" id="reply_content" name="reply_content" rows="3" form="frm" disabled="disabled">Please login..</textarea>
+                        </div>
+                    	<%}else { %>
+                    	<div class="form-group">
                             <textarea class="form-control" id="reply_content" name="reply_content" rows="3" form="frm" ></textarea>
                         </div>
                         <input class="btn btn-primary" type="button" id="btn_save" value="コメントセーブ">
+                    	<%} %>
                     </form>
                 </div>
                 <hr> 
@@ -117,7 +125,7 @@
 					return;
 				}
 				frm.submit();
-				history.pushState(null, 'page -1',"/album.do");
+				history.pushState(null, 'page -1',"/album.do?pageNumber=1&pageSize=12");
 			});
 			
 			$('a[id="file"]').on("click", function(e){

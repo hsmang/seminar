@@ -51,20 +51,25 @@
                                 <a href="/product.do">商品開発</a>
                             </li>
                             <li>
-                                <a href="/contest.do">ビジネスコンテスト</a>
+                                <a href="/contest.do?pageNumber=1&pageSize=6">ビジネスコンテスト</a>
                             </li>
                             <li>
                                 <a href="/tour.do">観光事業関連</a>
                             </li>
                             <li>
-                                <a href="/album.do">アルバム</a>
+                                <a href="/album.do?pageNumber=1&pageSize=12">アルバム</a>
                             </li>
                         </ul>
                     </li>
                     
                     <%
-                    	if(user != null){
-                    		String user_name = user.getUser_name();
+                    	if(user != null){%>
+                    		
+                    		<li>
+                                <a href="/board.do?pageNumber=1&pageSize=10">メンバー専用</a>
+                         </li>
+                    		
+                    		<%String user_name = user.getUser_name();
                     %>
                    		 <%if(user.getUser_role() == 0){ %>
                    		 <li>

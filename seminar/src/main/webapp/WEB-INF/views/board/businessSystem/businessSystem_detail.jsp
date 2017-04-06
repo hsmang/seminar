@@ -52,7 +52,7 @@
 				<%
 				if(user != null){
 						if(user.getUser_role() == 2){
-							int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
+							int board_user_idx = (Integer)pageContext.getAttribute("board_user_idx");
 							int user_idx = user.getUser_idx();
 							if(board_user_idx == user_idx){%>
 							<button type="button" class="btn btn-default" onclick="location.href='/businessSystem/update.do?board_idx=${detail.board_idx}'">修正</button>
@@ -70,10 +70,18 @@
                 <div class="well">
                     <h4>Leave a Comment:</h4>
                     <form role="form" id="frm" method="post">
-                        <div class="form-group">
+                        <%
+                    	if(user == null){
+                    	%>
+                    	<div class="form-group">
+                            <textarea class="form-control" id="reply_content" name="reply_content" rows="3" form="frm" disabled="disabled">Please login..</textarea>
+                        </div>
+                    	<%}else { %>
+                    	<div class="form-group">
                             <textarea class="form-control" id="reply_content" name="reply_content" rows="3" form="frm" ></textarea>
                         </div>
                         <input class="btn btn-primary" type="button" id="btn_save" value="コメントセーブ">
+                    	<%} %>
                     </form>
                 </div>
                 <hr> 
@@ -87,7 +95,7 @@
 								<%
 								if(user != null){
 										if(user.getUser_role() == 2){
-											int reply_user_idx = (int)pageContext.getAttribute("reply_user_idx");
+											int reply_user_idx = (Integer)pageContext.getAttribute("reply_user_idx");
 											int user_idx = user.getUser_idx();
 											if(reply_user_idx == user_idx){%>
 											<small class="pull-right"><a href="/businessSystem/deleteReplyProc.do?reply_idx=${replyList.reply_idx}">削除</a></small>

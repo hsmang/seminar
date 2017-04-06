@@ -72,7 +72,7 @@
 	
 	
 	<%
-		if(user != null){
+		if(user != null && user.getUser_role() < 2){
 	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/businessAdmin/insert.do'" >作成</button>
 	<%} %>
 	</form>

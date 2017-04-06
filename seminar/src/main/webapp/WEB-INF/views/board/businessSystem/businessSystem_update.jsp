@@ -17,7 +17,7 @@
 		
 	}
 	else if(user.getUser_role() == 2){
-		int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
+		int board_user_idx = (Integer)pageContext.getAttribute("board_user_idx");
 		int user_idx = user.getUser_idx();
 		if(board_user_idx != user_idx){
 			response.sendRedirect("/businessSystem.do");

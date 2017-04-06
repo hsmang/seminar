@@ -11,7 +11,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+	<link rel="stylesheet" href="/resources/css/basic.css">
     <!-- Bootstrap Core CSS -->
     <link href="/resources/modern-business/css/bootstrap.min.css" rel="stylesheet">
 
@@ -36,12 +36,19 @@
     <!-- <link rel="stylesheet" href="/resources/assets/css/style.css"> -->
     
     <link rel="stylesheet" href="/resources/font-awesome-4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/resources/css/basic.css">
+    
     <script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 	<script src="/resources/modern-business/js/bootstrap.min.js"></script>
     <script src="/resources/assets/js/jquery.backstretch.min.js"></script>
     <script src="/resources/assets/js/scripts.js"></script>
     <script src="/resources/js/main.js"></script>
-        
+    <script src="/resources/js/jqBootstrapValidation.js"></script>  
+    <style>
+.text_overflow {
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+</style>  
 <title>近畿大学金泰旭ゼミナール</title>
 </head>

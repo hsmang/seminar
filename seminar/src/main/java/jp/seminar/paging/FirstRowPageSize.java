@@ -6,6 +6,13 @@ public class FirstRowPageSize {
 	private String value;
 	private String type;
 	
+	
+	public FirstRowPageSize() {	}
+	public FirstRowPageSize(int firstRow, int pageSize) {
+		this.firstRow = firstRow;
+		this.pageSize = pageSize;
+	}
+	
 	public String getValue() {
 		return value;
 	}

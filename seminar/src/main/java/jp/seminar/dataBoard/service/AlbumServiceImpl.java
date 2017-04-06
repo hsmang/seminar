@@ -46,6 +46,7 @@ public class AlbumServiceImpl implements DataBoardService {
 					board.setBoard_subject(boardList.get(i).getBoard_subject());
 					board.setBoard_update_date(boardList.get(i).getBoard_update_date());
 					board.setUser_name(userList.get(j).getUser_name());
+					board.setMain_img(boardList.get(i).getMain_img());
 					boardList.set(i, board);
 				}
 			}
@@ -69,6 +70,7 @@ public class AlbumServiceImpl implements DataBoardService {
 					board.setBoard_subject(boardList.get(i).getBoard_subject());
 					board.setBoard_update_date(boardList.get(i).getBoard_update_date());
 					board.setUser_name(userList.get(j).getUser_name());
+					board.setMain_img(boardList.get(i).getMain_img());
 					boardList.set(i, board);
 				}
 			}

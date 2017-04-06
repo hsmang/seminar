@@ -303,7 +303,7 @@ public class BasicSeminarController {
 		String return2="?callback_func=" + request.getParameter("callback_func");
 		String return3=""; 
 		String name = ""; 
-		
+		System.out.println("here1");
 		try { 
 			if(editor.getFiledata() != null && editor.getFiledata().getOriginalFilename() != null && !editor.getFiledata().getOriginalFilename().equals("")) { 
 				// 기존 상단 코드를 막고 하단코드를 이용 
@@ -334,7 +334,9 @@ public class BasicSeminarController {
 					SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss"); 
 					String today= formatter.format(new java.util.Date()); 
 					realFileNm = today + name.substring(name.lastIndexOf("."));
-					String rlFileNm = filePath + realFileNm; 
+					Random rand = new Random();
+					int r = rand.nextInt(99999);
+					String rlFileNm = filePath + realFileNm + r; 
 					///////////////// 서버에 파일쓰기 ///////////////// 
 					BoardImageVO image = new BoardImageVO();
 					image.setF_img_name(request.getHeader("file-name"));
@@ -363,6 +365,7 @@ public class BasicSeminarController {
 ///////////////////////////////////////////////////////////////////////////////
 	@RequestMapping("/seminar/multiplePhotoUpload.do")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("here2");
 		try {
 	         //파일정보
 	         String sFileInfo = "";
@@ -383,9 +386,12 @@ public class BasicSeminarController {
 	         String realFileNm = "";
 	         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 	         String today= formatter.format(new java.util.Date());
-	         realFileNm = today + filename.substring(filename.lastIndexOf("."));
-	         String rlFileNm = filePath + realFileNm;
+	         Random rand = new Random();
+			 int r = rand.nextInt(99999);
+	         realFileNm = today +  r + filename.substring(filename.lastIndexOf("."));
 	         
+			 String rlFileNm = filePath + realFileNm ; 
+			 System.out.println(rlFileNm);
 	         ///////////////// 서버에 파일쓰기 /////////////////
 	         InputStream is = request.getInputStream();
 	         OutputStream os=new FileOutputStream(rlFileNm);

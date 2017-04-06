@@ -72,8 +72,9 @@
 	
 	
 	<%
-		if(user != null){
-	%><button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/seminar/insert.do'" >作成</button>
+		if(user != null && user.getUser_role() < 2){
+	%>
+		<button type="button" id="btn_insert" class="btn btn-default" onclick="location.href='/seminar/insert.do'" >作成</button>
 	<%} %>
 	</form>
 	<hr>

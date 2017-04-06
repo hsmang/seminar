@@ -12,11 +12,7 @@ $(function(){
 		location.href="/user/info.do";
 	})
 	
-	$("#role_view").change(function(){
-		/*var pageNumber = getQuerystring("pageNumber");
-		var pageSize= getQuerystring("pageSize");*/
-		location.href="/user/userList.do?order=" + this.value + "&pageNumber=1&pageSize=10";
-	})
+	
 })
 
 function getQuerystring(paramName){
