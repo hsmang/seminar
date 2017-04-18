@@ -127,8 +127,10 @@
     </select>
     
     <select id="getMaxIdx" resultType="int">
-    	SELECT if( isnull(MAX(board_idx)), 0, MAX(board_idx))
-    	FROM business_contest
+    	SELECT AUTO_INCREMENT
+		FROM information_schema.TABLES
+		WHERE TABLE_SCHEMA = "seminar"
+		AND TABLE_NAME = "business_contest"
     </select>
 
 </mapper>

@@ -112,7 +112,7 @@ public class QnAController {
 		
 		String url = request.getRequestURL().toString();
 		int totalCount = qnaService.getTotalCount(order);
-		Paging boardPaging = new Paging(pageNumber, pageSize , totalCount, url); // 페이징처리
+		Paging boardPaging = new Paging(pageNumber, pageSize , totalCount, url, order); // 페이징처리
 		FirstRowPageSize  firstRowpageSize = new FirstRowPageSize(); // db limit 설정하기
 		firstRowpageSize.setFirstRow(boardPaging.getBeginRow());
 		firstRowpageSize.setPageSize(boardPaging.getPageSize());

@@ -43,12 +43,25 @@
     <script src="/resources/assets/js/scripts.js"></script>
     <script src="/resources/js/main.js"></script>
     <script src="/resources/js/jqBootstrapValidation.js"></script>  
+    <script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/jquery.loadingoverlay/latest/loadingoverlay_progress.min.js"></script>
     <style>
 .text_overflow {
 	white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-</style>  
+</style>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-97182375-1', 'auto');
+  ga('send', 'pageview');
+
+</script>  
 <title>近畿大学金泰旭ゼミナール</title>
 </head>

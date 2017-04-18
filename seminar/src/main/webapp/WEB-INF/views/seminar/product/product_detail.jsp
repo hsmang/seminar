@@ -46,7 +46,9 @@
 					</c:choose>
 					</form>
 				<hr>
+				<div class="row">
 				<p>${detail.board_content }</p>
+				</div>
 				<hr>
 				<c:set var="board_user_idx" value="${board_user_idx }"/>
 				<%

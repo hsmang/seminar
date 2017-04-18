@@ -7,6 +7,11 @@ $(function(){
 	$("#role_view option[value=" + order + "]").attr('selected', 'selected');
 })
 </script>
+<%
+	if(user != null){
+		response.sendRedirect("/index.do");
+	}
+%>
 <!-- Page Content -->
     <div class="container">
 

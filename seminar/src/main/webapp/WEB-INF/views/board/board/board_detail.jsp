@@ -11,11 +11,11 @@
 	<div class="row">
 		<div class="col-lg-12">
 			<h1 class="page-header">
-				基礎ゼミ
+				メンバー専用
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="/index.do">Home</a></li>
-				<li class="active">基礎ゼミ</li>
+				<li class="active">メンバー専用</li>
 			</ol>
 		</div>
 	</div>
@@ -54,12 +54,12 @@
 							int board_user_idx = (int)pageContext.getAttribute("board_user_idx");
 							int user_idx = user.getUser_idx();
 							if(board_user_idx == user_idx){%>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">修正</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/board/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/board/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>
 							<% }
 						}else{%>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/update.do?board_idx=${detail.board_idx}'">修正</button>
-							<button type="button" class="btn btn-default" onclick="location.href='/seminar/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>	
+							<button type="button" class="btn btn-default" onclick="location.href='/board/update.do?board_idx=${detail.board_idx}'">修正</button>
+							<button type="button" class="btn btn-default" onclick="location.href='/board/deleteProc.do?board_idx=${detail.board_idx}'">削除</button>	
 						<%} %>
 				<%} %>
 				<button type="button" class="btn btn-default" onclick="javascript:history.back(-1);">目録</button>

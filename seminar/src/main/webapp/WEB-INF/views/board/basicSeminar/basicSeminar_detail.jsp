@@ -22,9 +22,7 @@
 
 
 	<div class="row">
-		<div class="col-lg-12">
-		
-		
+		<div class="col-md-12">
  				<input type="hidden" id="board_idx" value="${detail.board_idx }">
 				<hr>
 				<h2>${detail.board_subject }</h2>

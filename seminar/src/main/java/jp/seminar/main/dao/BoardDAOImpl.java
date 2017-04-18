@@ -28,7 +28,7 @@ public class BoardDAOImpl implements BoardDAO {
 		list.add(sqlSession.selectOne("main.selectProduct" , firstRowpageSize));
 		list.add(sqlSession.selectOne("main.selectBusinessContest" , firstRowpageSize));
 		list.add(sqlSession.selectOne("main.selectAlbum" , firstRowpageSize));
-		FirstRowPageSize  firstRowpageSize2 = new FirstRowPageSize(0, 4);
+		FirstRowPageSize  firstRowpageSize2 = new FirstRowPageSize(0, 2);
 		list.add(sqlSession.selectList("main.selectSeminar" , firstRowpageSize2));
 		list.add(sqlSession.selectList("main.selectAdmin" , firstRowpageSize2));
 		list.add(sqlSession.selectList("main.selectStrategy" , firstRowpageSize2));

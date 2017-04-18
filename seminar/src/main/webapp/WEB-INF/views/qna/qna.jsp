@@ -100,13 +100,7 @@ $(function(){
                         <a href="http://facebook.com/kindaibusinesskim"><i class="fa fa-facebook-square fa-2x"></i></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-linkedin-square fa-2x"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-google-plus-square fa-2x"></i></a>
+                        <a href="https://twitter.com/kindaikimzemi"><i class="fa fa-twitter-square fa-2x"></i></a>
                     </li>
                 </ul>
             </div>

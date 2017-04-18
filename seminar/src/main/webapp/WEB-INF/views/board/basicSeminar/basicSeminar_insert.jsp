@@ -2,7 +2,7 @@
 <%@include file="../../nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 
-<script type="text/javascript" src="/resources/se2/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js" charset="utf-8"></script>
 
 <script type="text/javascript" src="/resources/dropzone/dropzone.js" charset="utf-8"></script>
 
@@ -67,18 +67,38 @@
 <script type="text/javascript">
 
 	var smartEditor = [];
+	var sLang = "ja_JP";
+	var aDefaultFontSet = [];
+	switch(sLang){
+		case "ja_JP" :
+			aDefaultFontSet = [["MS UI Gothic", "MS UI Gothic"], ["MS Pゴシック", "MS Pゴシック"], ["MS ゴシック", "MS ゴシック"], ["MS P明朝", "MS P明朝"], ["MS 明朝", "MS 明朝"], ["Arial", "Arial"], ["Arial Black", "Arial Black"], ["Comic Sans MS", "Comic Sans MS"], ["Courier New", "Courier New"], ["Times New Roman", "Times New Roman"], ["Verdana", "Verdana"]];
+			break;
+		case "zh_CN" :
+			aDefaultFontSet = [["宋体", "宋体"], ["新宋体", "新宋体"], ["黑体", "黑体"], ["仿宋", "仿宋"], ["楷体", "楷体"], ["幼圆", "幼圆"], ["隶书", "隶书"], ["华文彩云", "华文彩云"], ["Arial", "Arial"], ["Comic Sans MS", "Comic Sans MS"], ["Verdana", "Verdana"], ["Times New Roman", "Times New Roman"], ["Tahoma", "Tahoma"]];
+			break;
+		case "en_US" :
+			aDefaultFontSet = [["Gulim", "Gulim"], ["Batang", "Batang"], ["Gulimche", "Gulimche"], ["Sans Serif", "Sans Serif"], ["Serif", "Serif"], ["Wide", "Wide"], ["Narrow", "Narrow"], ["Comic Sans MS", "Comic Sans MS"], ["Courier New", "Courier New"], ["Garamond", "Garamond"], ["Georgia", "Georgia"], ["Tahoma", "Tahoma"], ["Trebuchet MS", "Trebuchet MS"], ["Verdana", "Verdana"]];
+			break;
+		default :
+			break;
+	}
+
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef : smartEditor,
 		elPlaceHolder : "content",
-		sSkinURI : "/resources/se2/SmartEditor2Skin.html",
+		sSkinURI : "/resources/se2/SmartEditor2Skin_ja_JP.html",
 		htParams : {
-            // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseToolbar : true,            
-            // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseVerticalResizer : true,    
-            // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
-            bUseModeChanger : true,
-        }
+	        // 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+	        bUseToolbar : true,            
+	        // 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+	        bUseVerticalResizer : true,    
+	        // 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+	        bUseModeChanger : true,
+	        SE2M_FontName: {
+				aDefaultFontList: aDefaultFontSet
+			},
+	        I18N_LOCALE : sLang
+	    }
 	});
 	
 	$(document).ready(function() {

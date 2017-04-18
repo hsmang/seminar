@@ -1,5 +1,6 @@
 package jp.seminar.board.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -217,6 +219,7 @@ public class BasicSeminarController {
 	public String insertProcBasicSeminarBoard(BoardVO board, HttpServletRequest request, HttpSession session) throws Exception{
 		UserVO user = (UserVO) session.getAttribute("user");
 		board.setUser_idx(user.getUser_idx());
+		System.out.println("인서트 먼저");
 		boardService.insertBoard(board);
 		
 		return "redirect:/seminar.do";
@@ -227,7 +230,7 @@ public class BasicSeminarController {
 	@RequestMapping(value="/seminar/fileUpload.do")
 	@ResponseBody
 	public Map<String,String> fileUpload(HttpServletRequest request, FileVO filevo, String board_idx) throws Exception  {
-		
+		System.out.println("파일업로드먼저");
 		Map<String, String> resultMap = new HashMap<String, String>();
 		
 		try{
@@ -392,6 +395,7 @@ public class BasicSeminarController {
 	         
 			 String rlFileNm = filePath + realFileNm ; 
 			 System.out.println(rlFileNm);
+			 
 	         ///////////////// 서버에 파일쓰기 /////////////////
 	         InputStream is = request.getInputStream();
 	         OutputStream os=new FileOutputStream(rlFileNm);
@@ -403,6 +407,7 @@ public class BasicSeminarController {
 	         if(is != null) {
 	        	 is.close();
 	         }
+	         
 	         os.flush();
 	         os.close();
 	         
@@ -416,6 +421,8 @@ public class BasicSeminarController {
 			 ///////////////// 서버에 파일쓰기 /////////////////
 	         // 정보 출력
 	         sFileInfo += "&bNewLine=true";
+	         BufferedImage bimg = ImageIO.read(new File(rlFileNm));
+	         sFileInfo += "&nWidth=" + bimg.getWidth();
 	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	         sFileInfo += "&sFileName="+ filename;;
 	         sFileInfo += "&sFileURL="+"/resources/photo_upload/"+realFileNm;

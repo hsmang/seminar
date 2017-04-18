@@ -157,7 +157,7 @@ public class BusinessStrategyServiceImpl implements BoardService {
 	@Override
 	public int insertFile(FileVO fileinfo) {
 		int	maxIdx = boardDAO.getMaxBoard_idx();
-		fileinfo.setBoard_idx(++maxIdx);
+		fileinfo.setBoard_idx(maxIdx);
 		return boardDAO.insertFileinfo(fileinfo);
 	}
 	

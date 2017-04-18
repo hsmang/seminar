@@ -1,5 +1,6 @@
 package jp.seminar.board.controller;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -13,6 +14,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -411,8 +413,9 @@ public class BusinessAdminController {
 			// 정보 출력
 			sFileInfo += "&bNewLine=true";
 			// img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
+			BufferedImage bimg = ImageIO.read(new File(rlFileNm));
+	        sFileInfo += "&nWidth=" + bimg.getWidth();
 			sFileInfo += "&sFileName=" + filename;
-			;
 			sFileInfo += "&sFileURL=" + "/resources/photo_upload/" + realFileNm;
 			System.out.println(sFileInfo);
 			PrintWriter print = response.getWriter();

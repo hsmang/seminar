@@ -23,16 +23,16 @@
 					<c:forEach items="${boardList }" var="list">
 						<div class="row">
 				            <div class="col-md-7">
-				                <a href="portfolio-item.html">
+				                <a href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR">
 				                    <img class="img-responsive img-hover" src="${list.main_img }" alt="">
 				                </a>
 				            </div>
 				            <div class="col-md-5">
 				                <h3 class="text_overflow"><a href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR" id="subject">${list.board_subject }</a></h3>
-				                <h4>${list.user_name } <fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
+				                <h4><fmt:parseDate value='${list.board_update_date }' var='update_date' pattern='yyyy-MM-dd'/>
 								<fmt:formatDate value="${update_date}" pattern="yyyy.MM.dd"/></h4>
 				                <p>${list.board_content }</p>
-				                <a class="btn btn-primary" href="portfolio-item.html">View Project</i></a>
+				                <a class="btn btn-primary" href="/product/detail.do?board_idx=${list.board_idx }&f_type=PR">View Product</i></a>
 				            </div>
 				        </div>
 				        <hr>

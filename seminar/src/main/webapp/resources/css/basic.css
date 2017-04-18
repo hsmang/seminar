@@ -3,9 +3,23 @@
 	height : 300px;
 }
 
+.se_photo{
+	display : inline;
+}
+
+.w36h27_main_img{
+	width : 360px;
+	height : 270px;
+}
+
 .w7h4_main_img{
 	width : 700px;
 	height : 400px;
+}
+
+.w7h45_main_img{
+	width : 700px;
+	height : 450px;
 }
 
 .w75h45_main_img{

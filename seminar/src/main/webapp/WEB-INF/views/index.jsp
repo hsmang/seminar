@@ -1,7 +1,24 @@
 <%@include file="head.jsp"%>
 <%@include file="nav.jsp"%>
 <%@ page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1314406451979529',
+      xfbml      : true,
+      version    : 'v2.8'
+    });
+    FB.AppEvents.logPageView();
+  };
 
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "//connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <script>
 $(function(){
 	$("#contactForm input,#contactForm textarea").jqBootstrapValidation({
@@ -59,6 +76,14 @@ $(function(){
     });
 })
 </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.8&appId=1314406451979529";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <!-- Header Carousel -->
 <div class="container">
     <header id="myCarousel" class="carousel slide">
@@ -123,9 +148,26 @@ $(function(){
                     </div>
                 </div>
             </div>
+            <div class="col-md-4">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> FaceBook</h4>
+                    </div>
+                    <div class="panel-body">
+            <div class="fb-page" data-href="https://www.facebook.com/kindaibusiness" data-tabs="timeline" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"><blockquote cite="https://www.facebook.com/kindaibusiness" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/kindaibusiness">Kindaibusinesskim</a></blockquote></div>
+                    </div>
+                </div>
+            </div>
+            <!-- </div>
+            <div class="row"> -->
             
-            <div class="col-md-8">
-                <table class="table table-hover table-responsive">
+            <div class="col-md-4">
+            	<div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4><i class="fa fa-fw fa-check"></i> News</h4>
+                    </div>
+                    <div class="panel-body">
+            <table class="table table-hover table-responsive">
 					<thead>
 						<tr>
 							<th style="width:100%">基礎ゼミ</th>
@@ -154,7 +196,7 @@ $(function(){
 							<c:when test="${fn:length(adminList) > 0}">
 								<c:forEach items="${adminList }" var="list">
 									<tr>
-										<td><a href="/businessAdmin/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+										<td><a href="/businessAdmin/detail.do?board_idx=${list.board_idx }&f_type=AD" id="subject">${list.board_subject }</a></td>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -172,7 +214,7 @@ $(function(){
 							<c:when test="${fn:length(strategyList) > 0}">
 								<c:forEach items="${strategyList }" var="list">
 									<tr>
-										<td><a href="/businessStrategy/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+										<td><a href="/businessStrategy/detail.do?board_idx=${list.board_idx }&f_type=ST" id="subject">${list.board_subject }</a></td>
 									</tr>
 								</c:forEach>
 							</c:when>
@@ -190,13 +232,16 @@ $(function(){
 							<c:when test="${fn:length(systemList) > 0}">
 								<c:forEach items="${systemList }" var="list">
 									<tr>
-										<td><a href="/businessSystem/detail.do?board_idx=${list.board_idx }&f_type=SE" id="subject">${list.board_subject }</a></td>
+										<td><a href="/businessSystem/detail.do?board_idx=${list.board_idx }&f_type=SY" id="subject">${list.board_subject }</a></td>
 									</tr>
 								</c:forEach>
 							</c:when>
 						</c:choose>
 					</tbody>
 				</table>
+                    </div>
+                </div>
+                
             </div>
         </div>
         <!-- /.row -->
@@ -208,20 +253,20 @@ $(function(){
             </div>
            	<div class="col-md-4 col-sm-6">
                 <a href="/product/detail.do?board_idx=${product.board_idx }&f_type=PR">
-                    <img class="img-responsive img-portfolio img-hover" src="${product.main_img }" alt="">
+                    <img class="img-responsive img-portfolio img-hover w36h27_main_img" src="${product.main_img }" alt="">
                 </a>
                 <h3 class="text_overflow">${product.board_subject }</h3>
            	</div>	
             
             <div class="col-md-4 col-sm-6">
                 <a href="/contest/detail.do?board_idx=${contest.board_idx }&f_type=CO">
-                    <img class="img-responsive img-portfolio img-hover" src="${contest.main_img }" alt="">
+                    <img class="img-responsive img-portfolio img-hover w36h27_main_img" src="${contest.main_img }" alt="">
                 </a>
                 <h3 class="text_overflow">${contest.board_subject }</h3>
             </div>
             <div class="col-md-4 col-sm-6">
                 <a href="/album/detail.do?board_idx=${album.board_idx }&f_type=AL">
-                    <img class="img-responsive img-portfolio img-hover" src="${album.main_img }" alt="">
+                    <img class="img-responsive img-portfolio img-hover w36h27_main_img" src="${album.main_img }" alt="">
                 </a>
                 <h3 class="text_overflow">${album.board_subject }</h3>
             </div>
@@ -256,13 +301,7 @@ $(function(){
                         <a href="http://facebook.com/kindaibusinesskim"><i class="fa fa-facebook-square fa-2x"></i></a>
                     </li>
                     <li>
-                        <a href="#"><i class="fa fa-linkedin-square fa-2x"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-google-plus-square fa-2x"></i></a>
+                        <a href="https://twitter.com/kindaikimzemi"><i class="fa fa-twitter-square fa-2x"></i></a>
                     </li>
                 </ul>
             </div>
